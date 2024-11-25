@@ -3,19 +3,172 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+  /* Nueva paleta de colores */
+  --color-primary: #ffffff;    /* Blanco para el fondo principal */
+  --color-secondary: #F0F7FF; /* Azul muy claro para elementos secundarios */
+  --color-accent: #E3F2FD;    /* Azul suave para acentos */
+  
+  /* Colores de texto */
+  --text-primary: #1A237E;    /* Azul oscuro para texto principal */
+  --text-secondary: #455A64;  /* Gris azulado para texto secundario */
+  --text-muted: #78909C;      /* Gris claro para texto muted */
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  /* Colores de fondo */
+  --bg-page: #F8FAFC;        /* Gris muy claro para el fondo de la página */
+  --bg-card: #FFFFFF;        /* Blanco para tarjetas y contenido */
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--bg-page);
+  color: var(--text-primary);
+  font-family: 'Inter', sans-serif;
+  line-height: 1.6;
+}
+
+/* Estilos de tarjetas y contenedores */
+.card {
+  background-color: var(--bg-card);
+  border-radius: 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+}
+
+/* Contenedor principal */
+.main-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  background-color: var(--color-primary);
+  min-height: 100vh;
+}
+
+/* Tags */
+.tag {
+  background-color: var(--color-secondary);
+  color: var(--text-primary);
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  transition: all 0.2s ease-in-out;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.tag:hover {
+  background-color: var(--color-accent);
+  transform: scale(1.05);
+}
+
+/* Botones */
+.btn {
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-primary {
+  background-color: var(--color-secondary);
+  color: var(--text-primary);
+}
+
+.btn-primary:hover {
+  background-color: var(--color-accent);
+  transform: translateY(-1px);
+}
+
+/* Estilos para el contenido del artículo */
+.article-content {
+  max-width: 65ch;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: var(--bg-card);
+  border-radius: 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+.article-content h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+  line-height: 1.2;
+}
+
+.article-content h2 {
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+.article-content h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.article-content p {
+  margin-bottom: 1.5rem;
+  color: var(--text-secondary);
+}
+
+.article-content blockquote {
+  background-color: var(--color-secondary);
+  border-left: 4px solid var(--color-accent);
+  padding: 1rem 1.5rem;
+  margin: 1.5rem 0;
+  border-radius: 0.5rem;
+}
+
+/* Código */
+pre {
+  background-color: var(--color-secondary);
+  padding: 1.5rem;
+  border-radius: 0.75rem;
+  overflow-x: auto;
+  margin: 1.5rem 0;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+code {
+  background-color: var(--color-secondary);
+  padding: 0.2rem 0.4rem;
+  border-radius: 0.25rem;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.875em;
+  color: var(--text-primary);
+}
+
+/* Animaciones suaves */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+/* Navegación */
+.nav-link {
+  color: var(--text-secondary);
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.nav-link:hover {
+  background-color: var(--color-secondary);
+  color: var(--text-primary);
 }
