@@ -1,6 +1,5 @@
 import NetworkAnimation from '@/components/NetworkAnimation';
 import TypewriterText from '@/components/TypewriterText';
-import Image from 'next/image';
 
 export default function NosotrosPage() {
   return (

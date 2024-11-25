@@ -103,15 +103,16 @@ export default function NetworkAnimation() {
     if (!canvas || !container) return;
 
     const handleResize = () => {
-      const { width, height } = container.getBoundingClientRect();
-      canvas.width = width;
-      canvas.height = height;
-      nodesRef.current = initNodes(width, height);
+      if (container) {
+        canvas.width = container.clientWidth;
+        canvas.height = container.clientHeight;
+        nodesRef.current = initNodes(canvas.width, canvas.height);
+      }
     };
 
     handleResize();
     window.addEventListener('resize', handleResize);
-    animationRef.current = requestAnimationFrame(animate);
+    animate();
 
     return () => {
       window.removeEventListener('resize', handleResize);
@@ -119,7 +120,7 @@ export default function NetworkAnimation() {
         cancelAnimationFrame(animationRef.current);
       }
     };
-  }, []);
+  }, [animate]);
 
   return (
     <div
