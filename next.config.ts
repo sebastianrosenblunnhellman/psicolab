@@ -1,20 +1,17 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  webpack: (config, { isServer }) => {
-    if (!isServer) {
-      config.resolve.fallback = {
-        fs: false,
-      };
-    }
-    return config;
-  },
   typescript: {
-    ignoreBuildErrors: true, // Temporalmente true mientras arreglamos los errores
+    ignoreBuildErrors: true,
   },
   eslint: {
-    // Warning: Solo habilitamos esto temporalmente para permitir el deploy
-    ignoreDuringBuilds: true
+    ignoreDuringBuilds: true,
   },
+  webpack: (config, { isServer }) => {
+    config.resolve.fallback = { ...config.resolve.fallback, fs: false };
+    return config;
+  },
+  reactStrictMode: true,
+  swcMinify: true,
 };
 
 export default nextConfig;
