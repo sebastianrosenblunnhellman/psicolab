@@ -13,7 +13,6 @@ interface Node {
 export default function NetworkAnimation() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const [isHovering, setIsHovering] = useState(false);
   const animationRef = useRef<number>();
   const nodesRef = useRef<Node[]>([]);
   const fadeInRef = useRef(0);
@@ -134,8 +133,6 @@ export default function NetworkAnimation() {
     <div
       ref={containerRef}
       className="absolute inset-0 w-full h-full"
-      onMouseEnter={() => setIsHovering(true)}
-      onMouseLeave={() => setIsHovering(false)}
     >
       <canvas
         ref={canvasRef}
