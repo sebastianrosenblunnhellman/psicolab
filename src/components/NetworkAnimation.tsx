@@ -17,70 +17,66 @@ export default function NetworkAnimation() {
   const nodesRef = useRef<Node[]>([]);
   const fadeInRef = useRef(0);
 
-  const initNodes = (width: number, height: number) => {
+  const initNodes = useCallback((width: number, height: number) => {
     const nodes: Node[] = [];
-    const nodeCount = 30; 
+    const nodeCount = 30;
 
     for (let i = 0; i < nodeCount; i++) {
       nodes.push({
         x: Math.random() * width,
         y: Math.random() * height,
-        vx: (Math.random() - 0.5) * 1, 
+        vx: (Math.random() - 0.5) * 1,
         vy: (Math.random() - 0.5) * 1,
         connections: []
       });
     }
 
-    // Create connections
+    // Establecer conexiones
     nodes.forEach((node, i) => {
-      const connectionCount = 3 + Math.floor(Math.random() * 3); 
-      for (let j = 0; j < connectionCount; j++) {
-        const target = Math.floor(Math.random() * nodeCount);
-        if (target !== i && !node.connections.includes(target)) {
-          node.connections.push(target);
+      const connections = Math.floor(Math.random() * 3) + 1;
+      for (let j = 0; j < connections; j++) {
+        const targetIndex = Math.floor(Math.random() * nodeCount);
+        if (targetIndex !== i && !node.connections.includes(targetIndex)) {
+          node.connections.push(targetIndex);
         }
       }
     });
 
     return nodes;
-  };
+  }, []);
 
-  const updateNodePositions = (nodes: Node[], width: number, height: number) => {
+  const updateNodePositions = useCallback((nodes: Node[], width: number, height: number) => {
     nodes.forEach(node => {
-      // Update position
       node.x += node.vx;
       node.y += node.vy;
 
-      // Bounce off walls
       if (node.x <= 0 || node.x >= width) node.vx *= -1;
       if (node.y <= 0 || node.y >= height) node.vy *= -1;
     });
-  };
+  }, []);
 
-  const drawConnections = (ctx: CanvasRenderingContext2D, nodes: Node[]) => {
+  const drawConnections = useCallback((ctx: CanvasRenderingContext2D, nodes: Node[], opacity: number) => {
     nodes.forEach(node => {
-      // Draw connections
       ctx.beginPath();
       node.connections.forEach(targetIndex => {
         const target = nodes[targetIndex];
         ctx.moveTo(node.x, node.y);
         ctx.lineTo(target.x, target.y);
       });
-      ctx.strokeStyle = `rgba(45, 212, 191, ${0.2 * fadeInRef.current})`; 
+      ctx.strokeStyle = `rgba(45, 212, 191, ${0.2 * opacity})`;
       ctx.lineWidth = 1;
       ctx.stroke();
     });
-  };
+  }, []);
 
-  const drawNodes = (ctx: CanvasRenderingContext2D, nodes: Node[]) => {
+  const drawNodes = useCallback((ctx: CanvasRenderingContext2D, nodes: Node[], opacity: number) => {
     nodes.forEach(node => {
-      // Draw node
       ctx.beginPath();
       ctx.arc(node.x, node.y, 2, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(59, 130, 246, ${fadeInRef.current})`; 
+      ctx.fillStyle = `rgba(59, 130, 246, ${opacity})`;
       ctx.fill();
     });
-  };
+  }, []);
 
   const animate = useCallback(() => {
     const canvas = canvasRef.current;
@@ -89,20 +85,19 @@ export default function NetworkAnimation() {
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     
-    // Incrementar fadeIn
     if (fadeInRef.current < 1) {
       fadeInRef.current += 0.02;
     }
 
-    ctx.globalAlpha = fadeInRef.current;
-
+    const opacity = fadeInRef.current;
     const nodes = nodesRef.current;
+
     updateNodePositions(nodes, canvas.width, canvas.height);
-    drawConnections(ctx, nodes);
-    drawNodes(ctx, nodes);
+    drawConnections(ctx, nodes, opacity);
+    drawNodes(ctx, nodes, opacity);
 
     animationRef.current = requestAnimationFrame(animate);
-  }, []);
+  }, [updateNodePositions, drawConnections, drawNodes]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -127,7 +122,7 @@ export default function NetworkAnimation() {
         cancelAnimationFrame(animationRef.current);
       }
     };
-  }, [animate]);
+  }, [animate, initNodes]);
 
   return (
     <div
