@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 
 interface Node {
   x: number;
@@ -46,36 +46,20 @@ export default function NetworkAnimation() {
     return nodes;
   };
 
-  const animate = () => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    // Clear canvas
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    if (isHovering) {
-      fadeInRef.current = Math.min(fadeInRef.current + 0.05, 1); 
-    } else {
-      fadeInRef.current = Math.max(fadeInRef.current - 0.03, 0);
-    }
-
-    // Siempre visible con opacidad mínima
-    const opacity = 0.2 + (fadeInRef.current * 0.8);
-
-    // Update and draw nodes
-    const nodes = nodesRef.current;
+  const updateNodePositions = (nodes: Node[], width: number, height: number) => {
     nodes.forEach(node => {
       // Update position
       node.x += node.vx;
       node.y += node.vy;
 
       // Bounce off walls
-      if (node.x <= 0 || node.x >= canvas.width) node.vx *= -1;
-      if (node.y <= 0 || node.y >= canvas.height) node.vy *= -1;
+      if (node.x <= 0 || node.x >= width) node.vx *= -1;
+      if (node.y <= 0 || node.y >= height) node.vy *= -1;
+    });
+  };
 
+  const drawConnections = (ctx: CanvasRenderingContext2D, nodes: Node[]) => {
+    nodes.forEach(node => {
       // Draw connections
       ctx.beginPath();
       node.connections.forEach(targetIndex => {
@@ -83,19 +67,43 @@ export default function NetworkAnimation() {
         ctx.moveTo(node.x, node.y);
         ctx.lineTo(target.x, target.y);
       });
-      ctx.strokeStyle = `rgba(45, 212, 191, ${0.2 * opacity})`; 
+      ctx.strokeStyle = `rgba(45, 212, 191, ${0.2 * fadeInRef.current})`; 
       ctx.lineWidth = 1;
       ctx.stroke();
+    });
+  };
 
+  const drawNodes = (ctx: CanvasRenderingContext2D, nodes: Node[]) => {
+    nodes.forEach(node => {
       // Draw node
       ctx.beginPath();
       ctx.arc(node.x, node.y, 2, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(59, 130, 246, ${opacity})`; 
+      ctx.fillStyle = `rgba(59, 130, 246, ${fadeInRef.current})`; 
       ctx.fill();
     });
+  };
+
+  const animate = useCallback(() => {
+    const canvas = canvasRef.current;
+    const ctx = canvas?.getContext('2d');
+    if (!canvas || !ctx) return;
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
+    // Incrementar fadeIn
+    if (fadeInRef.current < 1) {
+      fadeInRef.current += 0.02;
+    }
+
+    ctx.globalAlpha = fadeInRef.current;
+
+    const nodes = nodesRef.current;
+    updateNodePositions(nodes, canvas.width, canvas.height);
+    drawConnections(ctx, nodes);
+    drawNodes(ctx, nodes);
 
     animationRef.current = requestAnimationFrame(animate);
-  };
+  }, []);
 
   useEffect(() => {
     const canvas = canvasRef.current;
