@@ -1,6 +1,9 @@
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
+import { unified } from 'unified';
+import remarkParse from 'remark-parse';
+import remarkHtml from 'remark-html';
 
 export interface Roadmap {
   slug: string;
@@ -41,5 +44,32 @@ export async function getAllRoadmaps(): Promise<Roadmap[]> {
   } catch (error) {
     console.error('Error loading roadmaps:', error);
     return [];
+  }
+}
+
+export async function getRoadmapBySlug(slug: string): Promise<Roadmap | null> {
+  try {
+    const fullPath = path.join(roadmapsDirectory, `${slug}.md`);
+    const fileContents = fs.readFileSync(fullPath, 'utf8');
+    const { data, content } = matter(fileContents);
+
+    const processedContent = await unified()
+      .use(remarkParse)
+      .use(remarkHtml)
+      .process(content);
+
+    return {
+      slug,
+      title: data.title || 'Sin título',
+      description: data.description || '',
+      duration: data.duration || '4-6 semanas',
+      level: data.level || 'Principiante',
+      tags: Array.isArray(data.tags) ? data.tags : [],
+      topics: Array.isArray(data.topics) ? data.topics : [],
+      content: processedContent.toString(),
+    };
+  } catch (error) {
+    console.error(`Error loading roadmap ${slug}:`, error);
+    return null;
   }
 }

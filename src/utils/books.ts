@@ -48,3 +48,27 @@ export async function getAllBooks(): Promise<Book[]> {
     return [];
   }
 }
+
+export async function getBookBySlug(slug: string): Promise<Book | null> {
+  try {
+    const fullPath = path.join(booksDirectory, `${slug}.md`);
+    const fileContents = fs.readFileSync(fullPath, 'utf8');
+    const { data } = matter(fileContents);
+
+    return {
+      slug,
+      title: data.title || 'Sin título',
+      author: data.author || 'Autor desconocido',
+      description: data.description || '',
+      coverImage: data.coverImage || '/book-img/default-book.jpg',
+      downloadUrl: data.downloadUrl || '#',
+      tags: Array.isArray(data.tags) ? data.tags : [],
+      year: data.year || '',
+      pages: data.pages || 0,
+      language: data.language || 'Español',
+    };
+  } catch (error) {
+    console.error(`Error loading book ${slug}:`, error);
+    return null;
+  }
+}

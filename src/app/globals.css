@@ -3,172 +3,89 @@
 @tailwind utilities;
 
 :root {
-  /* Nueva paleta de colores */
-  --color-primary: #ffffff;    /* Blanco para el fondo principal */
-  --color-secondary: #F0F7FF; /* Azul muy claro para elementos secundarios */
-  --color-accent: #E3F2FD;    /* Azul suave para acentos */
-  
-  /* Colores de texto */
-  --text-primary: #1A237E;    /* Azul oscuro para texto principal */
-  --text-secondary: #455A64;  /* Gris azulado para texto secundario */
-  --text-muted: #78909C;      /* Gris claro para texto muted */
-
-  /* Colores de fondo */
-  --bg-page: #F8FAFC;        /* Gris muy claro para el fondo de la página */
-  --bg-card: #FFFFFF;        /* Blanco para tarjetas y contenido */
+  --color-primary: #ffffff;
+  --color-secondary: #F0F7FF;
+  --color-accent: #E3F2FD;
+  --text-primary: #1A237E;
+  --text-secondary: #455A64;
+  --text-muted: #78909C;
+  --bg-page: #F8FAFC;
+  --bg-card: #FFFFFF;
 }
 
 body {
   background-color: var(--bg-page);
   color: var(--text-primary);
-  font-family: 'Inter', sans-serif;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   line-height: 1.6;
 }
 
-/* Estilos de tarjetas y contenedores */
 .card {
-  background-color: var(--bg-card);
-  border-radius: 1rem;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
-  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-  border: 1px solid rgba(0, 0, 0, 0.05);
+  @apply bg-white rounded-lg shadow-sm border border-gray-100 transition-all duration-200;
 }
 
 .card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+  @apply shadow-md -translate-y-0.5;
 }
 
-/* Contenedor principal */
 .main-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 2rem;
-  background-color: var(--color-primary);
-  min-height: 100vh;
+  @apply max-w-7xl mx-auto px-4 py-8 bg-white min-h-screen;
 }
 
-/* Tags */
 .tag {
-  background-color: var(--color-secondary);
-  color: var(--text-primary);
-  padding: 0.25rem 0.75rem;
-  border-radius: 9999px;
-  font-size: 0.75rem;
-  font-weight: 500;
-  transition: all 0.2s ease-in-out;
-  border: 1px solid rgba(0, 0, 0, 0.05);
+  @apply inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-gray-100 text-gray-800 transition-all duration-200;
 }
 
 .tag:hover {
-  background-color: var(--color-accent);
-  transform: scale(1.05);
+  @apply bg-gray-200 scale-105;
 }
 
-/* Botones */
 .btn {
-  padding: 0.75rem 1.5rem;
-  border-radius: 0.5rem;
-  font-weight: 500;
-  transition: all 0.2s ease-in-out;
+  @apply px-4 py-2 rounded-lg font-medium transition-all duration-200;
 }
 
 .btn-primary {
-  background-color: var(--color-secondary);
-  color: var(--text-primary);
+  @apply bg-blue-500 text-white hover:bg-blue-600;
 }
 
-.btn-primary:hover {
-  background-color: var(--color-accent);
-  transform: translateY(-1px);
-}
-
-/* Estilos para el contenido del artículo */
 .article-content {
-  max-width: 65ch;
-  margin: 2rem auto;
-  padding: 2rem;
-  background-color: var(--bg-card);
-  border-radius: 1rem;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+  @apply prose prose-lg prose-gray max-w-none;
 }
 
 .article-content h1 {
-  font-size: 2.5rem;
-  font-weight: 700;
-  color: var(--text-primary);
-  margin-bottom: 1rem;
-  line-height: 1.2;
+  @apply text-4xl font-bold mb-6 text-gray-900;
 }
 
 .article-content h2 {
-  font-size: 2rem;
-  font-weight: 600;
-  color: var(--text-primary);
-  margin-top: 2rem;
-  margin-bottom: 1rem;
+  @apply text-3xl font-bold mt-8 mb-4 text-gray-800;
 }
 
 .article-content h3 {
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: var(--text-secondary);
-  margin-top: 1.5rem;
-  margin-bottom: 0.75rem;
+  @apply text-2xl font-semibold mt-6 mb-3 text-gray-800;
 }
 
 .article-content p {
-  margin-bottom: 1.5rem;
-  color: var(--text-secondary);
+  @apply mb-4 text-gray-700;
 }
 
 .article-content blockquote {
-  background-color: var(--color-secondary);
-  border-left: 4px solid var(--color-accent);
-  padding: 1rem 1.5rem;
-  margin: 1.5rem 0;
-  border-radius: 0.5rem;
+  @apply pl-4 border-l-4 border-gray-300 italic my-4 text-gray-600;
 }
 
-/* Código */
 pre {
-  background-color: var(--color-secondary);
-  padding: 1.5rem;
-  border-radius: 0.75rem;
-  overflow-x: auto;
-  margin: 1.5rem 0;
-  border: 1px solid rgba(0, 0, 0, 0.05);
+  @apply p-4 rounded-lg bg-gray-800 text-white overflow-x-auto my-4;
 }
 
 code {
-  background-color: var(--color-secondary);
-  padding: 0.2rem 0.4rem;
-  border-radius: 0.25rem;
-  font-family: 'Fira Code', monospace;
-  font-size: 0.875em;
-  color: var(--text-primary);
+  @apply font-mono text-sm;
 }
 
-/* Animaciones suaves */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.fade-in {
-  animation: fadeIn 0.5s ease-out forwards;
-}
-
-/* Navegación */
 .nav-link {
-  color: var(--text-secondary);
-  font-weight: 500;
-  padding: 0.5rem 1rem;
-  border-radius: 0.5rem;
-  transition: background-color 0.2s ease-in-out;
+  @apply text-gray-600 hover:text-blue-600 transition-colors duration-200;
 }
 
-.nav-link:hover {
-  background-color: var(--color-secondary);
-  color: var(--text-primary);
+@layer utilities {
+  .animate-blink {
+    animation: blink 1s step-end infinite;
+  }
 }
