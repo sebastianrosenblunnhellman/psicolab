@@ -5,41 +5,30 @@ duration: "8 semanas"
 level: "Intermedio"
 tags: ["Conductismo", "Análisis Funcional", "Terapia"]
 topics:
-  - "Principios básicos del conductismo"
+  - "Fundamentos del conductismo"
   - "Análisis funcional de la conducta"
   - "Técnicas de modificación conductual"
   - "Evaluación conductual"
-  - "Diseño de intervenciones"
 ---
 
 # Análisis Conductual Aplicado
 
-## Introducción
-El análisis conductual aplicado (ABA) es una disciplina científica que se centra en la comprensión y modificación del comportamiento humano. Este curso te guiará a través de los principios fundamentales y su aplicación práctica.
-
 ## Contenido del Curso
 
-### Semana 1-2: Fundamentos del Conductismo
-- Historia del conductismo
-- Principios básicos del aprendizaje
-- Condicionamiento clásico y operante
+1. [Fundamentos del Conductismo](/roadmaps/analisis-conductual/fundamentos)
+2. [Principios del Análisis Funcional](/roadmaps/analisis-conductual/principios)
+3. [Técnicas de Modificación Conductual](/roadmaps/analisis-conductual/tecnicas)
+4. [Evaluación y Medición](/roadmaps/analisis-conductual/evaluacion)
 
-### Semana 3-4: Análisis Funcional
-- Identificación de antecedentes y consecuentes
-- Evaluación conductual
-- Registro y medición del comportamiento
+## Descripción General
 
-### Semana 5-6: Técnicas de Modificación Conductual
-- Reforzamiento positivo y negativo
-- Extinción y castigo
-- Moldeamiento y encadenamiento
+Este curso te guiará a través de los principios fundamentales del análisis conductual aplicado...
 
-### Semana 7-8: Aplicaciones Prácticas
-- Diseño de intervenciones
-- Evaluación de resultados
-- Casos prácticos y ejemplos
+## Objetivos de Aprendizaje
 
-## Recursos Adicionales
-- Lecturas recomendadas
-- Videos demostrativos
-- Ejercicios prácticos
+- Comprender los fundamentos teóricos del conductismo
+- Desarrollar habilidades en análisis funcional
+- Aplicar técnicas de modificación conductual
+- Realizar evaluaciones conductuales efectivas
+
+[Comenzar con Fundamentos →](/roadmaps/analisis-conductual/fundamentos)

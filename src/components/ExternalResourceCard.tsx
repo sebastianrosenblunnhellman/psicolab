@@ -1,5 +1,6 @@
 import { ExternalResource } from '@/utils/externalResources';
-import { FaExternalLinkAlt, FaTag } from 'react-icons/fa';
+import { FaTag } from 'react-icons/fa';
+import Link from 'next/link';
 
 interface ExternalResourceCardProps {
   resource: ExternalResource;
@@ -33,15 +34,12 @@ export default function ExternalResourceCard({ resource }: ExternalResourceCardP
           <span>{resource.language}</span>
         </div>
 
-        <a
-          href={resource.url}
-          target="_blank"
-          rel="noopener noreferrer"
+        <Link
+          href={`/materiales/recursos-externos/${resource.slug}`}
           className="inline-flex items-center justify-center w-full gap-2 py-2 px-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
         >
-          <span>Visitar Recurso</span>
-          <FaExternalLinkAlt className="w-4 h-4" />
-        </a>
+          Ver Recurso
+        </Link>
       </div>
     </div>
   );
