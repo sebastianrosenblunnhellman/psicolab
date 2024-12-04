@@ -1,11 +1,13 @@
 import Link from 'next/link';
-import { featuredArticles } from '@/data/featuredArticles';
-import FeaturedArticle from '@/components/FeaturedArticle';
 import Newsletter from '@/components/Newsletter';
 import NetworkAnimation from '@/components/NetworkAnimation';
 import TypewriterText from '@/components/TypewriterText';
+import BlogCard from '@/components/BlogCard';
+import { getAllArticles } from '@/utils/articles';
 
-export default function Home() {
+export default async function Home() {
+  const recentArticles = (await getAllArticles()).slice(0, 4);
+
   return (
     <div className="bg-white">
       {/* Hero Section */}
@@ -30,16 +32,22 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Featured Articles Section */}
+      {/* Recent Articles Section */}
       <section className="container mx-auto px-4 py-16">
         <h2 className="text-3xl font-bold text-gray-800 mb-12">
-          Artículos Destacados
+          Artículos Recientes
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
-          {featuredArticles.map((article) => (
-            <FeaturedArticle
+          {recentArticles.map((article) => (
+            <BlogCard
               key={article.slug}
-              {...article}
+              slug={article.slug}
+              title={article.title}
+              date={article.date}
+              excerpt={article.excerpt}
+              tags={article.tags}
+              readTime={article.readTime}
+              author={article.author}
             />
           ))}
         </div>
