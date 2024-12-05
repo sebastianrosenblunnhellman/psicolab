@@ -1,7 +1,10 @@
 import Link from 'next/link';
 import { Article } from '@/utils/articles';
 
-type BlogCardProps = Article;
+type BlogCardProps = Partial<Article> & {
+  slug: string;
+  title: string;
+};
 
 export default function BlogCard({
   slug,
@@ -24,13 +27,15 @@ export default function BlogCard({
         </h2>
       </Link>
       <div className="flex items-center gap-2 text-sm text-gray-600 mb-4">
-        <time dateTime={date}>
-          {new Date(date).toLocaleDateString('es-ES', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric',
-          })}
-        </time>
+        {date && (
+          <time dateTime={date}>
+            {new Date(date).toLocaleDateString('es-ES', {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric',
+            })}
+          </time>
+        )}
         {readTime && (
           <>
             <span>·</span>
@@ -44,7 +49,7 @@ export default function BlogCard({
           </>
         )}
       </div>
-      <p className="text-gray-600 mb-4">{excerpt}</p>
+      {excerpt && <p className="text-gray-600 mb-4">{excerpt}</p>}
       {tags && tags.length > 0 && (
         <div className="flex flex-wrap gap-2">
           {tags.map((tag) => (

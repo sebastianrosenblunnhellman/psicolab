@@ -6,7 +6,8 @@ import BlogCard from '@/components/BlogCard';
 import { getAllArticles } from '@/utils/articles';
 
 export default async function Home() {
-  const recentArticles = (await getAllArticles()).slice(0, 4);
+  const articles = await getAllArticles();
+  const recentArticles = articles.slice(0, 4);
 
   return (
     <div className="bg-white">
@@ -37,20 +38,26 @@ export default async function Home() {
         <h2 className="text-3xl font-bold text-gray-800 mb-12">
           Artículos Recientes
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
-          {recentArticles.map((article) => (
-            <BlogCard
-              key={article.slug}
-              slug={article.slug}
-              title={article.title}
-              date={article.date}
-              excerpt={article.excerpt}
-              tags={article.tags}
-              readTime={article.readTime}
-              author={article.author}
-            />
-          ))}
-        </div>
+        {recentArticles.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+            {recentArticles.map((article) => (
+              <BlogCard
+                key={article.slug}
+                slug={article.slug}
+                title={article.title}
+                date={article.date}
+                excerpt={article.excerpt}
+                tags={article.tags}
+                readTime={article.readTime}
+                author={article.author}
+              />
+            ))}
+          </div>
+        ) : (
+          <p className="text-center text-gray-600 py-8">
+            No hay artículos disponibles en este momento.
+          </p>
+        )}
         <div className="text-center">
           <Link
             href="/articulos"

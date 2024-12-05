@@ -20,48 +20,76 @@ export interface Article {
 
 const articlesDirectory = path.join(process.cwd(), 'content/articles');
 
+// Ensure the articles directory exists
+function ensureArticlesDirectory() {
+  if (!fs.existsSync(articlesDirectory)) {
+    fs.mkdirSync(articlesDirectory, { recursive: true });
+  }
+}
+
 export async function getAllArticles(): Promise<Article[]> {
   try {
+    ensureArticlesDirectory();
+    
     const fileNames = fs.readdirSync(articlesDirectory);
     const allArticlesData = await Promise.all(
       fileNames
         .filter(fileName => fileName.endsWith('.md'))
         .map(async fileName => {
-          const slug = fileName.replace(/\.md$/, '');
-          return getArticleBySlug(slug, ['title', 'date', 'excerpt', 'tags', 'readTime', 'author']);
+          try {
+            const slug = fileName.replace(/\.md$/, '');
+            const article = await getArticleBySlug(slug, ['title', 'date', 'excerpt', 'tags', 'readTime', 'author']);
+            return article;
+          } catch (error) {
+            console.error(`Error processing article ${fileName}:`, error);
+            return null;
+          }
         })
     );
 
-    return allArticlesData.sort((a, b) => 
-      new Date(b.date).getTime() - new Date(a.date).getTime()
-    );
+    // Filter out any null articles and sort by date
+    return allArticlesData
+      .filter((article): article is Article => article !== null)
+      .sort((a, b) => 
+        new Date(b.date).getTime() - new Date(a.date).getTime()
+      );
   } catch (error) {
     console.error('Error getting all articles:', error);
     return [];
   }
 }
 
-export async function getArticleBySlug(slug: string, fields: string[] = []): Promise<Article> {
+export async function getArticleBySlug(slug: string, fields: string[] = []): Promise<Article | null> {
   try {
+    ensureArticlesDirectory();
+    
     const fileNames = fs.readdirSync(articlesDirectory);
     const fileName = fileNames.find(
       fn => fn.toLowerCase().replace(/\.md$/, '') === decodeURIComponent(slug).toLowerCase()
     );
 
     if (!fileName) {
-      throw new Error(`Article not found: ${slug}`);
+      console.warn(`Article not found: ${slug}`);
+      return null;
     }
 
     const fullPath = path.join(articlesDirectory, fileName);
     const fileContents = fs.readFileSync(fullPath, 'utf8');
     const { data, content } = matter(fileContents);
+
+    // Validate required fields
+    if (!data.title || !data.date) {
+      console.error(`Article ${slug} is missing required fields`);
+      return null;
+    }
+
     const wordCount = content.split(/\s+/).length;
     const readTime = Math.ceil(wordCount / 200);
 
     const article: Article = {
       slug: fileName.replace(/\.md$/, ''),
-      title: data.title || 'Sin título',
-      date: data.date ? new Date(data.date).toISOString() : new Date().toISOString(),
+      title: data.title,
+      date: new Date(data.date).toISOString(),
       excerpt: data.excerpt || content.slice(0, 200).trim() + '...',
       tags: Array.isArray(data.tags) ? data.tags : [],
       readTime: readTime,
@@ -79,18 +107,14 @@ export async function getArticleBySlug(slug: string, fields: string[] = []): Pro
     return article;
   } catch (error) {
     console.error(`Error reading article ${slug}:`, error);
-    return {
-      slug,
-      title: 'Error loading article',
-      date: new Date().toISOString(),
-      excerpt: 'This article could not be loaded.',
-      tags: ['error'],
-    };
+    return null;
   }
 }
 
 export async function getArticleSlugs(): Promise<string[]> {
   try {
+    ensureArticlesDirectory();
+    
     const fileNames = fs.readdirSync(articlesDirectory);
     return fileNames
       .filter(fileName => fileName.endsWith('.md'))
