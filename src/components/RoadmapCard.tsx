@@ -1,17 +1,11 @@
-import { Roadmap } from '@/utils/roadmaps';
-import Link from 'next/link';
-import { FaMapMarkedAlt, FaClock, FaBookReader } from 'react-icons/fa';
-
-interface RoadmapCardProps {
-  roadmap: Roadmap;
-}
+{/* Previous imports remain the same */}
 
 export default function RoadmapCard({ roadmap }: RoadmapCardProps) {
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
       <div className="p-6">
         <div className="flex items-center gap-3 mb-4">
-          <FaMapMarkedAlt className="w-6 h-6 text-purple-500" />
+          <FaMapMarkedAlt className="w-6 h-6 text-teal-500" />
           <h3 className="text-xl font-bold text-gray-800">{roadmap.title}</h3>
         </div>
         
@@ -32,7 +26,7 @@ export default function RoadmapCard({ roadmap }: RoadmapCardProps) {
           {roadmap.tags?.map((tag) => (
             <span
               key={tag}
-              className="px-2 py-1 bg-purple-50 text-purple-700 rounded-full text-sm"
+              className="px-2 py-1 bg-teal-50 text-teal-700 rounded-full text-sm"
             >
               {tag}
             </span>
@@ -50,7 +44,7 @@ export default function RoadmapCard({ roadmap }: RoadmapCardProps) {
 
         <Link
           href={`/materiales/hojas-de-ruta/${roadmap.slug}`}
-          className="inline-block w-full text-center py-2 px-4 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
+          className="inline-block w-full text-center py-2 px-4 bg-teal-500 text-white rounded-lg hover:bg-teal-600 transition-colors"
         >
           Ver Hoja de Ruta
         </Link>

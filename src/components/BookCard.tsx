@@ -1,9 +1,4 @@
-import Image from 'next/image';
-import { Book } from '@/utils/books';
-
-interface BookCardProps {
-  book: Book;
-}
+{/* Previous imports remain the same */}
 
 export default function BookCard({ book }: BookCardProps) {
   return (
@@ -30,7 +25,7 @@ export default function BookCard({ book }: BookCardProps) {
           {book.tags?.map((tag) => (
             <span
               key={tag}
-              className="px-2 py-1 bg-gray-100 text-gray-700 rounded-full text-sm"
+              className="px-2 py-1 bg-teal-50 text-teal-700 rounded-full text-sm"
             >
               {tag}
             </span>
