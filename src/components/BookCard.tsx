@@ -1,4 +1,11 @@
-{/* Previous imports remain the same */}
+'use client';
+
+import Image from 'next/image';
+import { Book } from '@/utils/books';
+
+interface BookCardProps {
+  book: Book;
+}
 
 export default function BookCard({ book }: BookCardProps) {
   return (
@@ -10,6 +17,7 @@ export default function BookCard({ book }: BookCardProps) {
           fill
           className="object-cover"
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          priority={false}
         />
       </div>
       <div className="p-6">

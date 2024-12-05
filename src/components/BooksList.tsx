@@ -1,7 +1,56 @@
-{/* Previous imports remain the same */}
+'use client';
+
+import { useState, useMemo } from 'react';
+import BookCard from './BookCard';
+import { Book } from '@/utils/books';
+
+interface BooksListProps {
+  initialBooks: Book[];
+}
 
 export default function BooksList({ initialBooks }: BooksListProps) {
-  {/* State and other logic remains the same */}
+  const [currentPage, setCurrentPage] = useState(1);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedTag, setSelectedTag] = useState('');
+  const booksPerPage = 6;
+
+  // Get unique tags from all books
+  const allTags = useMemo(() => {
+    const tags = new Set<string>();
+    initialBooks.forEach(book => {
+      book.tags?.forEach(tag => tags.add(tag));
+    });
+    return Array.from(tags).sort();
+  }, [initialBooks]);
+
+  // Filter books based on search term and selected tag
+  const filteredBooks = useMemo(() => {
+    return initialBooks.filter(book => {
+      const matchesSearch = book.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        book.author.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        book.description.toLowerCase().includes(searchTerm.toLowerCase());
+      const matchesTag = selectedTag === '' || book.tags?.includes(selectedTag);
+      return matchesSearch && matchesTag;
+    });
+  }, [initialBooks, searchTerm, selectedTag]);
+
+  // Calculate pagination
+  const totalPages = Math.ceil(filteredBooks.length / booksPerPage);
+  const paginatedBooks = filteredBooks.slice(
+    (currentPage - 1) * booksPerPage,
+    currentPage * booksPerPage
+  );
+
+  // Reset to first page when filters change
+  const handleSearch = (value: string) => {
+    setSearchTerm(value);
+    setCurrentPage(1);
+  };
+
+  const handleTagChange = (value: string) => {
+    setSelectedTag(value);
+    setCurrentPage(1);
+  };
 
   return (
     <div className="space-y-8">
