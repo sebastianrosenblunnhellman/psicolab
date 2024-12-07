@@ -1,7 +1,55 @@
-{/* Previous imports remain the same */}
+'use client';
+
+import { useState, useMemo } from 'react';
+import RoadmapCard from './RoadmapCard';
+import { Roadmap } from '@/utils/roadmaps';
+
+interface RoadmapsListProps {
+  initialRoadmaps: Roadmap[];
+}
 
 export default function RoadmapsList({ initialRoadmaps }: RoadmapsListProps) {
-  {/* State and other logic remains the same */}
+  const [currentPage, setCurrentPage] = useState(1);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedTag, setSelectedTag] = useState('');
+  const roadmapsPerPage = 6;
+
+  // Get unique tags from all roadmaps
+  const allTags = useMemo(() => {
+    const tags = new Set<string>();
+    initialRoadmaps.forEach(roadmap => {
+      roadmap.tags?.forEach(tag => tags.add(tag));
+    });
+    return Array.from(tags).sort();
+  }, [initialRoadmaps]);
+
+  // Filter roadmaps based on search term and selected tag
+  const filteredRoadmaps = useMemo(() => {
+    return initialRoadmaps.filter(roadmap => {
+      const matchesSearch = roadmap.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        roadmap.description.toLowerCase().includes(searchTerm.toLowerCase());
+      const matchesTag = selectedTag === '' || roadmap.tags?.includes(selectedTag);
+      return matchesSearch && matchesTag;
+    });
+  }, [initialRoadmaps, searchTerm, selectedTag]);
+
+  // Calculate pagination
+  const totalPages = Math.ceil(filteredRoadmaps.length / roadmapsPerPage);
+  const paginatedRoadmaps = filteredRoadmaps.slice(
+    (currentPage - 1) * roadmapsPerPage,
+    currentPage * roadmapsPerPage
+  );
+
+  // Reset to first page when filters change
+  const handleSearch = (value: string) => {
+    setSearchTerm(value);
+    setCurrentPage(1);
+  };
+
+  const handleTagChange = (value: string) => {
+    setSelectedTag(value);
+    setCurrentPage(1);
+  };
 
   return (
     <div className="space-y-8">

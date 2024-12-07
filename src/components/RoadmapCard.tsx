@@ -1,4 +1,12 @@
-{/* Previous imports remain the same */}
+'use client';
+
+import Link from 'next/link';
+import { FaMapMarkedAlt, FaClock, FaBookReader } from 'react-icons/fa';
+import { Roadmap } from '@/utils/roadmaps';
+
+interface RoadmapCardProps {
+  roadmap: Roadmap;
+}
 
 export default function RoadmapCard({ roadmap }: RoadmapCardProps) {
   return (

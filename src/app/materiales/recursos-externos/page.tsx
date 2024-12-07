@@ -18,7 +18,7 @@ export default async function ExternalResourcesPage() {
         <NetworkAnimation className="absolute inset-0" />
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="text-center space-y-4 max-w-4xl px-4">
-            <h1 className="text-5xl font-bold text-gray-800">Recursos Externos</h1>
+            <h1 className="text-6xl font-bold text-blue-500">RECURSOS EXTERNOS</h1>
             <div className="h-8">
               <TypewriterText
                 texts={[

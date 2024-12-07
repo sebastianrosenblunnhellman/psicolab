@@ -1,7 +1,55 @@
-{/* Previous imports remain the same */}
+'use client';
+
+import { useState, useMemo } from 'react';
+import ExternalResourceCard from './ExternalResourceCard';
+import { ExternalResource } from '@/utils/externalResources';
+
+interface ExternalResourcesListProps {
+  initialResources: ExternalResource[];
+}
 
 export default function ExternalResourcesList({ initialResources }: ExternalResourcesListProps) {
-  {/* State and other logic remains the same */}
+  const [currentPage, setCurrentPage] = useState(1);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedTag, setSelectedTag] = useState('');
+  const resourcesPerPage = 6;
+
+  // Get unique tags from all resources
+  const allTags = useMemo(() => {
+    const tags = new Set<string>();
+    initialResources.forEach(resource => {
+      resource.tags?.forEach(tag => tags.add(tag));
+    });
+    return Array.from(tags).sort();
+  }, [initialResources]);
+
+  // Filter resources based on search term and selected tag
+  const filteredResources = useMemo(() => {
+    return initialResources.filter(resource => {
+      const matchesSearch = resource.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        resource.description.toLowerCase().includes(searchTerm.toLowerCase());
+      const matchesTag = selectedTag === '' || resource.tags?.includes(selectedTag);
+      return matchesSearch && matchesTag;
+    });
+  }, [initialResources, searchTerm, selectedTag]);
+
+  // Calculate pagination
+  const totalPages = Math.ceil(filteredResources.length / resourcesPerPage);
+  const paginatedResources = filteredResources.slice(
+    (currentPage - 1) * resourcesPerPage,
+    currentPage * resourcesPerPage
+  );
+
+  // Reset to first page when filters change
+  const handleSearch = (value: string) => {
+    setSearchTerm(value);
+    setCurrentPage(1);
+  };
+
+  const handleTagChange = (value: string) => {
+    setSelectedTag(value);
+    setCurrentPage(1);
+  };
 
   return (
     <div className="space-y-8">

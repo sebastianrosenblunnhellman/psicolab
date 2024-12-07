@@ -1,4 +1,17 @@
-{/* Previous imports remain the same */}
+import { FaTag } from 'react-icons/fa';
+import Link from 'next/link';
+
+interface ExternalResourceCardProps {
+  resource: {
+    title: string;
+    type: string;
+    description: string;
+    tags?: string[];
+    author: string;
+    language: string;
+    slug: string;
+  };
+}
 
 export default function ExternalResourceCard({ resource }: ExternalResourceCardProps) {
   return (

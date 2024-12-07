@@ -1,7 +1,55 @@
-{/* Previous imports remain the same */}
+'use client';
+
+import { useState, useMemo } from 'react';
+import VideoCard from './VideoCard';
+import { Video } from '@/utils/videos';
+
+interface VideosListProps {
+  initialVideos: Video[];
+}
 
 export default function VideosList({ initialVideos }: VideosListProps) {
-  {/* State and other logic remains the same */}
+  const [currentPage, setCurrentPage] = useState(1);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedTag, setSelectedTag] = useState('');
+  const videosPerPage = 6;
+
+  // Get unique tags from all videos
+  const allTags = useMemo(() => {
+    const tags = new Set<string>();
+    initialVideos.forEach(video => {
+      video.tags?.forEach(tag => tags.add(tag));
+    });
+    return Array.from(tags).sort();
+  }, [initialVideos]);
+
+  // Filter videos based on search term and selected tag
+  const filteredVideos = useMemo(() => {
+    return initialVideos.filter(video => {
+      const matchesSearch = video.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        video.description.toLowerCase().includes(searchTerm.toLowerCase());
+      const matchesTag = selectedTag === '' || video.tags?.includes(selectedTag);
+      return matchesSearch && matchesTag;
+    });
+  }, [initialVideos, searchTerm, selectedTag]);
+
+  // Calculate pagination
+  const totalPages = Math.ceil(filteredVideos.length / videosPerPage);
+  const paginatedVideos = filteredVideos.slice(
+    (currentPage - 1) * videosPerPage,
+    currentPage * videosPerPage
+  );
+
+  // Reset to first page when filters change
+  const handleSearch = (value: string) => {
+    setSearchTerm(value);
+    setCurrentPage(1);
+  };
+
+  const handleTagChange = (value: string) => {
+    setSelectedTag(value);
+    setCurrentPage(1);
+  };
 
   return (
     <div className="space-y-8">
