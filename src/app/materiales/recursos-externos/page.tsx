@@ -1,5 +1,4 @@
 import NetworkAnimation from '@/components/NetworkAnimation';
-import TypewriterText from '@/components/TypewriterText';
 import ExternalResourcesList from '@/components/ExternalResourcesList';
 import { getAllExternalResources } from '@/utils/externalResources';
 
@@ -19,20 +18,9 @@ export default async function ExternalResourcesPage() {
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="text-center space-y-4 max-w-4xl px-4">
             <h1 className="text-6xl font-bold text-blue-500">RECURSOS EXTERNOS</h1>
-            <div className="h-8">
-              <TypewriterText
-                texts={[
-                  'Recursos seleccionados para ti',
-                  'Contenido de calidad',
-                  'Fuentes confiables',
-                  'Material complementario',
-                ]}
-                typingSpeed={80}
-                deletingSpeed={40}
-                delayBetween={2000}
-                className="text-xl text-gray-600"
-              />
-            </div>
+            <p className="text-xl text-gray-600">
+              Contenido seleccionado de fuentes confiables
+            </p>
           </div>
         </div>
       </div>

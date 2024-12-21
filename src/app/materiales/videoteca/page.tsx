@@ -1,5 +1,4 @@
 import NetworkAnimation from '@/components/NetworkAnimation';
-import TypewriterText from '@/components/TypewriterText';
 import VideosList from '@/components/VideosList';
 import { getAllVideos } from '@/utils/videos';
 
@@ -19,20 +18,9 @@ export default async function VideotecaPage() {
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="text-center space-y-4 max-w-4xl px-4">
             <h1 className="text-6xl font-bold text-blue-500">VIDEOTECA</h1>
-            <div className="h-8">
-              <TypewriterText
-                texts={[
-                  'Aprende con contenido audiovisual',
-                  'Descubre nuevas perspectivas',
-                  'Explora temas complejos',
-                  'Mejora tu comprensión',
-                ]}
-                typingSpeed={80}
-                deletingSpeed={40}
-                delayBetween={2000}
-                className="text-xl text-gray-600"
-              />
-            </div>
+            <p className="text-xl text-gray-600">
+              Aprende con contenido audiovisual
+            </p>
           </div>
         </div>
       </div>

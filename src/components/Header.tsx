@@ -2,14 +2,22 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
-import { FiMenu, FiX } from 'react-icons/fi';
-import { FaBook, FaTools, FaUsers } from 'react-icons/fa';
+import { FiMenu, FiX, FiChevronDown } from 'react-icons/fi';
+import { FaBook, FaTools, FaUsers, FaGraduationCap, FaExternalLinkAlt, FaVideo } from 'react-icons/fa';
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  const materialsLinks = [
+    { href: "/biblioteca", icon: <FaBook className="w-5 h-5" />, text: "Biblioteca" },
+    { href: "/materiales/hojas-de-ruta", icon: <FaGraduationCap className="w-5 h-5" />, text: "Guías" },
+    { href: "/materiales/recursos-externos", icon: <FaExternalLinkAlt className="w-5 h-5" />, text: "Recursos" },
+    { href: "/materiales/videoteca", icon: <FaVideo className="w-5 h-5" />, text: "Videoteca" },
+  ];
 
   return (
-    <header className="bg-white fixed w-full top-0 z-50">
+    <header className="bg-white fixed w-full top-0 z-50 shadow-sm">
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-20">
           {/* Logo y enlaces de navegación */}
@@ -30,13 +38,39 @@ export default function Header() {
                 <FaBook className="h-5 w-5" />
                 Artículos
               </Link>
-              <Link
-                href="/materiales"
-                className="flex items-center gap-2 text-gray-600 hover:text-blue-600 pt-1 transition-all"
-              >
-                <FaTools className="h-5 w-5" />
-                Materiales
-              </Link>
+              
+              {/* Materiales Dropdown */}
+              <div className="relative">
+                <button
+                  className="flex items-center gap-2 text-gray-600 hover:text-blue-600 pt-1 transition-all"
+                  onMouseEnter={() => setIsDropdownOpen(true)}
+                  onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                >
+                  <FaTools className="h-5 w-5" />
+                  Materiales
+                  <FiChevronDown className={`w-4 h-4 transition-transform ${isDropdownOpen ? 'rotate-180' : ''}`} />
+                </button>
+
+                {/* Dropdown Menu */}
+                {isDropdownOpen && (
+                  <div
+                    className="absolute top-full left-0 w-48 py-2 mt-1 bg-white rounded-lg shadow-lg"
+                    onMouseLeave={() => setIsDropdownOpen(false)}
+                  >
+                    {materialsLinks.map((link) => (
+                      <Link
+                        key={link.href}
+                        href={link.href}
+                        className="flex items-center gap-2 px-4 py-2 text-gray-600 hover:text-blue-600 hover:bg-gray-50"
+                      >
+                        {link.icon}
+                        {link.text}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
+
               <Link
                 href="/nosotros"
                 className="flex items-center gap-2 text-gray-600 hover:text-blue-600 pt-1 transition-all"
@@ -73,14 +107,20 @@ export default function Header() {
               <FaBook className="h-5 w-5" />
               Artículos
             </Link>
-            <Link
-              href="/materiales"
-              className="flex items-center gap-2 px-3 py-2 text-gray-600 hover:text-blue-600 hover:bg-gray-50 rounded-md transition-colors"
-              onClick={() => setIsOpen(false)}
-            >
-              <FaTools className="h-5 w-5" />
-              Materiales
-            </Link>
+            
+            {/* Mobile Materials Links */}
+            {materialsLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="flex items-center gap-2 px-3 py-2 ml-4 text-gray-600 hover:text-blue-600 hover:bg-gray-50 rounded-md transition-colors"
+                onClick={() => setIsOpen(false)}
+              >
+                {link.icon}
+                {link.text}
+              </Link>
+            ))}
+
             <Link
               href="/nosotros"
               className="flex items-center gap-2 px-3 py-2 text-gray-600 hover:text-blue-600 hover:bg-gray-50 rounded-md transition-colors"
