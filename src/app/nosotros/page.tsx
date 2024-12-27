@@ -1,7 +1,7 @@
-import NetworkAnimation from '@/components/NetworkAnimation';
-import { FaChevronDown } from 'react-icons/fa';
 'use client';
 
+import NetworkAnimation from '@/components/NetworkAnimation';
+import { FaChevronDown } from 'react-icons/fa';
 import { useState } from 'react';
 
 export default function NosotrosPage() {
