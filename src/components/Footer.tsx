@@ -1,4 +1,4 @@
-import { FaFacebook, FaInstagram, FaYoutube } from 'react-icons/fa';
+import { FaFacebook, FaInstagram, FaYoutube, FaWhatsapp } from 'react-icons/fa';
 
     export default function Footer() {
       return (
@@ -33,10 +33,19 @@ import { FaFacebook, FaInstagram, FaYoutube } from 'react-icons/fa';
                   <FaYoutube className="w-6 h-6" />
                   <span className="sr-only">YouTube</span>
                 </a>
+                 <a
+                  href="https://whatsapp.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-600 hover:text-green-600 transition-colors"
+                >
+                  <FaWhatsapp className="w-6 h-6" />
+                  <span className="sr-only">WhatsApp</span>
+                </a>
               </div>
               <div className="text-center">
                 <p className="text-gray-500">
-                  © {new Date().getFullYear() + 1} Psi Colab. Todos los derechos reservados.
+                  © {new Date().getFullYear()} Psi Colab. Todos los derechos reservados.
                 </p>
               </div>
             </div>

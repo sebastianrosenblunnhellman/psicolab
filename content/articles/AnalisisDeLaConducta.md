@@ -8,23 +8,6 @@ readTime: "10 min"
 published: true
 ---
 
-<details>
-  <summary>Tabla de Contenidos</summary>
-  <ul>
-    <li><a href="#introducción">Introducción</a></li>
-    <li><a href="#historia-del-movimiento-de-la-terapia-de-conducta">Historia del Movimiento de la Terapia de Conducta</a></li>
-    <li><a href="#características-del-análisis-de-conducta">Características del Análisis de Conducta</a></li>
-    <li><a href="#contextualismo-vs-mecanicismo">Contextualismo vs. Mecanicismo</a></li>
-    <li><a href="#estructuralismo-vs-funcionalismo">Estructuralismo vs. Funcionalismo</a></li>
-    <li><a href="#monismo-vs-dualismo">Monismo vs. Dualismo</a></li>
-    <li><a href="#mentalismo-vs-no-mentalismo">Mentalismo vs. No-mentalismo</a></li>
-    <li><a href="#reduccionismo-vs-no-reduccionismo">Reduccionismo vs. No-reduccionismo</a></li>
-    <li><a href="#métodos-nomotético-vs-ideográfico">Métodos Nomotético vs. Ideográfico</a></li>
-    <li><a href="#el-análisis-de-la-conducta-clínica-y-los-principios-del-análisis-de-conducta">El Análisis de la Conducta Clínica y los Principios del Análisis de Conducta</a></li>
-    <li><a href="#referencias">Referencias</a></li>
-  </ul>
-</details>
-
 <small><em>Este texto está basado en Dougher, M.J. y Hayes, S. C. (2000). Clinical Behavior Análisis. En M.J. Dougher (Ed.), Clinical Behavior Analysis (pp. 11-25). Reno: Context Press.</em></small>
 
 ## Introducción
