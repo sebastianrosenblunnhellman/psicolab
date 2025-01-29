@@ -10,6 +10,7 @@
     "clean": "rm -rf .next node_modules && npm install"
   },
   "dependencies": {
+    "@auth0/nextjs-auth0": "^3.5.0",
     "@tailwindcss/typography": "^0.5.10",
     "@types/markdown-it": "^13.0.7",
     "@types/prismjs": "^1.26.3",
