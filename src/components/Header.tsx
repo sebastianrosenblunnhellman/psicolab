@@ -95,10 +95,9 @@
                   <div className="relative">
                     <button
                       onClick={() => setIsUserDropdownOpen(!isUserDropdownOpen)}
-                      className="flex items-center gap-2 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors"
+                      className="flex items-center bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors"
                     >
                       <img src={user.picture} alt={user.name} className="w-6 h-6 rounded-full" />
-                      {user.name}
                       <FiChevronDown className={`w-4 h-4 transition-transform ${isUserDropdownOpen ? 'rotate-180' : ''}`} />
                     </button>
 
