@@ -17,9 +17,9 @@ import NetworkAnimation from '@/components/NetworkAnimation';
             <NetworkAnimation className="absolute inset-0" />
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="text-center space-y-4 max-w-4xl px-4">
-                <h1 className="text-6xl font-bold text-blue-500">HOJAS DE RUTA</h1>
+                <h1 className="text-6xl font-bold text-blue-500">CURSOS Y GUIAS</h1>
                 <p className="text-xl text-gray-600">
-                  Guías de aprendizaje estructuradas
+                  Hojas de ruta y cursos estructurados para aprender y practicar.
                 </p>
               </div>
             </div>
