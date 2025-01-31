@@ -7,6 +7,7 @@ tags: ["Conductismo", "Contextual", "Analisis Funcional"]
 readTime: "10 min"
 published: true
 ---
+ sdasds
 
 <small><em>Este texto está basado en Dougher, M.J. y Hayes, S. C. (2000). Clinical Behavior Análisis. En M.J. Dougher (Ed.), Clinical Behavior Analysis (pp. 11-25). Reno: Context Press.</em></small>
 
