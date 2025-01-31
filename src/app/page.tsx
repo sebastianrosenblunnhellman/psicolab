@@ -30,7 +30,7 @@ import Link from 'next/link';
           {/* Featured Articles Carousel */}
           <section className="container mx-auto px-4 py-16">
             <h2 className="text-3xl font-bold text-gray-800 mb-8">
-              Novedades
+              Destacado
             </h2>
             <FeaturedCarousel articles={featuredArticles} />
           </section>

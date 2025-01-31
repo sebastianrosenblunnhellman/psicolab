@@ -13,7 +13,7 @@
       const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false); // State for user dropdown
 
       const materialsLinks = [
-        { href: "/biblioteca", icon: <FaBookOpen className="w-5 h-5" />, text: "Biblioteca" },
+        { href: "/materiales/biblioteca", icon: <FaBookOpen className="w-5 h-5" />, text: "Biblioteca" },
         { href: "/materiales/videoteca", icon: <FaVideo className="w-5 h-5" />, text: "Videoteca" },
         { href: "/materiales/recursos-externos", icon: <FaExternalLinkAlt className="w-5 h-5" />, text: "Recursos" },
       ];
@@ -40,7 +40,7 @@
                   Artículos
                 </Link>
                 <Link
-                  href="/materiales/hojas-de-ruta"
+                  href="/hojas-de-ruta"
                   className="flex items-center gap-2 text-gray-600 hover:text-blue-600 pt-1 transition-all"
                 >
                   <FaGraduationCap className="h-5 w-5" />
@@ -172,7 +172,7 @@
                   Artículos
                 </Link>
                 <Link
-                  href="/materiales/hojas-de-ruta"
+                  href="/hojas-de-ruta"
                   className="flex items-center gap-2 px-3 py-2 text-gray-600 hover:text-blue-600 hover:bg-gray-50 rounded-md transition-colors"
                   onClick={() => setIsOpen(false)}
                 >
