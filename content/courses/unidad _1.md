@@ -1,5 +1,3 @@
-
-
 Thinking about los **Principios Fundamentales del Aprendizaje**: ¡Qué fascinante punto de partida!  Antes de sumergirnos en las técnicas y los experimentos, es crucial entender **qué es realmente el aprendizaje** desde una perspectiva psicológica.  Imagina que estás construyendo una casa. No empiezas por el tejado, ¿verdad? Primero necesitas unos buenos cimientos sólidos. En nuestro curso, los cimientos son comprender la naturaleza del aprendizaje y cómo lo abordamos científicamente.
 
 Vamos a desglosar esta **Unidad 1: Fundamentos del Aprendizaje: Condicionamiento Clásico y Operante** en dos partes principales. Primero, sentaremos las bases con una **Introducción al Aprendizaje**, definiéndolo de manera clara y útil. Después, nos adentraremos en el primero de los grandes mecanismos del aprendizaje: el **Condicionamiento Clásico**.
@@ -103,4 +101,3 @@ En las siguientes unidades, veremos cómo el Condicionamiento Clásico interact�
 ---
 
 ¡Hemos cubierto la primera parte de nuestra Unidad 1!  Hemos definido el aprendizaje desde una perspectiva funcional, y hemos explorado en profundidad el Condicionamiento Clásico, uno de los pilares fundamentales de la teoría del aprendizaje.  En la siguiente parte de la unidad, nos adentraremos en el segundo pilar: el **Condicionamiento Operante**. ¿Continuamos?
-

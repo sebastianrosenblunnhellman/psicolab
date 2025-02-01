@@ -1,5 +1,3 @@
-
-
 Okay, ¡sigamos adelante con nuestro viaje por el aprendizaje!  Ya hemos explorado el fascinante mundo del Condicionamiento Clásico, donde aprendemos a asociar estímulos y a anticipar eventos. Pero la historia del aprendizaje no termina ahí.  De hecho, ¡apenas hemos arañado la superficie!
 
 Ahora vamos a sumergirnos en el segundo pilar fundamental de la teoría del aprendizaje: el **Condicionamiento Operante**.  Si el Condicionamiento Clásico nos enseña sobre el poder de las asociaciones entre estímulos, el Condicionamiento Operante nos revela cómo aprendemos a través de las **consecuencias de nuestros actos**.

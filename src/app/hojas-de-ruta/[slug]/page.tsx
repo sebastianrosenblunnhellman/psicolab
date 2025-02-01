@@ -1,6 +1,7 @@
 import { getRoadmapBySlug, getAllRoadmaps } from '@/utils/roadmaps';
 import NetworkAnimation from '@/components/NetworkAnimation';
 import { notFound } from 'next/navigation';
+import Link from 'next/link'; // IMPORT LINK
 
 interface RoadmapPageProps {
   params: {
@@ -22,11 +23,20 @@ export default async function RoadmapPage({ params }: RoadmapPageProps) {
     notFound();
   }
 
+  // Function to replace course paths to be relative to /materiales/hojas-de-ruta/[slug]
+  const adjustCourseLinks = (content: string | undefined, roadmapSlug: string) => {
+    if (!content) return '';
+    return content.replace(/]\(\.\.\/courses\/(unidad[^)]*?)\.md\)/g, `](materiales/hojas-de-ruta/${roadmapSlug}/\${'$1'})`); // More robust regex
+  };
+
+  const adjustedContent = adjustCourseLinks(roadmap.content, params.slug);
+
+
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
       <div className="relative h-[40vh] bg-gradient-to-b from-gray-50 to-white">
-        <NetworkAnimation className="absolute inset-0" />
+        {/* <NetworkAnimation className="absolute inset-0" /> */} {/*  COMMENT OUT NetworkAnimation */}
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="text-center space-y-4 max-w-4xl px-4">
             <h1 className="text-4xl font-bold text-gray-800">{roadmap.title}</h1>
@@ -55,7 +65,7 @@ export default async function RoadmapPage({ params }: RoadmapPageProps) {
       <div className="container mx-auto px-4 py-16">
         <div className="max-w-3xl mx-auto">
           <div className="prose prose-lg prose-gray max-w-none">
-            <div dangerouslySetInnerHTML={{ __html: roadmap.content || '' }} />
+            <div dangerouslySetInnerHTML={{ __html: adjustedContent || '' }} />
           </div>
         </div>
       </div>

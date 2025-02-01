@@ -16,7 +16,7 @@ export default function RoadmapCard({ roadmap }: RoadmapCardProps) {
           <FaMapMarkedAlt className="w-6 h-6 text-teal-500" />
           <h3 className="text-xl font-bold text-gray-800">{roadmap.title}</h3>
         </div>
-        
+
         <div className="flex items-center gap-4 text-sm text-gray-600 mb-4">
           <div className="flex items-center gap-1">
             <FaClock className="w-4 h-4" />
@@ -51,7 +51,7 @@ export default function RoadmapCard({ roadmap }: RoadmapCardProps) {
         </div>
 
         <Link
-          href={`/materiales/hojas-de-ruta/${roadmap.slug}`}
+          href={`/hojas-de-ruta/${roadmap.slug}`}
           className="inline-block w-full text-center py-2 px-4 bg-teal-500 text-white rounded-lg hover:bg-teal-600 transition-colors"
         >
           Ver Hoja de Ruta
