@@ -10,7 +10,8 @@
     "clean": "rm -rf .next node_modules && npm install"
   },
   "dependencies": {
-    "@auth0/nextjs-auth0": "^3.5.0",
+    "@prisma/client": "^6.4.1",
+    "@stackframe/stack": "^2.7.21",
     "@tailwindcss/typography": "^0.5.10",
     "@types/markdown-it": "^13.0.7",
     "@types/prismjs": "^1.26.3",
@@ -19,6 +20,7 @@
     "markdown-it-mermaid": "^0.2.0",
     "markdown-it-prism": "^2.3.0",
     "next": "14.1.0",
+    "prisma": "^6.4.1",
     "prismjs": "^1.29.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

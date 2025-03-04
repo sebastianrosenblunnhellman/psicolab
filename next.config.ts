@@ -11,7 +11,7 @@ const nextConfig = {
     return config;
   },
   reactStrictMode: true,
-  swcMinify: true,
+  swcMinify: false, // Disable SWC
 };
 
 export default nextConfig;
