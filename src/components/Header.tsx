@@ -1,13 +1,16 @@
 "use client";
 
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, Suspense } from 'react';
 import { FiMenu, FiX, FiChevronDown } from 'react-icons/fi';
 import { FaBook, FaTools, FaUsers, FaGraduationCap, FaExternalLinkAlt, FaVideo, FaBookOpen } from 'react-icons/fa';
+import { useUser, UserButton } from "@stackframe/stack";
 
 function HeaderComponent() {
   const [isOpen, setIsOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
+  const user = useUser();
 
   return (
     <header className="bg-white fixed w-full top-0 z-50 shadow-sm">
@@ -55,12 +58,39 @@ function HeaderComponent() {
 
           {/* Login Button / User Dropdown - Right */}
           <div className="hidden md:flex items-center">
-            <a
-              href="/login"
-              className="ml-4 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
-            >
-              Iniciar Sesión
-            </a>
+            {user ? (
+              <div className="relative">
+                <button
+                  onClick={() => setIsUserDropdownOpen(!isUserDropdownOpen)}
+                  className="ml-4 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
+                >
+                  {user.displayName}
+                </button>
+                {isUserDropdownOpen && (
+                  <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg">
+                    <Link
+                      href="/handler/account-settings"
+                      className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
+                    >
+                      Editar Perfil
+                    </Link>
+                    <button
+                      onClick={async () => await user.signOut()}
+                      className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
+                    >
+                      Cerrar Sesión
+                    </button>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <a
+                href="/handler/sign-up"
+                className="ml-4 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
+              >
+                Iniciar Sesión
+              </a>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -116,7 +146,7 @@ function HeaderComponent() {
 
             {/* Mobile Login Button */}
             <Link
-              href="/login"
+              href="/handler/sign-up"
               className="flex items-center gap-2 px-3 py-2 mt-2 text-white bg-blue-500 hover:bg-blue-600 rounded-md transition-colors"
               onClick={() => setIsOpen(false)}
             >
@@ -130,5 +160,9 @@ function HeaderComponent() {
 }
 
 export default function Header() {
-  return <HeaderComponent />;
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <HeaderComponent />
+    </Suspense>
+  );
 }
