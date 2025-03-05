@@ -74,6 +74,12 @@ function HeaderComponent() {
                     >
                       Editar Perfil
                     </Link>
+                    <Link
+                      href="/guardados"
+                      className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
+                    >
+                      Guardados
+                    </Link>
                     <button
                       onClick={async () => await user.signOut()}
                       className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
