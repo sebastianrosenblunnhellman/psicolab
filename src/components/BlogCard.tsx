@@ -3,13 +3,23 @@
 import Link from 'next/link';
 import { Article } from '@/utils/articles';
 import { FaRegBookmark, FaBookmark } from 'react-icons/fa';
-import { useUser } from "@stackframe/stack";
-import { useState } from 'react';
+import { useUser } from '@stackframe/stack';
+import { useState, useEffect } from 'react';
 
 type BlogCardProps = Partial<Article> & {
   slug: string;
   title: string;
 };
+
+interface BlogCardProps {
+  slug: string;
+  title: string;
+  date?: string;
+  excerpt?: string;
+  tags?: string[];
+  readTime?: string;
+  author?: string;
+}
 
 export default function BlogCard({
   slug,
