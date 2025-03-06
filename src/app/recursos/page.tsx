@@ -1,22 +1,20 @@
 import NetworkAnimation from '@/components/NetworkAnimation';
-import ArticlesList from '@/components/ArticlesList';
-import { getAllArticles } from '@/utils/articles';
+import ResourcesList from '@/components/ResourcesList';
+import { getAllResources } from '@/utils/resources';
 
 export const metadata = {
-  title: 'ejemplo | Psi Colab',
-  description: 'ejemplo de descripción de la página',
+  title: 'Recursos | Psi Colab',
+  description: 'Explora nuestra colección de recursos educativos, incluyendo libros, videos y más.',
 };
 
-export default async function ArticulosPage() {
-  const articles = await getAllArticles();
+export default async function ResourcesPage() {
+  const resources = await getAllResources();
 
   return (
     <div className="bg-white">
-      
-
-      {/* Articles Section */}
+      {/* Resources Section */}
       <div className="container mx-auto px-4 py-16">
-        <ArticlesList initialArticles={articles} />
+        <ResourcesList initialResources={resources} />
       </div>
     </div>
   );
