@@ -1,0 +1,92 @@
+[
+  {
+    "curso": "CursoPrincipiosBasicosDelAprendizaje",
+    "leccion": "1",
+    "preguntas": [
+      {
+        "id": 1,
+        "pregunta": "¿Qué es el aprendizaje?",
+        "opciones": [
+          "Un proceso de cambio en el comportamiento basado en la experiencia",
+          "La repetición mecánica de información",
+          "Un conjunto de datos almacenados en la memoria",
+          "Un mecanismo exclusivamente biológico"
+        ],
+        "respuestaCorrecta": "Un proceso de cambio en el comportamiento basado en la experiencia",
+        "explicacion": "El aprendizaje es un proceso mediante el cual los individuos adquieren conocimientos, habilidades o actitudes a través de la experiencia, la instrucción o la observación."
+      },
+      {
+        "id": 2,
+        "pregunta": "¿Cuál de los siguientes es un tipo de aprendizaje?",
+        "opciones": [
+          "Aprendizaje conductista",
+          "Aprendizaje significativo",
+          "Aprendizaje por descubrimiento",
+          "Todos los anteriores"
+        ],
+        "respuestaCorrecta": "Todos los anteriores",
+        "explicacion": "Existen diversos tipos de aprendizaje, como el conductista (basado en estímulos y respuestas), el significativo (integración con conocimientos previos) y el aprendizaje por descubrimiento (donde el estudiante construye su conocimiento de manera activa)."
+      }
+    ]
+  },
+  {
+    "curso": "CursoPrincipiosBasicosDelAprendizaje",
+    "leccion": "2",
+    "preguntas": [
+      {
+        "id": 1,
+        "pregunta": "¿Qué es el aprendizaje significativo?",
+        "opciones": [
+          "Un proceso de memorización sin comprensión",
+          "La capacidad de recordar información sin razonarla",
+          "La integración de nuevos conocimientos con experiencias previas",
+          "Una técnica para aprender más rápido"
+        ],
+        "respuestaCorrecta": "La integración de nuevos conocimientos con experiencias previas",
+        "explicacion": "El aprendizaje significativo ocurre cuando los nuevos conocimientos se relacionan con lo que ya sabemos, facilitando la comprensión y la retención a largo plazo."
+      },
+      {
+        "id": 2,
+        "pregunta": "¿Cuál de los siguientes factores influye en el aprendizaje?",
+        "opciones": [
+          "La motivación",
+          "El ambiente de estudio",
+          "La retroalimentación",
+          "Todas las anteriores"
+        ],
+        "respuestaCorrecta": "Todas las anteriores",
+        "explicacion": "La motivación, el ambiente de estudio y la retroalimentación son factores clave que influyen en la calidad del aprendizaje y en la retención del conocimiento."
+      }
+    ]
+  },
+  {
+    "curso": "CursoPrincipiosBasicosDelAprendizaje",
+    "leccion": "3",
+    "preguntas": [
+      {
+        "id": 1,
+        "pregunta": "¿Qué autor es conocido por la teoría del aprendizaje constructivista?",
+        "opciones": [
+          "B.F. Skinner",
+          "Jean Piaget",
+          "John Watson",
+          "Pavlov"
+        ],
+        "respuestaCorrecta": "Jean Piaget",
+        "explicacion": "Jean Piaget propuso el constructivismo, una teoría que sostiene que los estudiantes construyen activamente su conocimiento a partir de la interacción con el entorno y la experiencia."
+      },
+      {
+        "id": 2,
+        "pregunta": "¿Cuál es una estrategia efectiva para mejorar la retención del conocimiento?",
+        "opciones": [
+          "Repetir la información sin pausas",
+          "Relacionar conceptos nuevos con experiencias previas",
+          "Estudiar solo antes del examen",
+          "Evitar hacer preguntas sobre el tema"
+        ],
+        "respuestaCorrecta": "Relacionar conceptos nuevos con experiencias previas",
+        "explicacion": "Relacionar nuevos conceptos con conocimientos previos ayuda a consolidar la información en la memoria de manera más efectiva, facilitando la comprensión y la aplicación en contextos diversos."
+      }
+    ]
+  }
+]

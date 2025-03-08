@@ -39,8 +39,8 @@
                   />
                 </button>
                 <div
-                  className={`px-6 pb-6 overflow-hidden transition-max-height duration-300 ease-in-out ${
-                    isOpen('quienes') ? 'max-h-96 pb-6' : 'max-h-0 pb-0'
+                  className={`overflow-hidden transition-all duration-300 ease-in-out ${
+                    isOpen('quienes') ? 'max-h-[1000px] opacity-100 px-6 pb-6' : 'max-h-0 opacity-0'
                   }`}
                 >
                   <p className="text-gray-600">
@@ -63,8 +63,8 @@
                   />
                 </button>
                 <div
-                  className={`px-6 pb-6 overflow-hidden transition-max-height duration-300 ease-in-out ${
-                    isOpen('que') ? 'max-h-96 pb-6' : 'max-h-0 pb-0'
+                  className={`overflow-hidden transition-all duration-300 ease-in-out ${
+                    isOpen('que') ? 'max-h-[1000px] opacity-100 px-6 pb-6' : 'max-h-0 opacity-0'
                   }`}
                 >
                   <ul className="space-y-4 text-gray-600">
@@ -102,8 +102,8 @@
                   />
                 </button>
                 <div
-                  className={`px-6 pb-6 overflow-hidden transition-max-height duration-300 ease-in-out ${
-                    isOpen('porque') ? 'max-h-96 pb-6' : 'max-h-0 pb-0'
+                  className={`overflow-hidden transition-all duration-300 ease-in-out ${
+                    isOpen('porque') ? 'max-h-[1000px] opacity-100 px-6 pb-6' : 'max-h-0 opacity-0'
                   }`}
                 >
                   <p className="text-gray-600">
@@ -125,8 +125,8 @@
                   />
                 </button>
                 <div
-                  className={`px-6 pb-6 overflow-hidden transition-max-height duration-300 ease-in-out ${
-                    isOpen('colaborar') ? 'max-h-96 pb-6' : 'max-h-0 pb-0'
+                  className={`overflow-hidden transition-all duration-300 ease-in-out ${
+                    isOpen('colaborar') ? 'max-h-[1000px] opacity-100 px-6 pb-6' : 'max-h-0 opacity-0'
                   }`}
                 >
                   <p className="text-gray-600 mb-4">
