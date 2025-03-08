@@ -24,19 +24,20 @@ export default function RootLayout({
 }) {
   return (
     <html lang="es">
-      <StackProvider app={stackServerApp}>
-        <StackTheme>
+      <head>
+        <StackTheme />
+      </head>
+      <body className={`${inter.className} bg-white min-h-screen flex flex-col`}>
+        <StackProvider app={stackServerApp}>
           <CacheProvider>
-            <body className={`${inter.className} bg-white min-h-screen flex flex-col`}>
-              <Header />
-              <main className="flex-grow mt-20">
-                {children}
-              </main>
-              <Footer />
-            </body>
+            <Header />
+            <main className="flex-grow mt-20">
+              {children}
+            </main>
+            <Footer />
           </CacheProvider>
-        </StackTheme>
-      </StackProvider>
+        </StackProvider>
+      </body>
     </html>
   )
 }

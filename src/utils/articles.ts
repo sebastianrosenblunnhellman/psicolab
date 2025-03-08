@@ -3,9 +3,13 @@
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
-import { unified } from 'unified';
-import remarkParse from 'remark-parse';
-import remarkHtml from 'remark-html';
+import MarkdownIt from 'markdown-it';
+
+const md = new MarkdownIt({
+  html: true,
+  breaks: true,
+  linkify: true
+});
 
 export interface Article {
   slug: string;
@@ -97,11 +101,7 @@ export async function getArticleBySlug(slug: string, fields: string[] = []): Pro
     };
 
     if (fields.includes('content')) {
-      const processedContent = await unified()
-        .use(remarkParse)
-        .use(remarkHtml)
-        .process(content);
-      article.content = processedContent.toString();
+      article.content = md.render(content);
     }
 
     return article;
