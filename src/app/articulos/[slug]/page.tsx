@@ -1,5 +1,6 @@
 import { getArticleBySlug, getArticleSlugs } from '@/utils/articles';
 import NetworkAnimation from '@/components/NetworkAnimation';
+import ArticleActions from '@/components/ArticleActions';
 
 interface ArticlePageProps {
   params: {
@@ -74,6 +75,14 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
           <div className="mb-8 text-gray-600 text-xl leading-relaxed">
             {article.excerpt}
           </div>
+          
+          {/* Download and Share Buttons */}
+          <ArticleActions 
+            title={article.title}
+            content={article.content || ''}
+            slug={params.slug}
+          />
+          
           <div 
             className="prose prose-lg prose-gray max-w-none"
             dangerouslySetInnerHTML={{ __html: article.content || '' }}

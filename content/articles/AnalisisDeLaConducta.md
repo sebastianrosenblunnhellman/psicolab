@@ -9,9 +9,13 @@ readTime: "10 min"
 published: true
 ---
 
-<small><em>Este texto está basado en Dougher, M.J. y Hayes, S. C. (2000). Clinical Behavior Análisis. En M.J. Dougher (Ed.), Clinical Behavior Analysis (pp. 11-25). Reno: Context Press.</em></small>
+[Descargar](https://drive.google.com/file/d/1nYGav3_X2Xj_MaU6r73oxllPWim_LkF-/view?usp=sharing)
+
+
 
 ## Introducción
+
+Este texto está basado en Dougher, M.J. y Hayes, S. C. (2000). Clinical Behavior Análisis. En M.J. Dougher (Ed.), Clinical Behavior Analysis (pp. 11-25). Reno: Context Press.
 
 El análisis de la conducta clínica es un campo relativamente nuevo. Aunque Skinner (1953; 1957) y Ferster colocaron los cimientos conceptuales de un enfoque analítico-conductual de los problemas clínicos tradicionales hace décadas, sólo recientemente el análisis de conducta ha conducido a resultados para clientes verbalmente competentes que buscan asistencia terapéutica. El análisis aplicado del comportamiento surgió en la década de los sesenta.  El análisis conductual aplicado se focalizó en poblaciones con severas deficiencias como autistas, personas con lesiones cerebrales, y niños y adultos con retraso en el desarrollo. Con frecuencia esas poblaciones clínicas fueron tratadas en lugares de tratamiento residenciales, colegios especiales y hospitales donde hay una buena oportunidad de control directo de las contingencias de reforzamiento que afectan a la conducta de los clientes. La mayor parte de las intervenciones clínicas informadas en la literatura del análisis aplicado del comportamiento, constan de procedimientos para el manejo de las contingencias directas.
 
@@ -94,20 +98,3 @@ Hay una enorme diferencia entre la psicología cognitiva y una psicología condu
 El análisis conductual es uno de los pocos campos en la psicología que mantienen una alianza clara y efectiva entre las ramas básica y aplicada. Los analistas de conducta clínica se sienten bastante cómodos dirigiendo algunos de sus esfuerzos hacia la generación de conocimiento básico sobre los procesos verbales que es necesario para su trabajo clínico. Un buen ejemplo es la transformación de las funciones de estímulo a través de las clases de equivalencia y otras relaciones derivadas. Una amplia proporción de la investigación en esta área ha venido de los laboratorios de los analistas de conducta clínica. La transformación de las funciones de estímulo a través de las relaciones de estímulos derivadas es una de las áreas obviamente aplicable de la investigación analítica conductual básica dentro de los procesos del lenguaje. El análisis de conducta clínica es un campo orientado hacia el desarrollo de aproximaciones analíticas conductuales modernas a los eventos verbales. De esta forma, el análisis de conducta clínica extiende el rango de áreas dentro del análisis de conducta: básico, aplicado, teórico y filosófico.
 
 ---
-
-### Referencias:
-
-- Barlow, D.H., Hayes, S.C. y Nelson, R.O. (1984). *The scientist practitioner: Research and accountability in clinical and educational settings*. New York: Pergamon.
-- Hayes, S.C. (1993). Analytic goals and the varieties of scientific contextualism. En S.C. Hayes, L.J. Hayes, H.W. Reese, and T.R. Sarbin (Eds), *Varieties of Scientific Contextualism* (pp. 11-27). Reno, Nv: Context Press.
-- Hayes, S.C. y Brownstein, A.J. (1986). Mentalism, behavior-behavior relations, and a behavior analytic view of the purpose of science. *The Behavior Analyst*, *9*, 175-190.
-- Hayes, S.C., Hayes, L.J. y Reese, H.W. (1988). Finding the philosophical core: A review of Stephen C. Pepper’s World Hypotheses. *Journal of the Experimental Analysis of Behavior*, *50*, 97-111.
-- James, W. (1907; 1981) *Pragmatism*. Indianapolis, IN: Hackett.
-- Kohlenberg, R.J. y Tsai, M. (1991). *Functional Analytic Psychotherapy: Creating intense and curative therapeutic relationships*. New York: Plenum.
-- Kohlenberg, R.J., Tsai, M. y Dougher, M.J. (1993). The dimensions of clinical behavior analysis. *The Behavior Analyst*, *16*, 271-282.
-- Morris, E.K. (1988). Contextualism: The world view of behavior analysis. *Journal of Experimental Child Psychology*, *46*, 289-323.
-- Peirce, C.S. (1940). *Philosophical writings of Pierce* (J. Buchler, Ed.). New York: Dover.
-- Skinner, B.F. (1953). *Science and human behavior*. New York: The Free Press/Macmillan.
-- Skinner, B.F. (1957). *Verbal behavior*. New York: Appleton-Century-Crofts.
-- Skinner, B.F. (1974). *About behaviorism*. New York: Alfred A. Knopf, Inc.
-- Watson, J.B. (1913). Psychology as a behaviorist views it. *Psychological Review*, *20*, 158-177.
-- Watson, J.B. (1924). *Behaviorism*. New York: Norton.

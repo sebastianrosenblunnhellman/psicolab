@@ -162,7 +162,7 @@
             {/* Call to Action Banner */}
             <div className="mt-12 text-center">
               <a
-                href="mailto:psi.colab.arg@gmail.com"
+                href="https://docs.google.com/forms/d/e/1FAIpQLScUriQvAZDospfJetheyUQoTak24Cihzr7LvAXyL5uzZktbTA/viewform?usp=header"
                 className="inline-block px-8 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors font-medium"
               >
                 Contacta!

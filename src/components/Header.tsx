@@ -69,16 +69,16 @@ function HeaderComponent() {
                 {isUserDropdownOpen && (
                   <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg">
                     <Link
-                      href="/handler/account-settings"
-                      className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
-                    >
-                      Editar Perfil
-                    </Link>
-                    <Link
                       href="/guardados"
                       className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
                     >
                       Guardados
+                    </Link>
+                    <Link
+                      href="/perfil"
+                      className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
+                    >
+                      Editar Perfil
                     </Link>
                     <button
                       onClick={async () => await user.signOut()}

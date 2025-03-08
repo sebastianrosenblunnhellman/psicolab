@@ -46,15 +46,20 @@ export default function Quiz({ curso, leccion }: QuizProps) {
   }, [curso, leccion]);
 
   const handleAnswerSelect = (answer: string) => {
-    if (showExplanation) return;
-    
+    // Always allow selecting a new answer
     setSelectedAnswer(answer);
     if (!quizData) return;
 
     const currentQuestion = quizData.preguntas[currentQuestionIndex];
     const correct = answer === currentQuestion.respuestaCorrecta;
     setIsAnswerCorrect(correct);
-    setShowExplanation(!correct);
+    
+    // Only show explanation, but don't prevent changing the answer
+    if (!correct) {
+      setShowExplanation(true);
+    } else {
+      setShowExplanation(false);
+    }
   };
 
   const handleNextQuestion = () => {

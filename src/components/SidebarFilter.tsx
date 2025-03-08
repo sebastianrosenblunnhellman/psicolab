@@ -10,6 +10,10 @@ interface SidebarFilterProps {
   selectedAuthor: string;
   onTagChange: (tag: string) => void;
   onAuthorChange: (author: string) => void;
+  tagsLabel?: string;
+  authorsLabel?: string;
+  allTagsLabel?: string;
+  allAuthorsLabel?: string;
 }
 
 export default function SidebarFilter({
@@ -19,6 +23,10 @@ export default function SidebarFilter({
   selectedAuthor,
   onTagChange,
   onAuthorChange,
+  tagsLabel = 'Categorías',
+  authorsLabel = 'Autores',
+  allTagsLabel = 'Todas las categorías',
+  allAuthorsLabel = 'Todos los autores',
 }: SidebarFilterProps) {
   const [isTagsOpen, setIsTagsOpen] = useState(true);
   const [isAuthorsOpen, setIsAuthorsOpen] = useState(true);
@@ -31,7 +39,7 @@ export default function SidebarFilter({
           onClick={() => setIsTagsOpen(!isTagsOpen)}
           className="flex items-center justify-between w-full text-left font-semibold text-gray-700 mb-2"
         >
-          <span>Categorías</span>
+          <span>{tagsLabel}</span>
           {isTagsOpen ? (
             <FiChevronUp className="h-5 w-5" />
           ) : (
@@ -44,7 +52,7 @@ export default function SidebarFilter({
               onClick={() => onTagChange('')}
               className={`w-full text-left px-2 py-1 rounded ${selectedTag === '' ? 'bg-blue-50 text-blue-600' : 'text-gray-600 hover:bg-gray-50'}`}
             >
-              Todas las categorías
+              {allTagsLabel}
             </button>
             {tags.map((tag) => (
               <button
@@ -65,7 +73,7 @@ export default function SidebarFilter({
           onClick={() => setIsAuthorsOpen(!isAuthorsOpen)}
           className="flex items-center justify-between w-full text-left font-semibold text-gray-700 mb-2"
         >
-          <span>Autores</span>
+          <span>{authorsLabel}</span>
           {isAuthorsOpen ? (
             <FiChevronUp className="h-5 w-5" />
           ) : (
@@ -78,7 +86,7 @@ export default function SidebarFilter({
               onClick={() => onAuthorChange('')}
               className={`w-full text-left px-2 py-1 rounded ${selectedAuthor === '' ? 'bg-blue-50 text-blue-600' : 'text-gray-600 hover:bg-gray-50'}`}
             >
-              Todos los autores
+              {allAuthorsLabel}
             </button>
             {authors.map((author) => (
               <button

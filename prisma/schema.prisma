@@ -52,15 +52,3 @@ model saved_content {
     @@schema("neon_auth") // Added @@schema attribute
 }
 
-model course_progress {
-    id                Int      @id @default(autoincrement())
-    user_id           String   @db.Text
-    course_id         Int?
-    progress_percentage Int?
-    status            String?
-    last_accessed_at  DateTime @default(now()) @db.Timestamptz
-    users_sync        users_sync @relation(fields: [user_id], references: [id])
-
-    @@unique([user_id, course_id])
-    @@schema("neon_auth") // Added @@schema attribute
-}

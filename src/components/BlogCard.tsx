@@ -5,6 +5,7 @@ import { Article } from '@/utils/articles';
 import { FaRegBookmark, FaBookmark } from 'react-icons/fa';
 import { useUser } from '@stackframe/stack';
 import { useState, useEffect } from 'react';
+import { useCache } from '@/utils/cache';
 
 type BlogCardProps = Partial<Article> & {
   slug: string;
@@ -31,6 +32,7 @@ export default function BlogCard({
   author
 }: BlogCardProps) {
   const user = useUser();
+  const { getCachedData, invalidateCache } = useCache();
   const [isSaved, setIsSaved] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   
@@ -39,18 +41,28 @@ export default function BlogCard({
       if (!user) return;
       
       try {
-        const response = await fetch(`/api/saved-content/${user.id}?content_id=${slug}`);
-        if (response.ok) {
-          const data = await response.json();
-          setIsSaved(data.some((item: any) => item.content_id === slug));
-        }
+        // Use the cache system to fetch saved status
+        const cacheKey = `user_${user.id}_saved_article_${slug}`;
+        
+        const data = await getCachedData(
+          cacheKey,
+          async () => {
+            const response = await fetch(`/api/saved-content/${user.id}?content_id=${slug}`);
+            if (!response.ok) throw new Error('Failed to fetch saved status');
+            return response.json();
+          },
+          // Cache for 5 minutes
+          5 * 60 * 1000
+        );
+        
+        setIsSaved(data.some((item: any) => item.content_id === slug));
       } catch (error) {
         console.error('Error checking saved status:', error);
       }
     };
     
     checkSavedStatus();
-  }, [user, slug]);
+  }, [user, slug, getCachedData]);
   
   const handleSave = async () => {
       if (!user || isSaving) return;
@@ -71,6 +83,13 @@ export default function BlogCard({
   
           if (response.ok) {
               setIsSaved(!isSaved);
+              
+              // Invalidate the cache for this article's saved status
+              invalidateCache(`user_${user.id}_saved_article_${slug}`);
+              
+              // Also invalidate any cached lists of saved content
+              invalidateCache(`user_${user.id}_saved_content`);
+              
               setTimeout(() => setIsSaving(false), 1000);
           } else {
               const errorData = await response.json();
@@ -88,7 +107,7 @@ export default function BlogCard({
   }
 
   return (
-    <article className="bg-white p-6 rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+    <article className="bg-white p-6 rounded-lg shadow-sm border border-gray-100 hover:shadow-lg hover:border-teal-500 transition-all duration-300">
       <Link href={`/articulos/${slug}`} className="block">
         <h2 className="text-2xl font-bold text-gray-800 mb-2 hover:text-teal-500 transition-colors">
           {title}

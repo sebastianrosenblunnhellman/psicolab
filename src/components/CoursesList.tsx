@@ -1,10 +1,11 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { Course } from '@/utils/courses';
 import SidebarFilter from './SidebarFilter';
-import Link from 'next/link';
-import { FaBook, FaClock, FaGraduationCap } from 'react-icons/fa';
+import CourseCard from './CourseCard';
+import { useUser } from '@stackframe/stack';
+import { useCache } from '@/utils/cache';
 
 interface CoursesListProps {
   initialCourses: Course[];
@@ -15,7 +16,10 @@ export default function CoursesList({ initialCourses }: CoursesListProps) {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedTag, setSelectedTag] = useState('');
   const [selectedNivel, setSelectedNivel] = useState('');
+  const [savedCourses, setSavedCourses] = useState<string[]>([]);
   const coursesPerPage = 4;
+  const user = useUser();
+  const { getCachedData, invalidateCache } = useCache();
 
   // Get unique tags from all courses
   const allTags = useMemo(() => {
@@ -36,6 +40,98 @@ export default function CoursesList({ initialCourses }: CoursesListProps) {
     });
     return Array.from(niveles).sort();
   }, [initialCourses]);
+
+  // Fetch saved courses for the user
+  useEffect(() => {
+    if (user) {
+      fetchSavedCourses();
+    }
+  }, [user]);
+
+  const fetchSavedCourses = async () => {
+    try {
+      // Use the cache system to fetch saved courses
+      const cacheKey = `user_${user?.id}_saved_courses`;
+      
+      const data = await getCachedData(
+        cacheKey,
+        async () => {
+          const response = await fetch(`/api/saved-content/${user?.id}`);
+          if (!response.ok) throw new Error('Failed to fetch saved courses');
+          return response.json();
+        },
+        // Cache for 5 minutes
+        5 * 60 * 1000
+      );
+      
+      const courseIds = data
+        .filter((item: any) => item.content_type === 'course')
+        .map((item: any) => item.content_id);
+      setSavedCourses(courseIds);
+    } catch (error) {
+      console.error('Error fetching saved courses:', error);
+    }
+  };
+
+  // Handle saving/unsaving a course
+  const handleSaveToggle = async (courseId: string) => {
+    if (!user) {
+      alert('Debes iniciar sesión para guardar cursos');
+      return;
+    }
+
+    try {
+      const isSaved = savedCourses.includes(courseId);
+      
+      if (isSaved) {
+        // Unsave the course
+        const response = await fetch(`/api/saved-content/${user.id}`, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            content_id: courseId,
+            content_type: 'course'
+          }),
+        });
+
+        if (response.ok) {
+          setSavedCourses(savedCourses.filter(id => id !== courseId));
+          
+          // Invalidate the cache for saved courses
+          invalidateCache(`user_${user.id}_saved_courses`);
+          
+          // Also invalidate any specific course cache
+          invalidateCache(`user_${user.id}_saved_course_${courseId}`);
+        }
+      } else {
+        // Save the course
+        const response = await fetch(`/api/saved-content/${user.id}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            content_id: courseId,
+            content_type: 'course'
+          }),
+        });
+
+        if (response.ok) {
+          setSavedCourses([...savedCourses, courseId]);
+          
+          // Invalidate the cache for saved courses
+          invalidateCache(`user_${user.id}_saved_courses`);
+          
+          // Also invalidate any specific course cache
+          invalidateCache(`user_${user.id}_saved_course_${courseId}`);
+        }
+      }
+    } catch (error) {
+      console.error('Error toggling saved course:', error);
+    }
+  };
 
   // Filter courses based on search term, selected tag, and selected nivel
   const filteredCourses = useMemo(() => {
@@ -81,6 +177,8 @@ export default function CoursesList({ initialCourses }: CoursesListProps) {
         selectedAuthor={selectedNivel}
         onTagChange={handleTagChange}
         onAuthorChange={handleNivelChange}
+        authorsLabel="Nivel"
+        allAuthorsLabel="Todos los niveles"
       />
       
       {/* Main Content */}
@@ -100,55 +198,16 @@ export default function CoursesList({ initialCourses }: CoursesListProps) {
         {paginatedCourses.length > 0 ? (
           <div className="grid grid-cols-1 gap-8">
             {paginatedCourses.map((course) => (
-              <div key={course.slug} className="bg-white rounded-lg shadow-md overflow-hidden border border-gray-200 hover:shadow-lg transition-shadow duration-300">
-                <div className="p-6">
-                  <div className="flex justify-between items-start mb-2">
-                    <h3 className="text-xl font-bold text-gray-900 mb-2">
-                      <Link href={`/aprendizaje/${course.slug}`} className="hover:text-blue-600 transition-colors duration-200">
-                        {course.title}
-                      </Link>
-                    </h3>
-                  </div>
-                  
-                  <p className="text-gray-600 mb-4">{course.excerpt}</p>
-                  
-                  <div className="flex flex-wrap items-center text-sm text-gray-500 gap-4">
-                    {course.courseTime && (
-                      <div className="flex items-center">
-                        <FaClock className="mr-1" />
-                        <span>{course.courseTime}</span>
-                      </div>
-                    )}
-                    
-                    {course.nivel && (
-                      <div className="flex items-center">
-                        <FaGraduationCap className="mr-1" />
-                        <span>Nivel: {course.nivel}</span>
-                      </div>
-                    )}
-                    
-                    {course.author && (
-                      <div className="flex items-center">
-                        <span>Por: {course.author}</span>
-                      </div>
-                    )}
-                  </div>
-                  
-                  {course.tags && course.tags.length > 0 && (
-                    <div className="mt-4 flex flex-wrap gap-2">
-                      {course.tags.map(tag => (
-                        <span 
-                          key={tag} 
-                          className="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded"
-                          onClick={() => handleTagChange(tag)}
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              </div>
+              <CourseCard
+                key={course.slug}
+                id={course.slug}
+                title={course.title}
+                description={course.excerpt}
+                duration={course.courseTime}
+                level={course.nivel}
+                isSaved={savedCourses.includes(course.slug)}
+                onSaveToggle={handleSaveToggle}
+              />
             ))}
           </div>
         ) : (
@@ -164,16 +223,20 @@ export default function CoursesList({ initialCourses }: CoursesListProps) {
               <button
                 onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
                 disabled={currentPage === 1}
-                className={`relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium ${currentPage === 1 ? 'text-gray-300 cursor-not-allowed' : 'text-gray-500 hover:bg-gray-50'}`}
+                className="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 disabled:opacity-50"
               >
                 Anterior
               </button>
               
-              {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+              {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
                 <button
                   key={page}
                   onClick={() => setCurrentPage(page)}
-                  className={`relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium ${currentPage === page ? 'bg-blue-50 text-blue-600 z-10' : 'text-gray-500 hover:bg-gray-50'}`}
+                  className={`relative inline-flex items-center px-4 py-2 border text-sm font-medium ${
+                    currentPage === page
+                      ? 'z-10 bg-teal-50 border-teal-500 text-teal-600'
+                      : 'bg-white border-gray-300 text-gray-500 hover:bg-gray-50'
+                  }`}
                 >
                   {page}
                 </button>
@@ -182,7 +245,7 @@ export default function CoursesList({ initialCourses }: CoursesListProps) {
               <button
                 onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
                 disabled={currentPage === totalPages}
-                className={`relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium ${currentPage === totalPages ? 'text-gray-300 cursor-not-allowed' : 'text-gray-500 hover:bg-gray-50'}`}
+                className="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 disabled:opacity-50"
               >
                 Siguiente
               </button>
