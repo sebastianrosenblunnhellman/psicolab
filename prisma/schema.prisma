@@ -21,7 +21,6 @@ model users_sync {
     deleted_at  DateTime?       @db.Timestamptz @map("deleted_at")
     user_profile  user_profile?
     saved_content saved_content[]
-    course_progress course_progress[]
 
     @@schema("neon_auth") // Added @@schema attribute
 }
