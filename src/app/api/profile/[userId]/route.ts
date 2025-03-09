@@ -49,7 +49,10 @@ export async function GET(
       { status: 500 }
     );
   } finally {
-    await prisma.$disconnect();
+    // Don't disconnect in development to maintain connection pool
+    if (process.env.NODE_ENV === 'production') {
+      await prisma.$disconnect();
+    }
   }
 }
 
@@ -110,6 +113,9 @@ export async function PUT(
       { status: 500 }
     );
   } finally {
-    await prisma.$disconnect();
+    // Don't disconnect in development to maintain connection pool
+    if (process.env.NODE_ENV === 'production') {
+      await prisma.$disconnect();
+    }
   }
 }
