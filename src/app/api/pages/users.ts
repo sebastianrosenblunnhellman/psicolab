@@ -1,7 +1,20 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { PrismaClient } from '@prisma/client';
 
-const prisma = new PrismaClient();
+// Create a single PrismaClient instance and reuse it
+let prisma: PrismaClient;
+
+if (process.env.NODE_ENV === 'production') {
+  prisma = new PrismaClient();
+} else {
+  // In development, use a global variable to prevent multiple instances during hot-reloading
+  if (!(global as any).prisma) {
+    (global as any).prisma = new PrismaClient({
+      log: ['query', 'error', 'warn'],
+    });
+  }
+  prisma = (global as any).prisma;
+}
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   try {
