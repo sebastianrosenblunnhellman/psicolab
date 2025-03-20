@@ -7,6 +7,7 @@ author: "S. Hayes"
 tags: ["Conductismo", "Contextual", "Analisis Funcional"]
 readTime: "10 min"
 published: true
+image: "/images/miniatura.jpg"
 ---
 
 [Descargar](https://drive.google.com/file/d/1nYGav3_X2Xj_MaU6r73oxllPWim_LkF-/view?usp=sharing)

@@ -15,6 +15,7 @@ export interface Resource {
   pages?: number;
   cover?: string;
   link?: string;
+  image?: string; // Ensure image is included in the Resource type
 }
 
 const resourcesDirectory = path.join(process.cwd(), 'content/resources');
@@ -92,7 +93,8 @@ export async function getResourceBySlug(slug: string): Promise<Resource | null> 
       author: data.author,
       pages: data.pages,
       cover: data.cover,
-      link: data.link ? data.link[0] : undefined
+      link: data.link,
+      image: data.image || '/images/miniatura.jpg', // Default image if not provided
     };
 
     return resource;

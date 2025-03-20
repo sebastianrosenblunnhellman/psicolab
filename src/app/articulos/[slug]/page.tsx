@@ -37,29 +37,30 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
 
   return (
     <div className="min-h-screen bg-white">
-      <div className="container mx-auto px-4 py-16">
-        <article className="article-container">
-          <h1 className="text-4xl font-bold mb-6">{article.title}</h1>
-          <div className="flex items-center text-gray-600 mb-8 space-x-4">
+      <div className="container mx-auto px-4 py-8 md:py-16">
+        <article className="article-container max-w-4xl mx-auto">
+          <h1 className="text-3xl md:text-4xl font-bold mb-4 md:mb-6">{article.title}</h1>
+          <div className="flex flex-wrap items-center text-gray-600 mb-6 md:mb-8 space-x-2 md:space-x-4">
             <span>{new Date(article.date).toLocaleDateString()}</span>
             <span>•</span>
             <span>{article.author}</span>
             <span>•</span>
             <span>{article.readTime} min de lectura</span>
+            {/* Bookmark functionality removed */}
           </div>
           
           {/* Client component for interactive features */}
           <ArticleClientWrapper article={article} />
           
-          {/* Server-rendered content - Fix for dangerouslySetInnerHTML */}
+          {/* Server-rendered content */}
           {article.content && (
             <div className="article-content prose prose-lg max-w-none mt-8" 
                  dangerouslySetInnerHTML={{ __html: article.content }} />
           )}
           
           {/* Add the comments section */}
-          <div className="mt-16">
-            <h2 id="comments-heading" className="text-2xl font-bold mb-8">Comentarios</h2>
+          <div className="mt-12 md:mt-16">
+            <h2 id="comments-heading" className="text-xl md:text-2xl font-bold mb-6 md:mb-8">Comentarios</h2>
             <ClientCommentWrapper articleId={article.slug} />
           </div>
         </article>

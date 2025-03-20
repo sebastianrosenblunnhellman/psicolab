@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { FaTrash } from 'react-icons/fa';
+import Image from 'next/image';
 
 interface SavedContentCardProps {
   id: number;
@@ -11,6 +12,7 @@ interface SavedContentCardProps {
   title?: string;
   excerpt?: string;
   onDelete?: (id: number) => void;
+  image?: string;
 }
 
 export default function SavedContentCard({
@@ -20,7 +22,8 @@ export default function SavedContentCard({
   saved_at,
   title,
   excerpt,
-  onDelete
+  onDelete,
+  image = '/images/miniatura.jpg'
 }: SavedContentCardProps) {
   const getContentLink = () => {
     switch (content_type) {
@@ -55,12 +58,25 @@ export default function SavedContentCard({
   };
 
   return (
-    <article className="bg-white p-6 rounded-lg shadow-sm border border-gray-100 hover:shadow-lg hover:border-teal-500 transition-all duration-300 mb-4 w-full">
-      <div className="flex items-center justify-between mb-4">
-        <span className="inline-block bg-teal-100 text-teal-800 px-3 py-1 rounded-full text-sm font-medium">
-          {getContentTypeLabel()}
-        </span>
-        <div className="flex items-center">
+    <article className="bg-white rounded-lg shadow-sm border border-gray-100 hover:shadow-lg hover:border-teal-500 transition-all duration-300 mb-4 w-full flex flex-col md:flex-row overflow-hidden">
+      {/* Image column - exactly matching content height */}
+      <div className="md:w-1/4 relative flex-shrink-0">
+        <Image 
+          src={image} 
+          alt={title || `${getContentTypeLabel()} ${content_id}`}
+          width={250}
+          height={250}
+          className="object-cover h-full w-full"
+          priority
+        />
+      </div>
+      
+      {/* Content column */}
+      <div className="p-6 flex flex-col flex-grow">
+        <div className="flex items-center justify-between mb-4">
+          <span className="inline-block bg-teal-100 text-teal-800 px-3 py-1 rounded-full text-sm font-medium">
+            {getContentTypeLabel()}
+          </span>
           <button
             onClick={handleDelete}
             className="text-red-500 hover:text-red-700 transition-colors"
@@ -69,23 +85,23 @@ export default function SavedContentCard({
             <FaTrash className="w-5 h-5" />
           </button>
         </div>
-      </div>
-      
-      <Link href={getContentLink()} className="block">
-        <h2 className="text-2xl font-bold text-gray-800 mb-3 hover:text-teal-500 transition-colors">
-          {title || `${getContentTypeLabel()} ${content_id}`}
-        </h2>
-      </Link>
+        
+        <Link href={getContentLink()} className="block">
+          <h2 className="text-2xl font-bold text-gray-800 mb-3 hover:text-teal-500 transition-colors">
+            {title || `${getContentTypeLabel()} ${content_id}`}
+          </h2>
+        </Link>
 
-      {excerpt && <p className="text-gray-600 mb-4">{excerpt}</p>}
+        {excerpt && <p className="text-gray-600 mb-4">{excerpt}</p>}
 
-      <div className="text-sm text-gray-500">
-        Guardado el:{' '}
-        {new Date(saved_at).toLocaleDateString('es-ES', {
-          year: 'numeric',
-          month: 'long',
-          day: 'numeric'
-        })}
+        <div className="text-sm text-gray-500 mt-auto">
+          Guardado el:{' '}
+          {new Date(saved_at).toLocaleDateString('es-ES', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+          })}
+        </div>
       </div>
     </article>
   );

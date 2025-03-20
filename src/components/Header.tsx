@@ -1,7 +1,7 @@
 "use client";
 
 import Link from 'next/link';
-import { useState, Suspense } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { FiMenu, FiX, FiChevronDown } from 'react-icons/fi';
 import { FaBook, FaTools, FaUsers, FaGraduationCap, FaExternalLinkAlt, FaVideo, FaBookOpen } from 'react-icons/fa';
 import { useUser, UserButton } from "@stackframe/stack";
@@ -11,6 +11,25 @@ function HeaderComponent() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
   const user = useUser();
+  const [profilePicture, setProfilePicture] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchProfilePicture = async () => {
+      if (user && user.id) {
+        try {
+          const response = await fetch(`/api/profile/${user.id}`);
+          if (response.ok) {
+            const data = await response.json();
+            setProfilePicture(data.profile_picture_url);
+          }
+        } catch (error) {
+          console.error("Error fetching profile picture:", error);
+        }
+      }
+    };
+
+    fetchProfilePicture();
+  }, [user]);
 
   return (
     <header className="bg-white fixed w-full top-0 z-50 shadow-sm">
@@ -62,9 +81,19 @@ function HeaderComponent() {
               <div className="relative">
                 <button
                   onClick={() => setIsUserDropdownOpen(!isUserDropdownOpen)}
-                  className="ml-4 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
+                  className="ml-4 flex items-center justify-center overflow-hidden rounded-full w-10 h-10 border-2 border-gray-200 hover:border-blue-400 transition-all"
                 >
-                  {user.displayName}
+                  {profilePicture ? (
+                    <img 
+                      src={profilePicture} 
+                      alt="Perfil de usuario" 
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center bg-blue-100 text-blue-500">
+                      {user.displayName ? user.displayName.charAt(0).toUpperCase() : 'U'}
+                    </div>
+                  )}
                 </button>
                 {isUserDropdownOpen && (
                   <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg">
@@ -159,6 +188,24 @@ function HeaderComponent() {
               Iniciar Sesión
             </Link>
           </div>
+          {user && (
+            <div className="px-4 py-3 border-t border-gray-200 flex items-center gap-3">
+              <div className="overflow-hidden rounded-full w-8 h-8 flex-shrink-0">
+                {profilePicture ? (
+                  <img 
+                    src={profilePicture} 
+                    alt="Perfil de usuario" 
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center bg-blue-100 text-blue-500">
+                    {user.displayName ? user.displayName.charAt(0).toUpperCase() : 'U'}
+                  </div>
+                )}
+              </div>
+              <span className="text-gray-700 font-medium">{user.displayName || 'Usuario'}</span>
+            </div>
+          )}
         </div>
       </nav>
     </header>

@@ -139,32 +139,7 @@ export default function ClientCommentWrapper({ articleId }: ClientCommentWrapper
         </div>
       )}
       
-      {user ? (
-        <form onSubmit={handleSubmit} className="mb-8">
-          <textarea
-            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            rows={4}
-            placeholder="Escribe un comentario..."
-            value={newComment}
-            onChange={(e) => setNewComment(e.target.value)}
-            required
-          ></textarea>
-          <button
-            type="submit"
-            disabled={isSubmitting}
-            className="mt-2 px-6 py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors disabled:bg-gray-400"
-          >
-            {isSubmitting ? 'Enviando...' : 'Enviar comentario'}
-          </button>
-          {error && <p className="mt-2 text-red-500">{error}</p>}
-        </form>
-      ) : (
-        <div className="bg-gray-100 p-4 rounded-lg mb-8">
-          <p className="text-gray-600">Inicia sesión para comentar</p>
-        </div>
-      )}
-
-      <div className="comments-list space-y-6">
+      <div className="comments-list space-y-6 mb-8">
         {isLoading ? (
           <div className="flex justify-center py-8">
             <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-blue-500"></div>
@@ -185,6 +160,32 @@ export default function ClientCommentWrapper({ articleId }: ClientCommentWrapper
           <p id="no-comments-message" className="text-gray-500 text-center py-4">No hay comentarios aún. ¡Sé el primero!</p>
         )}
       </div>
+      
+      {/* Comment form moved below the comments list */}
+      {user ? (
+        <form onSubmit={handleSubmit} className="mt-8">
+          <textarea
+            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            rows={4}
+            placeholder="Escribe un comentario..."
+            value={newComment}
+            onChange={(e) => setNewComment(e.target.value)}
+            required
+          ></textarea>
+          <button
+            type="submit"
+            disabled={isSubmitting}
+            className="mt-2 px-6 py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors disabled:bg-gray-400"
+          >
+            {isSubmitting ? 'Enviando...' : 'Enviar comentario'}
+          </button>
+          {error && <p className="mt-2 text-red-500">{error}</p>}
+        </form>
+      ) : (
+        <div className="bg-gray-100 p-4 rounded-lg mt-8">
+          <p className="text-gray-600">Inicia sesión para comentar</p>
+        </div>
+      )}
     </div>
   );
 }

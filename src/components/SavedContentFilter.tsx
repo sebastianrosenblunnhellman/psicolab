@@ -27,7 +27,7 @@ export default function SavedContentFilter({
   const [isTypesOpen, setIsTypesOpen] = useState(true);
 
   return (
-    <div className="w-64 bg-white p-4 border-r border-gray-200">
+    <div className="w-64 bg-white p-4 border-r border-gray-200 h-fit sticky top-24">
       {/* Content Types Filter */}
       <div className="mb-6">
         <button
@@ -41,7 +41,7 @@ export default function SavedContentFilter({
             <FiChevronDown className="h-5 w-5" />
           )}
         </button>
-        {isTypesOpen && (
+        <div className={`overflow-hidden transition-all duration-300 ease-in-out ${isTypesOpen ? 'max-h-[500px]' : 'max-h-0'}`}>
           <div className="space-y-2">
             <button
               onClick={() => onTypeChange('')}
@@ -62,7 +62,7 @@ export default function SavedContentFilter({
               </button>
             ))}
           </div>
-        )}
+        </div>
       </div>
     </div>
   );
