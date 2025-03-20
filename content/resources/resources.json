@@ -1,0 +1,92 @@
+{
+  "categories": {
+    "lineaConductual": {
+      "name": "Línea conductual",
+      "subcategories": {
+        "conductismoRadical": {
+          "name": "Conductismo Radical",
+          "resources": [
+            {
+              "id": "resource_1742500649651",
+              "title": "Skinner, un pensador más. ",
+              "type": "libro",
+              "excerpt": "sasvdadasdfasfeasfddffd<szfdgsraesfdzvdbshtagrsfdzfbgxshtgasrdvzdbggarsadfdfdasdfd<svfgearesfdsvdbgstegasrfdzvgfbtsgarsdvgfbsagsrdfvgbtgrasfdvbsgrneagrsd",
+              "author": "F. B. Skinner",
+              "pages": 223,
+              "cover": "public\\images\\miniatura.jpg",
+              "tags": [],
+              "link": "https://drive.google.com/file/d/1nYGav3_X2Xj_MaU6r73oxllPWim_LkF-/view?usp=sharing",
+              "language": "español"
+            }
+          ]
+        },
+        "conductismoMetodologico": {
+          "name": "Conductismo metodológico",
+          "resources": []
+        },
+        "analisisFuncional": {
+          "name": "Análisis Funcional",
+          "resources": []
+        },
+        "analisisAplicado": {
+          "name": "Análisis Aplicado",
+          "resources": []
+        },
+        "principiosAprendizaje": {
+          "name": "Principios de aprendizaje",
+          "resources": []
+        },
+        "marcoRelacional": {
+          "name": "Marco Relacional",
+          "resources": []
+        },
+        "interconductismo": {
+          "name": "Interconductismo",
+          "resources": []
+        },
+        "conductismoMolar": {
+          "name": "Conductismo Molar",
+          "resources": []
+        }
+      }
+    },
+    "lineaCognitiva": {
+      "name": "Línea cognitiva",
+      "subcategories": {
+        "cognitivoConductual": {
+          "name": "Cognitivo-Conductual",
+          "resources": []
+        }
+      }
+    },
+    "otrosPsi": {
+      "name": "Otros (Psi)",
+      "subcategories": {
+        "general": {
+          "name": "General",
+          "resources": []
+        }
+      }
+    },
+    "otrosNoPsi": {
+      "name": "Otros (no-psi)",
+      "subcategories": {
+        "general": {
+          "name": "General",
+          "resources": []
+        }
+      }
+    }
+  },
+  "filters": {
+    "language": [
+      "español",
+      "inglés"
+    ],
+    "type": [
+      "artículo",
+      "libro",
+      "video"
+    ]
+  }
+}
