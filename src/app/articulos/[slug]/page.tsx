@@ -1,6 +1,19 @@
-import { getArticleBySlug, getArticleSlugs } from '@/utils/articles';
+import { useEffect, useState } from 'react';
+import fs from 'fs';
+import path from 'path';
+import matter from 'gray-matter';
+import { MDXRemote } from 'next-mdx-remote';
+import { serialize } from 'next-mdx-remote/serialize';
+import ArticleMeta from '@/components/ArticleMeta';
+import RelatedArticles from '@/components/RelatedArticles';
+import TableOfContents from '@/components/TableOfContents';
+import SaveButton from '@/components/SaveButton';
+import { useUser } from '@stackframe/stack';
+import ClientCommentWrapper from '@/components/ClientCommentWrapper'; // Import ClientCommentWrapper component
+import { getAllArticles, getArticleBySlug } from '@/utils/articles';
 import NetworkAnimation from '@/components/NetworkAnimation';
 import ArticleActions from '@/components/ArticleActions';
+import ArticleClientWrapper from '@/components/ArticleClientWrapper';
 
 interface ArticlePageProps {
   params: {
@@ -9,9 +22,9 @@ interface ArticlePageProps {
 }
 
 export async function generateStaticParams() {
-  const slugs = await getArticleSlugs();
-  return slugs.map((slug) => ({
-    slug,
+  const articles = await getAllArticles();
+  return articles.map((article) => ({
+    slug: article.slug,
   }));
 }
 
@@ -19,75 +32,37 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
   const article = await getArticleBySlug(params.slug, ['content']);
 
   if (!article) {
-    return (
-      <div className="min-h-screen bg-white">
-        <div className="container mx-auto px-4 py-16">
-          <h1 className="text-4xl font-bold text-gray-800">Artículo no encontrado</h1>
-        </div>
-      </div>
-    );
+    return <div>Article not found</div>;
   }
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Hero Section with NetworkAnimation */}
-      <div className="relative h-[70vh] bg-gradient-to-b from-gray-50 to-white">
-        <NetworkAnimation className="absolute inset-0" />
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="text-center space-y-6 max-w-4xl px-4">
-            <h1 className="text-5xl font-bold text-gray-800">{article.title}</h1>
-            <div className="flex items-center justify-center gap-2 text-gray-600">
-              <time dateTime={article.date}>
-                {new Date(article.date).toLocaleDateString('es-ES', {
-                  year: 'numeric',
-                  month: 'long',
-                  day: 'numeric',
-                })}
-              </time>
-              <span>·</span>
-              <span>{article.readTime} min de lectura</span>
-              {article.author && (
-                <>
-                  <span>·</span>
-                  <span>{article.author}</span>
-                </>
-              )}
-            </div>
-            {article.tags && article.tags.length > 0 && (
-              <div className="flex flex-wrap justify-center gap-2">
-                {article.tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm"
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
-
-      {/* Article Content */}
       <div className="container mx-auto px-4 py-16">
-        <div className="max-w-3xl mx-auto">
-          <div className="mb-8 text-gray-600 text-xl leading-relaxed">
-            {article.excerpt}
+        <article className="article-container">
+          <h1 className="text-4xl font-bold mb-6">{article.title}</h1>
+          <div className="flex items-center text-gray-600 mb-8 space-x-4">
+            <span>{new Date(article.date).toLocaleDateString()}</span>
+            <span>•</span>
+            <span>{article.author}</span>
+            <span>•</span>
+            <span>{article.readTime} min de lectura</span>
           </div>
           
-          {/* Download and Share Buttons */}
-          <ArticleActions 
-            title={article.title}
-            content={article.content || ''}
-            slug={params.slug}
-          />
+          {/* Client component for interactive features */}
+          <ArticleClientWrapper article={article} />
           
-          <div 
-            className="prose prose-lg prose-gray max-w-none"
-            dangerouslySetInnerHTML={{ __html: article.content || '' }}
-          />
-        </div>
+          {/* Server-rendered content - Fix for dangerouslySetInnerHTML */}
+          {article.content && (
+            <div className="article-content prose prose-lg max-w-none mt-8" 
+                 dangerouslySetInnerHTML={{ __html: article.content }} />
+          )}
+          
+          {/* Add the comments section */}
+          <div className="mt-16">
+            <h2 id="comments-heading" className="text-2xl font-bold mb-8">Comentarios</h2>
+            <ClientCommentWrapper articleId={article.slug} />
+          </div>
+        </article>
       </div>
     </div>
   );

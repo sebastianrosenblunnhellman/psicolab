@@ -15,11 +15,12 @@ export interface Article {
   slug: string;
   title: string;
   date: string;
+  author: string;
+  tags: string[];
   excerpt: string;
-  tags?: string[];
-  readTime?: number;
-  author?: string;
-  content?: string;
+  readTime: number;
+  content: string;
+  published: boolean;
 }
 
 const articlesDirectory = path.join(process.cwd(), 'content/articles');
@@ -98,9 +99,12 @@ export async function getArticleBySlug(slug: string, fields: string[] = []): Pro
       tags: Array.isArray(data.tags) ? data.tags : [],
       readTime: readTime,
       author: data.author || 'Anónimo',
+      content: '', // Initialize with empty string
+      published: data.published !== false, // Default to true if not specified
     };
 
-    if (fields.includes('content')) {
+    // Only add content if specifically requested or if fields array is empty (get all)
+    if (fields.length === 0 || fields.includes('content')) {
       article.content = md.render(content);
     }
 

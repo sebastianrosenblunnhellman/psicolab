@@ -1,26 +1,38 @@
 import { NextResponse } from 'next/server';
-import { PrismaClient } from '@prisma/client';
+import { prisma } from '@/lib/prisma';
 
-// Create a single PrismaClient instance and reuse it
-let prisma: PrismaClient;
-
-if (process.env.NODE_ENV === 'production') {
-  prisma = new PrismaClient();
-} else {
-  // In development, use a global variable to prevent multiple instances during hot-reloading
-  if (!(global as any).prisma) {
-    (global as any).prisma = new PrismaClient({
-      log: ['query', 'error', 'warn'],
-    });
-  }
-  prisma = (global as any).prisma;
-}
-
+// GET: Fetch saved content for a user
 export async function GET(
   request: Request,
   { params }: { params: { userId: string } }
 ) {
   try {
+    console.log('Fetching saved content for user:', params.userId);
+    
+    // Ensure user exists
+    const user = await prisma.users_sync.findUnique({
+      where: { id: params.userId }
+    });
+
+    if (!user) {
+      console.log('User not found, creating minimal record');
+      // Create minimal user record if not exists
+      try {
+        await prisma.users_sync.create({
+          data: {
+            id: params.userId,
+            name: 'Usuario',
+            created_at: new Date(),
+            updated_at: new Date(),
+          }
+        });
+        console.log('Created minimal user record');
+      } catch (error) {
+        console.error('Failed to create user:', error);
+        // Continue anyway
+      }
+    }
+    
     const savedContent = await prisma.saved_content.findMany({
       where: {
         user_id: params.userId
@@ -34,14 +46,9 @@ export async function GET(
   } catch (error) {
     console.error('Error fetching saved content:', error);
     return NextResponse.json(
-      { error: 'Error al obtener contenido guardado' },
+      { error: 'Error al obtener contenido guardado', details: String(error) },
       { status: 500 }
     );
-  } finally {
-    // Don't disconnect in development to maintain connection pool
-    if (process.env.NODE_ENV === 'production') {
-      await prisma.$disconnect();
-    }
   }
 }
 
@@ -68,11 +75,6 @@ export async function DELETE(
       { error: 'Error al eliminar contenido guardado' },
       { status: 500 }
     );
-  } finally {
-    // Don't disconnect in development to maintain connection pool
-    if (process.env.NODE_ENV === 'production') {
-      await prisma.$disconnect();
-    }
   }
 }
 
@@ -81,19 +83,34 @@ export async function POST(
   { params }: { params: { userId: string } }
 ) {
   try {
-    // Check if DATABASE_URL is set
-    if (!process.env.DATABASE_URL) {
-      console.error('DATABASE_URL environment variable is not set');
-      return NextResponse.json(
-        { error: 'Database configuration error' },
-        { status: 500 }
-      );
-    }
-    
     const body = await request.json();
     const { content_id, content_type } = body;
     
     console.log('Saving content:', { userId: params.userId, content_id, content_type });
+    
+    // Ensure user exists
+    const user = await prisma.users_sync.findUnique({
+      where: { id: params.userId }
+    });
+
+    if (!user) {
+      console.log('User not found, creating minimal record');
+      // Create minimal user record if not exists
+      try {
+        await prisma.users_sync.create({
+          data: {
+            id: params.userId,
+            name: 'Usuario',
+            created_at: new Date(),
+            updated_at: new Date(),
+          }
+        });
+        console.log('Created minimal user record');
+      } catch (error) {
+        console.error('Failed to create user:', error);
+        // Continue anyway
+      }
+    }
     
     // Check if the item already exists to avoid unique constraint violation
     const existingItem = await prisma.saved_content.findFirst({
@@ -120,15 +137,9 @@ export async function POST(
     return NextResponse.json(savedItem);
   } catch (error) {
     console.error('Error saving content:', error);
-    // Return more detailed error information
     return NextResponse.json(
       { error: 'Error al guardar contenido', details: String(error) },
       { status: 500 }
     );
-  } finally {
-    // Don't disconnect in development to maintain connection pool
-    if (process.env.NODE_ENV === 'production') {
-      await prisma.$disconnect();
-    }
   }
 }
