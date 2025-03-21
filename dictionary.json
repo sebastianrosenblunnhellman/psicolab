@@ -1,0 +1,44 @@
+{
+  "categories": {
+    "lineaConductual": {
+      "name": "Línea Conductual",
+      "subcategories": {
+        "conductismoRadical": {
+          "name": "Conductismo Radical"
+        },
+        "analisisConductual": {
+          "name": "Análisis Conductual"
+        },
+        "terapiaConductual": {
+          "name": "Terapia Conductual"
+        }
+      }
+    },
+    "lineaCognitiva": {
+      "name": "Línea Cognitiva",
+      "subcategories": {
+        "terapiaCognitiva": {
+          "name": "Terapia Cognitiva"
+        },
+        "terapiaCognitivo": {
+          "name": "Terapia Cognitivo Conductual"
+        }
+      }
+    },
+    "lineaContextual": {
+      "name": "Línea Contextual",
+      "subcategories": {
+        "terapiaAceptacion": {
+          "name": "Terapia de Aceptación y Compromiso"
+        },
+        "analisisFuncional": {
+          "name": "Análisis Funcional"
+        }
+      }
+    }
+  },
+  "filters": {
+    "language": ["español", "inglés", "portugués", "francés"],
+    "type": ["libro", "artículo", "video", "curso", "podcast", "infografía", "recurso"]
+  }
+}

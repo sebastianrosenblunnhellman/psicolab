@@ -1,14 +1,12 @@
 ---
 title: "Recurso de Ejemplo con Imagen"
 type: "recurso"
-excerpt: "Este es un recurso de ejemplo que demuestra cómo se muestra una imagen en las tarjetas de recursos."
 author: "Autor de Ejemplo"
+excerpt: "Este es un recurso de ejemplo que demuestra cómo se muestra una imagen en las tarjetas de recursos."
 tags: ["Ejemplo", "Imagen", "Recurso"]
-link: "https://example.com/sample-resource.pdf"
-published: true
+categories: "Línea conductual" 
+subcategories: "Conductismo Radical"
+language: "español"
 image: "/images/miniatura.jpg"
+link: "https://example.com/sample-resource.pdf"
 ---
-
-# Contenido del recurso
-
-Este es un recurso de demostración para probar cómo se muestran las imágenes en nuestras tarjetas de recursos.

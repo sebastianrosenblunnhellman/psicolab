@@ -1,59 +1,56 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import { promises as fs } from 'fs';
-import path from 'path';
 import ResourceFilter from '@/components/ResourceFilter';
 
-type Resource = {
-  id: string;
-  title: string;
-  type: string;
-  excerpt: string;
-  author: string;
-  pages?: number;
-  cover: string;
-  tags: string[];
-  link: string;
-  language: string;
-};
-
-type Category = {
-  name: string;
-  subcategories: Record<string, {
+type DictionaryData = {
+  categories: Record<string, {
     name: string;
-    resources: Resource[];
+    subcategories: Record<string, {
+      name: string;
+    }>;
   }>;
-};
-
-type ResourcesData = {
-  categories: Record<string, Category>;
   filters: {
     language: string[];
     type: string[];
   };
 };
 
+type ResourceFormData = {
+  title: string;
+  type: string;
+  author: string;
+  excerpt: string;
+  tags: string[];
+  categories: string;
+  subcategories: string;
+  language: string;
+  image: string;
+  link: string;
+  pages?: number;
+  fileName: string;
+};
+
 export default function ResourceAdmin() {
-  const [resourcesData, setResourcesData] = useState<ResourcesData | null>(null);
+  const [dictionaryData, setDictionaryData] = useState<DictionaryData | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [success, setSuccess] = useState<boolean | null>(null);
   const [error, setError] = useState<string | null>(null);
   
   // Form state
-  const [formData, setFormData] = useState<Resource & { category: string; subcategory: string }>({
-    id: '',
+  const [formData, setFormData] = useState<ResourceFormData>({
     title: '',
-    type: 'libro',
-    excerpt: '',
+    type: '',
     author: '',
-    pages: undefined,
-    cover: '',
+    excerpt: '',
     tags: [],
+    categories: '',
+    subcategories: '',
+    language: '',
+    image: '',
     link: '',
-    language: 'español',
-    category: 'lineaConductual',
-    subcategory: 'conductismoRadical',
+    pages: undefined,
+    fileName: '',
   });
   
   const [newTag, setNewTag] = useState<string>('');
@@ -61,15 +58,43 @@ export default function ResourceAdmin() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('/api/resources');
+        setLoading(true);
+        setError(null);
+        
+        console.log("Fetching dictionary data...");
+        const response = await fetch('/api/dictionary');
+        
         if (!response.ok) {
-          throw new Error('Failed to fetch resources data');
+          console.error(`Dictionary API returned status: ${response.status}`);
+          throw new Error(`Failed to fetch dictionary data: ${response.statusText}`);
         }
+        
         const data = await response.json();
-        setResourcesData(data);
+        console.log("Dictionary data received:", data);
+        
+        if (!data.categories || !data.filters) {
+          console.error("Dictionary data is missing required properties:", data);
+          throw new Error("Dictionary data format is invalid");
+        }
+        
+        setDictionaryData(data);
+        
+        // Initialize form with first available values
+        if (data && data.categories && Object.keys(data.categories).length > 0) {
+          const firstCategory = Object.keys(data.categories)[0];
+          const firstSubcategory = Object.keys(data.categories[firstCategory].subcategories)[0];
+          
+          setFormData(prev => ({
+            ...prev,
+            type: data.filters.type[0] || '',
+            language: data.filters.language[0] || '',
+            categories: firstCategory,
+            subcategories: firstSubcategory,
+          }));
+        }
       } catch (err) {
-        setError('Error loading resources data');
-        console.error(err);
+        console.error("Error loading dictionary:", err);
+        setError('Error loading dictionary data. Please check the console for details.');
       } finally {
         setLoading(false);
       }
@@ -103,6 +128,38 @@ export default function ResourceAdmin() {
     });
   };
   
+  const createMarkdownContent = () => {
+    // Format tags as a YAML array
+    const tagsStr = formData.tags.length > 0 
+      ? `[${formData.tags.map(tag => `"${tag}"`).join(', ')}]` 
+      : '[]';
+    
+    // Get category and subcategory names
+    const categoryName = dictionaryData?.categories[formData.categories]?.name || formData.categories;
+    const subcategoryName = dictionaryData?.categories[formData.categories]?.subcategories[formData.subcategories]?.name || formData.subcategories;
+    
+    // Create frontmatter
+    const frontMatter = [
+      '---',
+      `title: "${formData.title}"`,
+      `type: "${formData.type}"`,
+      `author: "${formData.author}"`,
+      `excerpt: "${formData.excerpt}"`,
+      `tags: ${tagsStr}`,
+      `categories: "${categoryName}"`,
+      `subcategories: "${subcategoryName}"`,
+      `language: "${formData.language}"`,
+      `image: "${formData.image}"`,
+      `link: "${formData.link}"`,
+      formData.pages ? `pages: ${formData.pages}` : null,
+      '---',
+      '',
+      formData.excerpt // Add excerpt as content
+    ].filter(Boolean).join('\n');
+    
+    return frontMatter;
+  };
+  
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
@@ -110,52 +167,45 @@ export default function ResourceAdmin() {
     setError(null);
     
     try {
-      if (!formData.id) {
-        formData.id = `resource_${Date.now()}`;
-      }
+      // Generate filename if not provided
+      const fileName = formData.fileName.trim() || 
+        `${formData.title.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]+/g, '')}-${Date.now()}.md`;
       
-      const { category, subcategory, ...resourceData } = formData;
+      // Create markdown content
+      const markdownContent = createMarkdownContent();
       
-      const response = await fetch('/api/resources/add', {
+      const response = await fetch('/api/resources/upload-markdown', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          category,
-          subcategory,
-          resource: resourceData,
+          fileName,
+          content: markdownContent,
         }),
       });
       
       if (!response.ok) {
-        throw new Error('Failed to add resource');
+        throw new Error('Failed to upload resource');
       }
       
       setSuccess(true);
       
       // Reset form
       setFormData({
-        id: '',
         title: '',
-        type: 'libro',
-        excerpt: '',
+        type: dictionaryData?.filters.type[0] || '',
         author: '',
-        pages: undefined,
-        cover: '',
+        excerpt: '',
         tags: [],
+        categories: formData.categories, // Keep the selected category
+        subcategories: formData.subcategories, // Keep the selected subcategory
+        language: dictionaryData?.filters.language[0] || '',
+        image: '',
         link: '',
-        language: 'español',
-        category: 'lineaConductual',
-        subcategory: 'conductismoRadical',
+        pages: undefined,
+        fileName: '',
       });
-      
-      // Refresh data
-      const refreshResponse = await fetch('/api/resources');
-      if (refreshResponse.ok) {
-        const refreshedData = await refreshResponse.json();
-        setResourcesData(refreshedData);
-      }
     } catch (err) {
       setError('Error adding resource. Please try again.');
       console.error(err);
@@ -164,12 +214,39 @@ export default function ResourceAdmin() {
     }
   };
   
-  if (loading && !resourcesData) {
-    return <div className="flex justify-center items-center min-h-screen">Loading...</div>;
+  if (loading && !dictionaryData) {
+    return (
+      <div className="container mx-auto px-4 py-8">
+        <div className="flex justify-center items-center min-h-screen">
+          <div className="text-center">
+            <p className="mb-4 text-lg">Cargando datos del diccionario...</p>
+            <div className="w-12 h-12 border-t-4 border-blue-500 border-solid rounded-full animate-spin mx-auto"></div>
+          </div>
+        </div>
+      </div>
+    );
   }
   
-  if (error && !resourcesData) {
-    return <div className="flex justify-center items-center min-h-screen text-red-600">{error}</div>;
+  if (error && !dictionaryData) {
+    return (
+      <div className="container mx-auto px-4 py-8">
+        <div className="bg-red-100 border-l-4 border-red-500 p-4 mb-4">
+          <div className="flex">
+            <div>
+              <h3 className="font-bold text-red-800">Error</h3>
+              <p className="text-red-700">{error}</p>
+              <p className="mt-2">Asegúrate de que el archivo dictionary.json existe y está correctamente formateado.</p>
+              <button 
+                className="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+                onClick={() => window.location.reload()}
+              >
+                Intentar de nuevo
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
   }
   
   return (
@@ -177,11 +254,11 @@ export default function ResourceAdmin() {
       <h1 className="text-2xl font-bold mb-6">Administrador de Recursos</h1>
       
       <div className="bg-white shadow-md rounded-lg p-6">
-        <h2 className="text-xl font-semibold mb-4">Agregar Nuevo Recurso</h2>
+        <h2 className="text-xl font-semibold mb-4">Añadir Nuevo Recurso (Markdown)</h2>
         
         {success && (
           <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
-            Recurso agregado exitosamente
+            Recurso agregado exitosamente en formato Markdown
           </div>
         )}
         
@@ -197,13 +274,13 @@ export default function ResourceAdmin() {
               <div>
                 <label className="block text-gray-700 font-semibold mb-2">Categoría</label>
                 <select
-                  name="category"
+                  name="categories"
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  value={formData.category}
+                  value={formData.categories}
                   onChange={handleInputChange}
                   required
                 >
-                  {resourcesData && Object.entries(resourcesData.categories).map(([key, category]) => (
+                  {dictionaryData && Object.entries(dictionaryData.categories).map(([key, category]) => (
                     <option key={key} value={key}>{category.name}</option>
                   ))}
                 </select>
@@ -212,28 +289,16 @@ export default function ResourceAdmin() {
               <div>
                 <label className="block text-gray-700 font-semibold mb-2">Subcategoría</label>
                 <select
-                  name="subcategory"
+                  name="subcategories"
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  value={formData.subcategory}
+                  value={formData.subcategories}
                   onChange={handleInputChange}
                   required
                 >
-                  {resourcesData && formData.category && Object.entries(resourcesData.categories[formData.category].subcategories).map(([key, subcategory]) => (
+                  {dictionaryData && formData.categories && Object.entries(dictionaryData.categories[formData.categories].subcategories).map(([key, subcategory]) => (
                     <option key={key} value={key}>{subcategory.name}</option>
                   ))}
                 </select>
-              </div>
-              
-              <div>
-                <label className="block text-gray-700 font-semibold mb-2">ID (opcional, se generará automáticamente)</label>
-                <input
-                  type="text"
-                  name="id"
-                  placeholder="ID único (dejar en blanco para auto-generar)"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  value={formData.id}
-                  onChange={handleInputChange}
-                />
               </div>
               
               <div>
@@ -250,14 +315,28 @@ export default function ResourceAdmin() {
               </div>
               
               <div>
+                <label className="block text-gray-700 font-semibold mb-2">Nombre del archivo (opcional)</label>
+                <input
+                  type="text"
+                  name="fileName"
+                  placeholder="archivo.md (se generará automáticamente si se deja vacío)"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  value={formData.fileName}
+                  onChange={handleInputChange}
+                />
+              </div>
+              
+              <div>
                 <label className="block text-gray-700 font-semibold mb-2">Tipo</label>
                 <select
                   name="type"
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                   value={formData.type}
                   onChange={handleInputChange}
+                  required
                 >
-                  {resourcesData?.filters.type.map(type => (
+                  <option value="">Seleccione un tipo</option>
+                  {dictionaryData?.filters.type.map(type => (
                     <option key={type} value={type}>{type}</option>
                   ))}
                 </select>
@@ -270,8 +349,10 @@ export default function ResourceAdmin() {
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                   value={formData.language}
                   onChange={handleInputChange}
+                  required
                 >
-                  {resourcesData?.filters.language.map(lang => (
+                  <option value="">Seleccione un idioma</option>
+                  {dictionaryData?.filters.language.map(lang => (
                     <option key={lang} value={lang}>{lang}</option>
                   ))}
                 </select>
@@ -293,7 +374,7 @@ export default function ResourceAdmin() {
               </div>
               
               <div>
-                <label className="block text-gray-700 font-semibold mb-2">Páginas (para libros)</label>
+                <label className="block text-gray-700 font-semibold mb-2">Páginas (para libros, opcional)</label>
                 <input
                   type="number"
                   name="pages"
@@ -305,13 +386,13 @@ export default function ResourceAdmin() {
               </div>
               
               <div>
-                <label className="block text-gray-700 font-semibold mb-2">URL de la Portada</label>
+                <label className="block text-gray-700 font-semibold mb-2">URL de la Imagen</label>
                 <input
                   type="text"
-                  name="cover"
-                  placeholder="URL de la imagen de portada"
+                  name="image"
+                  placeholder="/images/miniatura.jpg"
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  value={formData.cover}
+                  value={formData.image}
                   onChange={handleInputChange}
                   required
                 />
@@ -322,7 +403,7 @@ export default function ResourceAdmin() {
                 <input
                   type="text"
                   name="link"
-                  placeholder="URL del recurso"
+                  placeholder="https://example.com/recurso.pdf"
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                   value={formData.link}
                   onChange={handleInputChange}
@@ -387,10 +468,17 @@ export default function ResourceAdmin() {
               className="w-full md:w-auto px-6 py-3 bg-green-600 text-white rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 disabled:opacity-50"
               disabled={loading}
             >
-              {loading ? 'Guardando...' : 'Guardar Recurso'}
+              {loading ? 'Guardando...' : 'Guardar Recurso (Markdown)'}
             </button>
           </div>
         </form>
+      </div>
+      
+      <div className="mt-8 bg-white shadow-md rounded-lg p-6">
+        <h2 className="text-xl font-semibold mb-4">Vista Previa del Markdown</h2>
+        <pre className="bg-gray-100 p-4 rounded overflow-x-auto whitespace-pre-wrap">
+          {createMarkdownContent()}
+        </pre>
       </div>
     </div>
   );
