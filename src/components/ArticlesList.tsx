@@ -8,6 +8,7 @@ import Image from 'next/image';
 import { FaRegBookmark, FaBookmark } from 'react-icons/fa';
 import { useUser } from '@stackframe/stack';
 import { useCache } from '@/utils/cache';
+import FilteredLayout from './FilteredLayout';
 
 interface ArticlesListProps {
   initialArticles: Article[];
@@ -96,70 +97,74 @@ function BlogCard({ slug, title, date, excerpt, tags, image = '/images/miniatura
   };
   
   return (
-    <div 
-      className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col md:flex-row"
+    <Link
+      href={`/articulos/${slug}`}
+      className="block h-48"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {/* Image column - exactly matching content height */}
-      <div className="md:w-1/4 relative flex-shrink-0">
-        <Image 
-          src={image} 
-          alt={title}
-          width={250}
-          height={250}
-          className="object-cover h-full w-full"
-          priority
-        />
-      </div>
-      
-      {/* Content column */}
-      <div className="p-6 flex flex-col flex-grow">
-        <div className="flex justify-between items-start mb-2">
-          <Link href={`/articulos/${slug}`}>
-            <h3 className="text-xl font-bold text-gray-900 hover:text-teal-500 transition-colors">{title}</h3>
-          </Link>
-          
-          {user && (
-            <button
-              onClick={handleSaveClick}
-              className={`ml-2 text-blue-500 hover:text-blue-600 transition-colors flex-shrink-0 ${isHovered ? 'opacity-100' : 'opacity-70'}`}
-              title={isSaved ? 'Quitar de guardados' : 'Guardar artículo'}
-            >
-              {isSaved ? <FaBookmark className="w-5 h-5" /> : <FaRegBookmark className="w-5 h-5" />}
-            </button>
-          )}
+      <article className="bg-white rounded-lg shadow-sm border border-gray-100 hover:shadow-lg hover:border-teal-500 transition-all duration-300 flex flex-col md:flex-row overflow-hidden h-full">
+        {/* Image column - square shape */}
+        <div className="md:w-48 w-full h-full relative flex-shrink-0">
+          <Image 
+            src={image} 
+            alt={title}
+            width={192}
+            height={192}
+            className="object-cover h-full w-full"
+            priority
+          />
         </div>
         
-        <div className="flex flex-wrap items-center text-sm text-gray-600 mb-3">
-          <span>{new Date(date).toLocaleDateString()}</span>
-          <span className="mx-2">•</span>
-          <span>{author}</span>
-          <span className="mx-2">•</span>
-          <span>{readTime} min de lectura</span>
-        </div>
-        
-        <p className="text-gray-600 line-clamp-2">{excerpt}</p>
-        
-        {tags && tags.length > 0 && (
-          <div className="mt-4 flex flex-wrap gap-2">
-            {tags.slice(0, 2).map(tag => (
-              <span 
-                key={tag} 
-                className="bg-gray-100 text-gray-800 text-xs px-2 py-1 rounded"
+        {/* Content column */}
+        <div className="p-3 flex flex-col flex-grow overflow-hidden">
+          <div className="flex justify-between items-start mb-2">
+            <h3 className="text-lg font-bold text-gray-900 hover:text-teal-500 transition-colors line-clamp-2">{title}</h3>
+            
+            {user && (
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleSaveClick(e);
+                }}
+                className={`ml-2 transition-colors flex-shrink-0 ${isHovered ? 'opacity-100' : 'opacity-70'} ${isSaved ? 'text-teal-500 hover:text-teal-600' : 'text-gray-400 hover:text-teal-500'}`}
+                title={isSaved ? 'Quitar de guardados' : 'Guardar artículo'}
               >
-                {tag}
-              </span>
-            ))}
-            {tags.length > 2 && (
-              <span className="text-gray-500 text-xs">
-                +{tags.length - 2} más
-              </span>
+                {isSaved ? <FaBookmark className="w-4 h-4" /> : <FaRegBookmark className="w-4 h-4" />}
+              </button>
             )}
           </div>
-        )}
-      </div>
-    </div>
+          
+          <div className="flex flex-wrap items-center text-xs text-gray-600 mb-2">
+            <span>{new Date(date).toLocaleDateString()}</span>
+            <span className="mx-2">•</span>
+            <span>{author}</span>
+            <span className="mx-2">•</span>
+            <span>{readTime} min de lectura</span>
+          </div>
+          
+          <p className="text-sm text-gray-600 line-clamp-2">{excerpt}</p>
+          
+          {tags && tags.length > 0 && (
+            <div className="mt-auto flex flex-wrap gap-1">
+              {tags.slice(0, 2).map(tag => (
+                <span 
+                  key={tag} 
+                  className="bg-gray-100 text-gray-800 text-xs px-2 py-0.5 rounded"
+                >
+                  {tag}
+                </span>
+              ))}
+              {tags.length > 2 && (
+                <span className="text-gray-500 text-xs">
+                  +{tags.length - 2} más
+                </span>
+              )}
+            </div>
+          )}
+        </div>
+      </article>
+    </Link>
   );
 }
 
@@ -225,9 +230,8 @@ export default function ArticlesList({ initialArticles }: ArticlesListProps) {
   };
 
   return (
-    <div className="flex flex-col lg:flex-row">
-      {/* Sidebar Filter - Now collapsible */}
-      <div className="w-full lg:w-64 mb-6 lg:mb-0 lg:sticky lg:top-4 lg:self-start">
+    <FilteredLayout
+      filterComponent={
         <SidebarFilter 
           tags={allTags}
           authors={allAuthors}
@@ -236,10 +240,9 @@ export default function ArticlesList({ initialArticles }: ArticlesListProps) {
           onTagChange={handleTagChange}
           onAuthorChange={handleAuthorChange}
         />
-      </div>
-      
-      {/* Main Content */}
-      <div className="flex-1 lg:pl-6 space-y-6">
+      }
+    >
+      <div className="flex-1 space-y-6">
         {/* Search Bar */}
         <div>
           <input
@@ -268,7 +271,7 @@ export default function ArticlesList({ initialArticles }: ArticlesListProps) {
           </div>
         )}
 
-        {/* Articles Grid - Changed from grid to flex column for horizontal cards */}
+        {/* Articles Grid */}
         {paginatedArticles.length > 0 ? (
           <div className="flex flex-col space-y-6">
             {paginatedArticles.map((article) => (
@@ -314,6 +317,6 @@ export default function ArticlesList({ initialArticles }: ArticlesListProps) {
           </div>
         )}
       </div>
-    </div>
+    </FilteredLayout>
   );
 }

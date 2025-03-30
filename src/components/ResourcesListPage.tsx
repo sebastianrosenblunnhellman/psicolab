@@ -4,6 +4,7 @@ import { useState, useMemo } from 'react';
 import { Resource } from '@/utils/resources';
 import SidebarFilter from '@/components/SidebarFilter';
 import ResourceCard from '@/components/ResourceCard';
+import FilteredLayout from '@/components/FilteredLayout';
 
 interface ResourcesListPageProps {
   initialResources: Resource[];
@@ -77,9 +78,8 @@ export default function ResourcesListPage({ initialResources }: ResourcesListPag
   };
 
   return (
-    <div className="flex flex-col lg:flex-row">
-      {/* Sidebar Filter */}
-      <div className="w-full lg:w-64 mb-6 lg:mb-0 lg:sticky lg:top-4 lg:self-start">
+    <FilteredLayout
+      filterComponent={
         <SidebarFilter 
           tags={allTags}
           authors={allAuthors}
@@ -88,10 +88,9 @@ export default function ResourcesListPage({ initialResources }: ResourcesListPag
           onTagChange={handleTagChange}
           onAuthorChange={handleAuthorChange}
         />
-      </div>
-      
-      {/* Main Content */}
-      <div className="flex-1 lg:pl-6 space-y-6">
+      }
+    >
+      <div className="space-y-6">
         {/* Search Bar */}
         <div>
           <input
@@ -149,23 +148,23 @@ export default function ResourcesListPage({ initialResources }: ResourcesListPag
             <button
               onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
               disabled={currentPage === 1}
-              className="px-4 py-2 rounded-lg bg-gray-100 text-gray-800 disabled:opacity-50 hover:bg-gray-200 transition-colors"
+              className="px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg bg-gray-100 text-gray-800 disabled:opacity-50 hover:bg-gray-200 transition-colors text-sm sm:text-base"
             >
               Anterior
             </button>
-            <span className="text-gray-600">
+            <span className="text-gray-600 text-sm sm:text-base">
               Página {currentPage} de {totalPages}
             </span>
             <button
               onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
               disabled={currentPage === totalPages}
-              className="px-4 py-2 rounded-lg bg-gray-100 text-gray-800 disabled:opacity-50 hover:bg-gray-200 transition-colors"
+              className="px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg bg-gray-100 text-gray-800 disabled:opacity-50 hover:bg-gray-200 transition-colors text-sm sm:text-base"
             >
               Siguiente
             </button>
           </div>
         )}
       </div>
-    </div>
+    </FilteredLayout>
   );
 }

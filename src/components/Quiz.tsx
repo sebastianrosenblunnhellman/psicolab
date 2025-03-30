@@ -103,7 +103,7 @@ export default function Quiz({ curso, leccion }: QuizProps) {
           <button
             onClick={handleNextQuestion}
             disabled={currentQuestionIndex === quizData.preguntas.length - 1 || !selectedAnswer}
-            className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 disabled:bg-gray-300 disabled:cursor-not-allowed"
+            className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 disabled:bg-gray-300 disabled:cursor-not-allowed text-sm sm:text-base"
           >
             Siguiente
           </button>
@@ -111,12 +111,12 @@ export default function Quiz({ curso, leccion }: QuizProps) {
       </div>
 
       <div className="mb-6">
-        <p className="font-semibold mb-3">{currentQuestion.pregunta}</p>
+        <p className="font-semibold mb-3 text-sm sm:text-base">{currentQuestion.pregunta}</p>
         <div className="space-y-2">
           {currentQuestion.opciones.map((option, index) => (
             <label
               key={index}
-              className={`flex items-center p-3 rounded-lg cursor-pointer transition-colors
+              className={`flex items-center p-2 sm:p-3 rounded-lg cursor-pointer transition-colors text-sm sm:text-base
                 ${selectedAnswer === option
                   ? showExplanation
                     ? option === currentQuestion.respuestaCorrecta

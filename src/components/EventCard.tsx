@@ -30,51 +30,51 @@ export default function EventCard({
   });
 
   return (
-    <Link href={`/eventos/${id}`} className="block h-full">
+    <Link href={`/eventos/${id}`} className="block h-48">
       <article className="bg-white rounded-lg shadow-sm border border-gray-100 hover:shadow-lg hover:border-teal-500 transition-all duration-300 flex flex-col md:flex-row overflow-hidden h-full">
-        {/* Image column */}
-        <div className="md:w-1/4 relative flex-shrink-0">
+        {/* Image column - square shape */}
+        <div className="md:w-48 w-full h-full relative flex-shrink-0">
           <Image 
             src={image} 
             alt={title}
-            width={250}
-            height={250}
+            width={192}
+            height={192}
             className="object-cover h-full w-full"
             priority
           />
         </div>
         
         {/* Content column */}
-        <div className="p-6 flex flex-col flex-grow">
-          <div className="mb-4">
-            <span className="inline-block bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm font-medium">
+        <div className="p-3 flex flex-col flex-grow overflow-hidden">
+          <div className="mb-2">
+            <span className="inline-block bg-purple-100 text-purple-800 px-2 py-0.5 rounded-full text-xs font-medium">
               Evento {isVirtual ? 'Virtual' : 'Presencial'}
             </span>
           </div>
           
-          <h3 className="text-xl font-bold text-gray-800 mb-3 hover:text-teal-600 transition-colors">
+          <h3 className="text-lg font-bold text-gray-800 mb-2 hover:text-teal-600 transition-colors line-clamp-2">
             {title}
           </h3>
           
-          <p className="text-gray-600 mb-4">{description}</p>
+          <p className="text-sm text-gray-600 mb-2 line-clamp-2">{description}</p>
           
-          <div className="flex flex-col space-y-2 text-sm text-gray-500 mt-auto">
+          <div className="flex flex-col space-y-1 text-xs text-gray-500 mt-auto">
             <div className="flex items-center">
-              <FaCalendar className="mr-2" />
+              <FaCalendar className="mr-2 w-3 h-3" />
               <span>{formattedDate}</span>
             </div>
             
             {time && (
               <div className="flex items-center">
-                <FaClock className="mr-2" />
+                <FaClock className="mr-2 w-3 h-3" />
                 <span>{time}</span>
               </div>
             )}
             
             {location && (
               <div className="flex items-center">
-                <FaMapMarkerAlt className="mr-2" />
-                <span>{location}</span>
+                <FaMapMarkerAlt className="mr-2 w-3 h-3" />
+                <span className="truncate">{location}</span>
               </div>
             )}
           </div>

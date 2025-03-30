@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react'; // Added useState import
 import { FaSearch, FaFilter, FaTimes, FaChevronDown } from 'react-icons/fa';
 
 type ResourceFilterProps = {
@@ -28,6 +28,9 @@ const ResourceFilter = ({
   searchQuery,
   setSearchQuery,
 }: ResourceFilterProps) => {
+  // Added state for mobile filter collapse
+  const [isExpanded, setIsExpanded] = useState(false);
+  
   // Reset subcategory when category changes
   useEffect(() => {
     if (selectedCategory === 'all' || selectedCategory !== 'all') {

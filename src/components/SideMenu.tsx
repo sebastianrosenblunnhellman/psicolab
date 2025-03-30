@@ -50,6 +50,20 @@ export default function SideMenu() {
   }
 
   const currentMenu = menuItems[basePath];
+  
+  // Determine which icon to show based on base path
+  const getIcon = () => {
+    switch(basePath) {
+      case '/articulos':
+        return <FaBook className="h-5 w-5" />;
+      case '/aprendizaje':
+        return <FaGraduationCap className="h-5 w-5" />;
+      case '/recursos':
+        return <FaTools className="h-5 w-5" />;
+      default:
+        return null;
+    }
+  };
 
   return (
     <div className="fixed left-0 top-20 z-40 bg-white shadow-md rounded-r-lg">
@@ -58,14 +72,15 @@ export default function SideMenu() {
           onClick={() => setIsOpen(!isOpen)}
           className="flex items-center gap-2 px-4 py-3 text-gray-700 hover:text-blue-600 transition-colors w-full"
         >
-          <span className="text-lg font-medium">{currentMenu.label}</span>
+          {getIcon()}
+          <span className="text-lg font-medium md:block hidden">{currentMenu.label}</span>
           <FiChevronDown
             className={`h-5 w-5 transition-transform ${isOpen ? 'rotate-180' : ''}`}
           />
         </button>
 
         {isOpen && (
-          <div className="absolute left-full top-0 w-64 bg-white shadow-lg rounded-r-lg py-2">
+          <div className="absolute left-0 md:left-full top-full md:top-0 w-48 md:w-64 bg-white shadow-lg rounded-b-lg md:rounded-r-lg md:rounded-b-none py-2">
             {currentMenu.items.map((item, index) => (
               <a
                 key={index}

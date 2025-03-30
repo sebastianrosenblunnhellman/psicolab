@@ -2,16 +2,53 @@
 
 import Link from 'next/link';
 import { useState, useEffect, Suspense } from 'react';
-import { FiMenu, FiX, FiChevronDown } from 'react-icons/fi';
-import { FaBook, FaTools, FaUsers, FaGraduationCap, FaExternalLinkAlt, FaVideo, FaBookOpen } from 'react-icons/fa';
-import { useUser, UserButton } from "@stackframe/stack";
+import { FiMenu, FiX } from 'react-icons/fi';
+import { FaBook, FaTools, FaUsers, FaGraduationCap } from 'react-icons/fa';
+import { useUser } from "@stackframe/stack";
+import { usePathname } from 'next/navigation';
+
+interface MobileMenuItem {
+  label: string;
+  href: string;
+  icon: JSX.Element;
+}
 
 function HeaderComponent() {
+  const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
   const user = useUser();
   const [profilePicture, setProfilePicture] = useState<string | null>(null);
+
+  // Define mobile menu items - simplified without submenus
+  const mobileMenuItems: MobileMenuItem[] = [
+    {
+      label: 'Artículos',
+      href: '/articulos',
+      icon: <FaBook className="h-5 w-5" />
+    },
+    {
+      label: 'Aprendizaje',
+      href: '/aprendizaje',
+      icon: <FaGraduationCap className="h-5 w-5" />
+    },
+    {
+      label: 'Recursos',
+      href: '/recursos',
+      icon: <FaTools className="h-5 w-5" />
+    },
+    {
+      label: 'Nosotros',
+      href: '/nosotros',
+      icon: <FaUsers className="h-5 w-5" />
+    }
+  ];
+
+  // Close menus when the path changes (user navigates)
+  useEffect(() => {
+    setIsOpen(false);
+    setIsUserDropdownOpen(false);
+  }, [pathname]);
 
   useEffect(() => {
     const fetchProfilePicture = async () => {
@@ -30,6 +67,10 @@ function HeaderComponent() {
 
     fetchProfilePicture();
   }, [user]);
+
+  const isActive = (path: string) => {
+    return pathname.startsWith(path);
+  };
 
   return (
     <header className="bg-white fixed w-full top-0 z-50 shadow-sm">
@@ -129,68 +170,9 @@ function HeaderComponent() {
           </div>
 
           {/* Mobile Menu Button */}
-          <div className="flex items-center md:hidden">
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="inline-flex items-center justify-center p-2 rounded-md text-gray-600 hover:text-blue-600 hover:bg-gray-100 transition-colors"
-            >
-              {isOpen ? (
-                <FiX className="block h-6 w-6" />
-              ) : (
-                <FiMenu className="block h-6 w-6" />
-              )}
-            </button>
-          </div>
-        </div>
-
-        {/* Mobile Menu */}
-        <div className={`md:hidden ${isOpen ? 'block' : 'hidden'}`}>
-          <div className="pt-2 pb-3 space-y-1">
-            <Link
-              href="/articulos"
-              className="flex items-center gap-2 px-3 py-2 text-gray-600 hover:text-blue-600 hover:bg-gray-50 rounded-md transition-colors"
-              onClick={() => setIsOpen(false)}
-            >
-              <FaBook className="h-5 w-5" />
-              Artículos
-            </Link>
-            <Link
-              href="/aprendizaje"
-              className="flex items-center gap-2 px-3 py-2 text-gray-600 hover:text-blue-600 hover:bg-gray-50 rounded-md transition-colors"
-              onClick={() => setIsOpen(false)}
-            >
-              <FaGraduationCap className="h-5 w-5" />
-              Aprendizaje!
-            </Link>
-            <Link
-              href="/recursos"
-              className="flex items-center gap-2 px-3 py-2 text-gray-600 hover:text-blue-600 hover:bg-gray-50 rounded-md transition-colors"
-              onClick={() => setIsOpen(false)}
-            >
-              <FaTools className="h-5 w-5" />
-              Recursos
-            </Link>
-            <Link
-              href="/nosotros"
-              className="flex items-center gap-2 px-3 py-2 text-gray-600 hover:text-blue-600 hover:bg-gray-50 rounded-md transition-colors"
-              onClick={() => setIsOpen(false)}
-            >
-              <FaUsers className="h-5 w-5" />
-              Nosotros
-            </Link>
-
-            {/* Mobile Login Button */}
-            <Link
-              href="/handler/sign-up"
-              className="flex items-center gap-2 px-3 py-2 mt-2 text-white bg-blue-500 hover:bg-blue-600 rounded-md transition-colors"
-              onClick={() => setIsOpen(false)}
-            >
-              Iniciar Sesión
-            </Link>
-          </div>
-          {user && (
-            <div className="px-4 py-3 border-t border-gray-200 flex items-center gap-3">
-              <div className="overflow-hidden rounded-full w-8 h-8 flex-shrink-0">
+          <div className="md:hidden flex items-center gap-2">
+            {user && (
+              <div className="flex items-center justify-center overflow-hidden rounded-full w-8 h-8 border-2 border-gray-200">
                 {profilePicture ? (
                   <img 
                     src={profilePicture} 
@@ -203,9 +185,83 @@ function HeaderComponent() {
                   </div>
                 )}
               </div>
-              <span className="text-gray-700 font-medium">{user.displayName || 'Usuario'}</span>
-            </div>
-          )}
+            )}
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="inline-flex items-center justify-center p-2 rounded-md text-gray-600 hover:text-blue-600 hover:bg-gray-100 transition-colors"
+              aria-expanded={isOpen}
+              aria-label="Toggle menu"
+            >
+              {isOpen ? (
+                <FiX className="block h-6 w-6" />
+              ) : (
+                <FiMenu className="block h-6 w-6" />
+              )}
+            </button>
+          </div>
+        </div>
+
+        {/* Mobile Menu - Simplified Hamburger Menu */}
+        <div className={`md:hidden fixed top-20 right-0 left-0 bottom-0 bg-white z-50 overflow-y-auto transform transition-transform duration-300 ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+          <div className="pt-2 pb-3 space-y-1 px-4">
+            {/* Mobile Navigation Menu - Simple links without submenus */}
+            {mobileMenuItems.map((item) => (
+              <div key={item.label} className="py-2 border-b border-gray-100">
+                <Link
+                  href={item.href}
+                  className={`flex items-center gap-3 py-3 ${
+                    isActive(item.href) 
+                      ? 'text-blue-600 font-medium' 
+                      : 'text-gray-600'
+                  }`}
+                  onClick={() => setIsOpen(false)}
+                >
+                  {item.icon}
+                  <span className="text-lg">{item.label}</span>
+                </Link>
+              </div>
+            ))}
+            
+            {/* Mobile User Menu */}
+            {user ? (
+              <div className="mt-4 pt-4 border-t border-gray-200 space-y-2">
+                <p className="text-sm text-gray-500 pb-2">Cuenta</p>
+                <Link
+                  href="/guardados"
+                  className="flex items-center gap-2 py-2 text-gray-700"
+                  onClick={() => setIsOpen(false)}
+                >
+                  <span>Guardados</span>
+                </Link>
+                <Link
+                  href="/perfil"
+                  className="flex items-center gap-2 py-2 text-gray-700"
+                  onClick={() => setIsOpen(false)}
+                >
+                  <span>Editar Perfil</span>
+                </Link>
+                <button
+                  onClick={async () => {
+                    await user.signOut();
+                    setIsOpen(false);
+                  }}
+                  className="w-full flex items-center gap-2 py-2 text-left text-red-600"
+                >
+                  <span>Cerrar Sesión</span>
+                </button>
+              </div>
+            ) : (
+              <div className="mt-4 pt-4 border-t border-gray-200">
+                <a
+                  href="/handler/sign-up"
+                  className="block w-full py-3 mt-2 px-4 bg-blue-500 text-white rounded-md text-center"
+                  onClick={() => setIsOpen(false)}
+                >
+                  Iniciar Sesión
+                </a>
+              </div>
+            )}
+          </div>
         </div>
       </nav>
     </header>

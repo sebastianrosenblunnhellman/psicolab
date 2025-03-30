@@ -186,8 +186,8 @@ export default function Comments({ articleId }: CommentsProps) {
   };
 
   return (
-    <section className="mt-12 bg-gray-50 p-6 rounded-lg">
-      <h2 className="text-2xl font-bold mb-6">Comentarios</h2>
+    <section className="mt-12 bg-gray-50 p-4 sm:p-6 rounded-lg">
+      <h2 className="text-xl sm:text-2xl font-bold mb-6">Comentarios</h2>
       
       {/* Error message */}
       {error && (

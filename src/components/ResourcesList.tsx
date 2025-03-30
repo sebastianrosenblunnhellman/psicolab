@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { FaBook, FaVideo, FaExternalLinkAlt, FaRegBookmark, FaBookmark } from 'react-icons/fa';
 import { useUser } from '@stackframe/stack';
 import { useCache } from '@/utils/cache';
+import FilteredLayout from './FilteredLayout';
 
 interface ResourcesListProps {
   initialResources: Resource[];
@@ -177,21 +178,21 @@ export default function ResourcesList({ initialResources }: ResourcesListProps) 
   };
 
   return (
-    <div className="flex">
-      {/* Sidebar Filter */}
-      <SidebarFilter
-        tags={allTags}
-        authors={allTypes}
-        selectedTag={selectedTag}
-        selectedAuthor={selectedType}
-        onTagChange={handleTagChange}
-        onAuthorChange={handleTypeChange}
-        authorsLabel="Tipo"
-        allAuthorsLabel="Todos los tipos"
-      />
-      
-      {/* Main Content */}
-      <div className="flex-1 pl-6 space-y-8">
+    <FilteredLayout
+      filterComponent={
+        <SidebarFilter
+          tags={allTags}
+          authors={allTypes}
+          selectedTag={selectedTag}
+          selectedAuthor={selectedType}
+          onTagChange={handleTagChange}
+          onAuthorChange={handleTypeChange}
+          authorsLabel="Tipo"
+          allAuthorsLabel="Todos los tipos"
+        />
+      }
+    >
+      <div className="flex-1 space-y-8">
         {/* Search Bar */}
         <div className="mb-8">
           <input
@@ -302,6 +303,6 @@ export default function ResourcesList({ initialResources }: ResourcesListProps) 
           </div>
         )}
       </div>
-    </div>
+    </FilteredLayout>
   );
 }

@@ -38,6 +38,7 @@ export default function BlogCard({
   const { getCachedData, invalidateCache } = useCache();
   const [isSaved, setIsSaved] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
   
   useEffect(() => {
     const checkSavedStatus = async () => {
@@ -111,81 +112,89 @@ export default function BlogCard({
   }
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border border-gray-100 hover:shadow-lg hover:border-teal-500 transition-all duration-300 flex flex-col md:flex-row overflow-hidden">
-      {/* Image column - exactly matching content height */}
-      <div className="md:w-1/4 relative flex-shrink-0">
-        <Image 
-          src={image} 
-          alt={title}
-          width={250}
-          height={250}
-          className="object-cover h-full w-full"
-          priority
-        />
-      </div>
-      
-      {/* Content column */}
-      <div className="p-6 flex flex-col flex-grow">
-        <div className="flex justify-between items-start mb-2">
-          <Link href={`/articulos/${slug}`} className="block">
-            <h2 className="text-2xl font-bold text-gray-800 hover:text-teal-500 transition-colors">
+    <Link 
+      href={`/articulos/${slug}`} 
+      className="block h-48"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      <article className="bg-white rounded-lg shadow-sm border border-gray-100 hover:shadow-lg hover:border-teal-500 transition-all duration-300 flex flex-col md:flex-row overflow-hidden h-full">
+        {/* Image column - square shape */}
+        <div className="md:w-48 w-full h-full relative flex-shrink-0">
+          <Image 
+            src={image} 
+            alt={title}
+            width={192}
+            height={192}
+            className="object-cover h-full w-full"
+            priority
+          />
+        </div>
+        
+        {/* Content column */}
+        <div className="p-3 flex flex-col flex-grow overflow-hidden">
+          <div className="flex justify-between items-start mb-2">
+            <h2 className="text-lg font-bold text-gray-800 hover:text-teal-500 transition-colors line-clamp-2">
               {title}
             </h2>
-          </Link>
+            
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                handleSave();
+              }}
+              className={`ml-2 transition-colors flex-shrink-0 ${isHovered ? 'opacity-100' : 'opacity-70'} ${isSaved ? 'text-teal-500 hover:text-teal-600' : 'text-gray-400 hover:text-teal-500'}`}
+              aria-label={isSaved ? 'Quitar de guardados' : 'Guardar artículo'}
+            >
+              {isSaved ? <FaBookmark className="w-4 h-4" /> : <FaRegBookmark className="w-4 h-4" />}
+            </button>
+          </div>
           
-          <button
-            onClick={handleSave}
-            className="ml-2 text-blue-500 hover:text-blue-600 transition-colors flex-shrink-0"
-            aria-label={isSaved ? 'Quitar de guardados' : 'Guardar artículo'}
-          >
-            {isSaved ? <FaBookmark className="w-5 h-5" /> : <FaRegBookmark className="w-5 h-5" />}
-          </button>
-        </div>
-        
-        <div className="flex items-center gap-2 text-sm text-gray-600 mb-4">
-          {date && (
-            <time dateTime={date}>
-              {new Date(date).toLocaleDateString('es-ES', {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric',
-              })}
-            </time>
-          )}
-          {readTime && (
-            <>
-              <span>·</span>
-              <span>{readTime} min de lectura</span>
-            </>
-          )}
-          {author && (
-            <>
-              <span>·</span>
-              <span>{author}</span>
-            </>
-          )}
-        </div>
-        
-        {excerpt && <p className="text-gray-600 mb-4">{excerpt}</p>}
-        
-        {tags && tags.length > 0 && (
-          <div className="flex flex-wrap gap-2 mt-auto">
-            {tags.slice(0, 2).map((tag) => (
-              <span
-                key={tag}
-                className="inline-block bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm"
-              >
-                {tag}
-              </span>
-            ))}
-            {tags.length > 2 && (
-              <span className="text-gray-500 text-sm">
-                +{tags.length - 2}
-              </span>
+          <div className="flex items-center gap-2 text-xs text-gray-600 mb-2">
+            {date && (
+              <time dateTime={date}>
+                {new Date(date).toLocaleDateString('es-ES', {
+                  year: 'numeric',
+                  month: 'short',
+                  day: 'numeric',
+                })}
+              </time>
+            )}
+            {readTime && (
+              <>
+                <span>·</span>
+                <span>{readTime} min</span>
+              </>
+            )}
+            {author && (
+              <>
+                <span>·</span>
+                <span className="truncate">{author}</span>
+              </>
             )}
           </div>
-        )}
-      </div>
-    </div>
+          
+          {excerpt && <p className="text-sm text-gray-600 mb-2 line-clamp-2">{excerpt}</p>}
+          
+          {tags && tags.length > 0 && (
+            <div className="flex flex-wrap gap-1 mt-auto">
+              {tags.slice(0, 2).map((tag) => (
+                <span
+                  key={tag}
+                  className="inline-block bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full text-xs"
+                >
+                  {tag}
+                </span>
+              ))}
+              {tags.length > 2 && (
+                <span className="text-gray-500 text-xs">
+                  +{tags.length - 2}
+                </span>
+              )}
+            </div>
+          )}
+        </div>
+      </article>
+    </Link>
   );
 }

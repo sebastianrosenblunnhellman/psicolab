@@ -14,6 +14,7 @@ interface SidebarFilterProps {
   authorsLabel?: string;
   allTagsLabel?: string;
   allAuthorsLabel?: string;
+  onFilterOpenChange?: (isOpen: boolean) => void;
 }
 
 export default function SidebarFilter({
@@ -27,9 +28,10 @@ export default function SidebarFilter({
   authorsLabel = 'Autores',
   allTagsLabel = 'Todas las categorías',
   allAuthorsLabel = 'Todos los autores',
+  onFilterOpenChange,
 }: SidebarFilterProps) {
-  const [isTagsOpen, setIsTagsOpen] = useState(true);
-  const [isAuthorsOpen, setIsAuthorsOpen] = useState(true);
+  const [isTagsOpen, setIsTagsOpen] = useState(false);
+  const [isAuthorsOpen, setIsAuthorsOpen] = useState(false);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   
   // Check if we're on mobile based on screen width
@@ -38,7 +40,7 @@ export default function SidebarFilter({
   useEffect(() => {
     // Set initial state
     const checkMobile = () => {
-      setIsMobile(window.innerWidth < 1024);
+      setIsMobile(window.innerWidth < 768); // Changed from 1024 to 768 for better mobile breakpoint
     };
     
     // Check on initial load
@@ -51,30 +53,43 @@ export default function SidebarFilter({
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
   
-  // Open tags by default on desktop
+  // Keep filters collapsed by default on mobile, but allow opening on desktop
   useEffect(() => {
-    if (!isMobile) {
-      setIsFilterOpen(true);
-      setIsTagsOpen(true);
-      setIsAuthorsOpen(true);
+    if (isMobile) {
+      setIsFilterOpen(false);
+    } else {
+      setIsFilterOpen(true); // Auto-expand on desktop
     }
   }, [isMobile]);
 
+  // Notify parent component when filter state changes
+  useEffect(() => {
+    if (onFilterOpenChange) {
+      onFilterOpenChange(isFilterOpen);
+    }
+  }, [isFilterOpen, onFilterOpenChange]);
+
+  const toggleFilterOpen = () => {
+    setIsFilterOpen(!isFilterOpen);
+  };
+
   return (
-    <div className="w-64 bg-white p-4 border-r border-gray-200 h-fit sticky top-24">
+    <div className={`${isFilterOpen ? (isMobile ? 'w-full' : 'w-64') : 'w-12'} transition-all duration-300 bg-white p-4 border-r border-gray-200 h-fit sticky top-24 lg:top-24 z-10 ${isMobile && isFilterOpen ? 'fixed left-0 right-0 bottom-0' : ''}`}>
       {/* Filter header with toggle */}
       <button 
         className="w-full flex items-center justify-between font-medium text-gray-800 mb-4"
-        onClick={() => setIsFilterOpen(!isFilterOpen)}
+        onClick={toggleFilterOpen}
       >
         <div className="flex items-center">
-          <FiFilter className="mr-2" />
-          <span className="text-lg">Filtros</span>
+          <FiFilter className="text-blue-600 h-5 w-5" />
+          {isFilterOpen && <span className="text-lg ml-2">Filtros</span>}
         </div>
-        {isFilterOpen ? (
-          <FiChevronUp className="h-5 w-5" />
-        ) : (
-          <FiChevronDown className="h-5 w-5" />
+        {isFilterOpen && (
+          isFilterOpen ? (
+            <FiChevronUp className="h-5 w-5" />
+          ) : (
+            <FiChevronDown className="h-5 w-5" />
+          )
         )}
       </button>
 
@@ -179,6 +194,13 @@ export default function SidebarFilter({
               </div>
             </div>
           )}
+        </div>
+      )}
+      
+      {/* Filter notification badge when collapsed - shows number of active filters */}
+      {!isFilterOpen && (selectedTag || selectedAuthor) && (
+        <div className="absolute top-0 right-0 -mt-2 -mr-2 h-5 w-5 rounded-full bg-red-500 flex items-center justify-center text-white text-xs">
+          {(selectedTag ? 1 : 0) + (selectedAuthor ? 1 : 0)}
         </div>
       )}
     </div>

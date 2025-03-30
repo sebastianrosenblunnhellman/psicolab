@@ -58,23 +58,23 @@ export default function SavedContentCard({
   };
 
   return (
-    <article className="bg-white rounded-lg shadow-sm border border-gray-100 hover:shadow-lg hover:border-teal-500 transition-all duration-300 mb-4 w-full flex flex-col md:flex-row overflow-hidden">
-      {/* Image column - exactly matching content height */}
-      <div className="md:w-1/4 relative flex-shrink-0">
+    <article className="bg-white rounded-lg shadow-sm border border-gray-100 hover:shadow-lg hover:border-teal-500 transition-all duration-300 mb-4 w-full flex flex-col md:flex-row overflow-hidden h-48">
+      {/* Image column - square shape */}
+      <div className="md:w-48 w-full h-full relative flex-shrink-0">
         <Image 
           src={image} 
           alt={title || `${getContentTypeLabel()} ${content_id}`}
-          width={250}
-          height={250}
+          width={192}
+          height={192}
           className="object-cover h-full w-full"
           priority
         />
       </div>
       
       {/* Content column */}
-      <div className="p-6 flex flex-col flex-grow">
-        <div className="flex items-center justify-between mb-4">
-          <span className="inline-block bg-teal-100 text-teal-800 px-3 py-1 rounded-full text-sm font-medium">
+      <div className="p-3 flex flex-col flex-grow overflow-hidden">
+        <div className="flex items-center justify-between mb-2">
+          <span className="inline-block bg-teal-100 text-teal-800 px-2 py-0.5 rounded-full text-xs font-medium">
             {getContentTypeLabel()}
           </span>
           <button
@@ -82,23 +82,23 @@ export default function SavedContentCard({
             className="text-red-500 hover:text-red-700 transition-colors"
             title="Eliminar contenido guardado"
           >
-            <FaTrash className="w-5 h-5" />
+            <FaTrash className="w-4 h-4" />
           </button>
         </div>
         
         <Link href={getContentLink()} className="block">
-          <h2 className="text-2xl font-bold text-gray-800 mb-3 hover:text-teal-500 transition-colors">
+          <h2 className="text-lg font-bold text-gray-800 mb-2 hover:text-teal-500 transition-colors line-clamp-2">
             {title || `${getContentTypeLabel()} ${content_id}`}
           </h2>
         </Link>
 
-        {excerpt && <p className="text-gray-600 mb-4">{excerpt}</p>}
+        {excerpt && <p className="text-sm text-gray-600 mb-2 line-clamp-2">{excerpt}</p>}
 
-        <div className="text-sm text-gray-500 mt-auto">
+        <div className="text-xs text-gray-500 mt-auto">
           Guardado el:{' '}
           {new Date(saved_at).toLocaleDateString('es-ES', {
             year: 'numeric',
-            month: 'long',
+            month: 'short',
             day: 'numeric'
           })}
         </div>
