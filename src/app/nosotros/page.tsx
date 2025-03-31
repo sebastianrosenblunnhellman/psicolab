@@ -183,7 +183,6 @@ export default function NosotrosPage() {
               Contacta!
             </a>
           </div>
-          <p className="mt-4 text-sm text-gray-500">¿Tienes dudas o quieres colaborar? ¡Estamos aquí para escucharte!</p>
         </div>
       </section>
     </div>

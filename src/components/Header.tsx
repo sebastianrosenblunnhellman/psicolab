@@ -78,7 +78,8 @@ function HeaderComponent() {
         <div className="flex justify-between items-center h-20">
           {/* Logo */}
           <div className="flex-shrink-0 flex items-center">
-            <Link href="/" className="text-2xl font-bold transition-colors">
+            <Link href="/" className="text-2xl font-bold transition-colors flex items-center gap-2">
+              <img src="/favicon.png" alt="Logo" className="h-8 w-8" />
               <span className="text-teal-500">Psi</span>{" "}
               <span className="text-blue-500">Colab</span>
             </Link>
@@ -143,12 +144,6 @@ function HeaderComponent() {
                       className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
                     >
                       Guardados
-                    </Link>
-                    <Link
-                      href="/perfil"
-                      className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
-                    >
-                      Editar Perfil
                     </Link>
                     <button
                       onClick={async () => await user.signOut()}
