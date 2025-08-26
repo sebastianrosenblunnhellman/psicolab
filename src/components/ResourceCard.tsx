@@ -38,13 +38,13 @@ export default function ResourceCard({
   return (
     <Link
       href={`/recursos/${id}`}
-      className="block h-48"
+      className="block h-auto md:h-48"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
       <article className="bg-white rounded-lg shadow-sm border border-gray-100 hover:shadow-lg hover:border-teal-500 transition-all duration-300 flex flex-col md:flex-row overflow-hidden h-full">
         {/* Image column - square shape */}
-        <div className="md:w-48 w-full h-full relative flex-shrink-0">
+        <div className="w-full md:w-48 h-40 md:h-full relative flex-shrink-0">
           <Image 
             src={image} 
             alt={title}

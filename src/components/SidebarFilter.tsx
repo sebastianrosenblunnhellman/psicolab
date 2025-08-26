@@ -15,6 +15,8 @@ interface SidebarFilterProps {
   allTagsLabel?: string;
   allAuthorsLabel?: string;
   onFilterOpenChange?: (isOpen: boolean) => void;
+  // When this number changes, open the drawer on mobile
+  externalToggleKey?: number;
 }
 
 export default function SidebarFilter({
@@ -29,6 +31,7 @@ export default function SidebarFilter({
   allTagsLabel = 'Todas las categorías',
   allAuthorsLabel = 'Todos los autores',
   onFilterOpenChange,
+  externalToggleKey,
 }: SidebarFilterProps) {
   const [isTagsOpen, setIsTagsOpen] = useState(false);
   const [isAuthorsOpen, setIsAuthorsOpen] = useState(false);
@@ -62,6 +65,15 @@ export default function SidebarFilter({
     }
   }, [isMobile]);
 
+  // Open the drawer when the parent requests it (mobile only)
+  useEffect(() => {
+    if (isMobile && typeof externalToggleKey === 'number') {
+      // Open when key changes
+      setIsFilterOpen(true);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [externalToggleKey]);
+
   // Notify parent component when filter state changes
   useEffect(() => {
     if (onFilterOpenChange) {
@@ -74,7 +86,25 @@ export default function SidebarFilter({
   };
 
   return (
-    <div className={`${isFilterOpen ? (isMobile ? 'w-full' : 'w-64') : 'w-12'} transition-all duration-300 bg-white p-4 border-r border-gray-200 h-fit sticky top-24 lg:top-24 z-10 ${isMobile && isFilterOpen ? 'fixed left-0 right-0 bottom-0' : ''}`}>
+    <>
+      {/* Backdrop on mobile when open */}
+      {isMobile && isFilterOpen && (
+        <div
+          className="fixed top-20 right-0 left-0 bottom-0 bg-black/30 z-40"
+          onClick={() => setIsFilterOpen(false)}
+          aria-hidden="true"
+        />
+      )}
+
+      <div
+        className={`${
+          isMobile
+            ? `fixed top-20 bottom-0 left-0 z-50 bg-white border-r border-gray-200 transition-transform duration-300 ${
+                isFilterOpen ? 'translate-x-0' : '-translate-x-full'
+              } w-11/12 max-w-sm p-4`
+            : `${isFilterOpen ? 'w-64' : 'w-12'} transition-all duration-300 bg-white p-4 border-r border-gray-200 h-fit sticky top-24`
+        }`}
+      >
       {/* Filter header with toggle */}
       <button 
         className="w-full flex items-center justify-between font-medium text-gray-800 mb-4"
@@ -93,9 +123,9 @@ export default function SidebarFilter({
         )}
       </button>
 
-      {/* Filter content - collapsible */}
-      {isFilterOpen && (
-        <div className="space-y-6">
+        {/* Filter content - collapsible */}
+        {isFilterOpen && (
+          <div className="space-y-6 pb-6">
           {/* Tags Filter */}
           <div className="mb-6">
             <button
@@ -194,8 +224,8 @@ export default function SidebarFilter({
               </div>
             </div>
           )}
-        </div>
-      )}
+          </div>
+        )}
       
       {/* Filter notification badge when collapsed - shows number of active filters */}
       {!isFilterOpen && (selectedTag || selectedAuthor) && (
@@ -203,6 +233,7 @@ export default function SidebarFilter({
           {(selectedTag ? 1 : 0) + (selectedAuthor ? 1 : 0)}
         </div>
       )}
-    </div>
+      </div>
+    </>
   );
 }

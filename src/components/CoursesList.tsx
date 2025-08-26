@@ -6,6 +6,7 @@ import SidebarFilter from './SidebarFilter';
 import CourseCard from './CourseCard';
 import { useUser } from '@stackframe/stack';
 import { useCache } from '@/utils/cache';
+import FilteredLayout from './FilteredLayout';
 
 interface CoursesListProps {
   initialCourses: Course[];
@@ -168,21 +169,22 @@ export default function CoursesList({ initialCourses }: CoursesListProps) {
   };
 
   return (
-    <div className="flex">
-      {/* Sidebar Filter */}
-      <SidebarFilter
-        tags={allTags}
-        authors={allNiveles}
-        selectedTag={selectedTag}
-        selectedAuthor={selectedNivel}
-        onTagChange={handleTagChange}
-        onAuthorChange={handleNivelChange}
-        authorsLabel="Nivel"
-        allAuthorsLabel="Todos los niveles"
-      />
-      
+    <FilteredLayout
+      filterComponent={
+        <SidebarFilter
+          tags={allTags}
+          authors={allNiveles}
+          selectedTag={selectedTag}
+          selectedAuthor={selectedNivel}
+          onTagChange={handleTagChange}
+          onAuthorChange={handleNivelChange}
+          authorsLabel="Nivel"
+          allAuthorsLabel="Todos los niveles"
+        />
+      }
+    >
       {/* Main Content */}
-      <div className="flex-1 pl-6 space-y-8">
+      <div className="space-y-8">
         {/* Search Bar */}
         <div className="mb-8">
           <input
@@ -196,7 +198,7 @@ export default function CoursesList({ initialCourses }: CoursesListProps) {
 
         {/* Courses Grid */}
         {paginatedCourses.length > 0 ? (
-          <div className="grid grid-cols-1 gap-8">
+          <div className="grid grid-cols-1 gap-6 sm:gap-8">
             {paginatedCourses.map((course) => (
               <CourseCard
                 key={course.slug}
@@ -253,6 +255,6 @@ export default function CoursesList({ initialCourses }: CoursesListProps) {
           </div>
         )}
       </div>
-    </div>
+    </FilteredLayout>
   );
 }

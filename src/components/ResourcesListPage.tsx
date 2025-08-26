@@ -90,7 +90,7 @@ export default function ResourcesListPage({ initialResources }: ResourcesListPag
         />
       }
     >
-      <div className="space-y-6">
+  <div className="space-y-6">
         {/* Search Bar */}
         <div>
           <input
@@ -144,7 +144,7 @@ export default function ResourcesListPage({ initialResources }: ResourcesListPag
         
         {/* Pagination Controls */}
         {totalPages > 1 && (
-          <div className="flex justify-center items-center space-x-4 mt-8">
+          <div className="flex justify-center items-center gap-3 sm:gap-4 mt-8">
             <button
               onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
               disabled={currentPage === 1}
