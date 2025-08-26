@@ -22,25 +22,33 @@ export default function CoursesList({ initialCourses }: CoursesListProps) {
   const user = useUser();
   const { getCachedData, invalidateCache } = useCache();
 
-  // Get unique tags from all courses
-  const allTags = useMemo(() => {
+  // Available tags based on search + selectedNivel
+  const availableTags = useMemo(() => {
     const tags = new Set<string>();
-    initialCourses.forEach(course => {
-      course.tags?.forEach(tag => tags.add(tag));
-    });
+    initialCourses
+      .filter(c => c.title.toLowerCase().includes(searchTerm.toLowerCase()) || c.excerpt.toLowerCase().includes(searchTerm.toLowerCase()))
+      .filter(c => selectedNivel === '' || c.nivel === selectedNivel)
+      .forEach(c => c.tags?.forEach(t => tags.add(t)));
     return Array.from(tags).sort();
-  }, [initialCourses]);
+  }, [initialCourses, searchTerm, selectedNivel]);
 
-  // Get unique niveles from all courses
-  const allNiveles = useMemo(() => {
+  // Available niveles based on search + selectedTag
+  const availableNiveles = useMemo(() => {
     const niveles = new Set<string>();
-    initialCourses.forEach(course => {
-      if (course.nivel) {
-        niveles.add(course.nivel);
-      }
-    });
+    initialCourses
+      .filter(c => c.title.toLowerCase().includes(searchTerm.toLowerCase()) || c.excerpt.toLowerCase().includes(searchTerm.toLowerCase()))
+      .filter(c => selectedTag === '' || c.tags?.includes(selectedTag))
+      .forEach(c => { if (c.nivel) niveles.add(c.nivel); });
     return Array.from(niveles).sort();
-  }, [initialCourses]);
+  }, [initialCourses, searchTerm, selectedTag]);
+
+  // Keep selections valid
+  useEffect(() => {
+    if (selectedTag && !availableTags.includes(selectedTag)) setSelectedTag('');
+  }, [availableTags, selectedTag]);
+  useEffect(() => {
+    if (selectedNivel && !availableNiveles.includes(selectedNivel)) setSelectedNivel('');
+  }, [availableNiveles, selectedNivel]);
 
   // Fetch saved courses for the user
   useEffect(() => {
@@ -172,8 +180,8 @@ export default function CoursesList({ initialCourses }: CoursesListProps) {
     <FilteredLayout
       filterComponent={
         <SidebarFilter
-          tags={allTags}
-          authors={allNiveles}
+    tags={availableTags}
+    authors={availableNiveles}
           selectedTag={selectedTag}
           selectedAuthor={selectedNivel}
           onTagChange={handleTagChange}
@@ -207,6 +215,7 @@ export default function CoursesList({ initialCourses }: CoursesListProps) {
                 description={course.excerpt}
                 duration={course.courseTime}
                 level={course.nivel}
+                tags={course.tags}
                 isSaved={savedCourses.includes(course.slug)}
                 onSaveToggle={handleSaveToggle}
               />

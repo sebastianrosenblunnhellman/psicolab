@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { Resource } from '@/utils/resources';
 import SidebarFilter from '@/components/SidebarFilter';
 import ResourceCard from '@/components/ResourceCard';
@@ -17,25 +17,33 @@ export default function ResourcesListPage({ initialResources }: ResourcesListPag
   const [selectedAuthor, setSelectedAuthor] = useState('');
   const resourcesPerPage = 4;
 
-  // Get unique tags from all resources
-  const allTags = useMemo(() => {
+  // Available tags based on search + selectedAuthor
+  const availableTags = useMemo(() => {
     const tags = new Set<string>();
-    initialResources.forEach(resource => {
-      resource.tags?.forEach(tag => tags.add(tag));
-    });
+    initialResources
+      .filter(r => r.title.toLowerCase().includes(searchTerm.toLowerCase()) || r.excerpt.toLowerCase().includes(searchTerm.toLowerCase()))
+      .filter(r => selectedAuthor === '' || r.author === selectedAuthor)
+      .forEach(r => r.tags?.forEach(t => tags.add(t)));
     return Array.from(tags).sort();
-  }, [initialResources]);
-  
-  // Get unique authors from all resources
-  const allAuthors = useMemo(() => {
+  }, [initialResources, searchTerm, selectedAuthor]);
+
+  // Available authors based on search + selectedTag
+  const availableAuthors = useMemo(() => {
     const authors = new Set<string>();
-    initialResources.forEach(resource => {
-      if (resource.author) {
-        authors.add(resource.author);
-      }
-    });
+    initialResources
+      .filter(r => r.title.toLowerCase().includes(searchTerm.toLowerCase()) || r.excerpt.toLowerCase().includes(searchTerm.toLowerCase()))
+      .filter(r => selectedTag === '' || r.tags?.includes(selectedTag))
+      .forEach(r => { if (r.author) authors.add(r.author); });
     return Array.from(authors).sort();
-  }, [initialResources]);
+  }, [initialResources, searchTerm, selectedTag]);
+
+  // Ensure selections remain valid
+  useEffect(() => {
+    if (selectedTag && !availableTags.includes(selectedTag)) setSelectedTag('');
+  }, [availableTags, selectedTag]);
+  useEffect(() => {
+    if (selectedAuthor && !availableAuthors.includes(selectedAuthor)) setSelectedAuthor('');
+  }, [availableAuthors, selectedAuthor]);
 
   // Filter resources based on search term, selected tag, and selected author
   const filteredResources = useMemo(() => {
@@ -81,8 +89,8 @@ export default function ResourcesListPage({ initialResources }: ResourcesListPag
     <FilteredLayout
       filterComponent={
         <SidebarFilter 
-          tags={allTags}
-          authors={allAuthors}
+          tags={availableTags}
+          authors={availableAuthors}
           selectedTag={selectedTag}
           selectedAuthor={selectedAuthor}
           onTagChange={handleTagChange}
@@ -132,6 +140,7 @@ export default function ResourcesListPage({ initialResources }: ResourcesListPag
                 type={resource.type}
                 author={resource.author}
                 downloadUrl={resource.link}
+                tags={resource.tags}
                 onSaveToggle={handleSaveToggle}
               />
             ))}

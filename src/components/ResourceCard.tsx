@@ -13,6 +13,7 @@ interface ResourceCardProps {
   isSaved?: boolean;
   downloadUrl?: string;
   onSaveToggle?: (resourceId: string) => void;
+  tags?: string[];
 }
 
 export default function ResourceCard({
@@ -24,7 +25,8 @@ export default function ResourceCard({
   author,
   isSaved = false,
   downloadUrl,
-  onSaveToggle
+  onSaveToggle,
+  tags
 }: ResourceCardProps) {
   const [isHovered, setIsHovered] = useState(false);
 
@@ -84,10 +86,15 @@ export default function ResourceCard({
           
           <p className="text-sm text-gray-600 mb-2 line-clamp-2">{description}</p>
           
-          {author && (
-            <div className="text-xs text-gray-500 mt-auto">
-              Por: {author}
+          {tags && tags.length > 0 && (
+            <div className="mt-2 flex flex-wrap gap-1">
+              {tags.map((tag) => (
+                <span key={tag} className="bg-gray-100 text-gray-800 text-xs px-2 py-0.5 rounded">{tag}</span>
+              ))}
             </div>
+          )}
+          {author && (
+            <div className="text-xs text-gray-500 mt-2">Por: {author}</div>
           )}
         </div>
       </article>

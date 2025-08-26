@@ -174,14 +174,20 @@ export default function CoursePage() {
           </button>
         </div>
         <div className="prose max-w-none">
-          {mdxSource && <MDXRemote {...mdxSource} components={components} />}
+          {mdxSource && (
+            <MDXRemote
+              {...mdxSource}
+              // Solo permitir componentes especiales (como Quiz) en el examen final
+              components={currentLesson === 'exam' ? components : {}}
+            />
+          )}
         </div>
         
-        {/* Quiz Component */}
-        {currentLesson && (
-          <Quiz 
-            curso="CursoPrincipiosBasicosDelAprendizaje" 
-            leccion={currentLesson} 
+        {/* Quiz solo en la última lección (examen) */}
+        {currentLesson === 'exam' && (
+          <Quiz
+            curso="CursoPrincipiosBasicosDelAprendizaje"
+            leccion={currentLesson}
           />
         )}
 

@@ -146,20 +146,15 @@ function BlogCard({ slug, title, date, excerpt, tags, image = '/images/miniatura
           <p className="text-sm text-gray-600 line-clamp-2">{excerpt}</p>
           
           {tags && tags.length > 0 && (
-            <div className="mt-auto flex flex-wrap gap-1">
-              {tags.slice(0, 2).map(tag => (
-                <span 
-                  key={tag} 
+            <div className="mt-auto flex flex-wrap gap-1 pt-2">
+              {tags.map(tag => (
+                <span
+                  key={tag}
                   className="bg-gray-100 text-gray-800 text-xs px-2 py-0.5 rounded"
                 >
                   {tag}
                 </span>
               ))}
-              {tags.length > 2 && (
-                <span className="text-gray-500 text-xs">
-                  +{tags.length - 2} más
-                </span>
-              )}
             </div>
           )}
         </div>
@@ -175,25 +170,33 @@ export default function ArticlesList({ initialArticles }: ArticlesListProps) {
   const [selectedAuthor, setSelectedAuthor] = useState('');
   const articlesPerPage = 4;
 
-  // Get unique tags from all articles
-  const allTags = useMemo(() => {
+  // Available tags based on search + selectedAuthor (exclude selectedTag to avoid circularity)
+  const availableTags = useMemo(() => {
     const tags = new Set<string>();
-    initialArticles.forEach(article => {
-      article.tags?.forEach(tag => tags.add(tag));
-    });
+    initialArticles
+      .filter(a => a.title.toLowerCase().includes(searchTerm.toLowerCase()) || a.excerpt.toLowerCase().includes(searchTerm.toLowerCase()))
+      .filter(a => selectedAuthor === '' || a.author === selectedAuthor)
+      .forEach(a => a.tags?.forEach(t => tags.add(t)));
     return Array.from(tags).sort();
-  }, [initialArticles]);
-  
-  // Get unique authors from all articles
-  const allAuthors = useMemo(() => {
+  }, [initialArticles, searchTerm, selectedAuthor]);
+
+  // Available authors based on search + selectedTag
+  const availableAuthors = useMemo(() => {
     const authors = new Set<string>();
-    initialArticles.forEach(article => {
-      if (article.author) {
-        authors.add(article.author);
-      }
-    });
+    initialArticles
+      .filter(a => a.title.toLowerCase().includes(searchTerm.toLowerCase()) || a.excerpt.toLowerCase().includes(searchTerm.toLowerCase()))
+      .filter(a => selectedTag === '' || a.tags?.includes(selectedTag))
+      .forEach(a => { if (a.author) authors.add(a.author); });
     return Array.from(authors).sort();
-  }, [initialArticles]);
+  }, [initialArticles, searchTerm, selectedTag]);
+
+  // Ensure selected filters remain valid
+  useEffect(() => {
+    if (selectedTag && !availableTags.includes(selectedTag)) setSelectedTag('');
+  }, [availableTags, selectedTag]);
+  useEffect(() => {
+    if (selectedAuthor && !availableAuthors.includes(selectedAuthor)) setSelectedAuthor('');
+  }, [availableAuthors, selectedAuthor]);
 
   // Filter articles based on search term, selected tag, and selected author
   const filteredArticles = useMemo(() => {
@@ -233,8 +236,8 @@ export default function ArticlesList({ initialArticles }: ArticlesListProps) {
     <FilteredLayout
       filterComponent={
         <SidebarFilter 
-          tags={allTags}
-          authors={allAuthors}
+          tags={availableTags}
+          authors={availableAuthors}
           selectedTag={selectedTag}
           selectedAuthor={selectedAuthor}
           onTagChange={handleTagChange}

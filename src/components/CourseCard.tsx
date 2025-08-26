@@ -12,6 +12,7 @@ interface CourseCardProps {
   level?: string;
   isSaved?: boolean;
   onSaveToggle?: (courseId: string) => void;
+  tags?: string[];
 }
 
 export default function CourseCard({
@@ -22,7 +23,8 @@ export default function CourseCard({
   duration,
   level,
   isSaved = false,
-  onSaveToggle
+  onSaveToggle,
+  tags
 }: CourseCardProps) {
   const [isHovered, setIsHovered] = useState(false);
 
@@ -68,6 +70,14 @@ export default function CourseCard({
             </button>
           </div>
           <p className="text-sm text-gray-600 mb-2 line-clamp-2">{description}</p>
+
+          {tags && tags.length > 0 && (
+            <div className="flex flex-wrap gap-1 mb-2">
+              {tags.map((tag) => (
+                <span key={tag} className="bg-gray-100 text-gray-800 text-xs px-2 py-0.5 rounded">{tag}</span>
+              ))}
+            </div>
+          )}
           
           <div className="flex items-center text-xs text-gray-500 space-x-4 mt-auto">
             {duration && (
