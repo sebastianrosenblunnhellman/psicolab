@@ -4,10 +4,10 @@ type: "articulo"
 excerpt: "El análisis de la conducta clínica, surgido en los noventa, se enfoca en clientes verbalmente competentes, utilizando intervenciones basadas en el lenguaje. Difiere de la terapia cognitivo-conductual en enfoque filosófico y metodológico, siendo contextual y funcional."
 date: "2024-02-02"
 author: "D. Borsboom"
-tags: ["Conductismo", "Contextual", "Analisis Funcional"]
+tags: ["Redes","Psicopatologia"]
 readTime: ""
 published: true
-image: "/images/miniatura.jpg"  
+image: "/images/articles/T_R_T_M/miniatura.png"  
 ---
 
 [Descargar](https://drive.google.com/file/d/1nYGav3_X2Xj_MaU6r73oxllPWim_LkF-/view?usp=sharing)
@@ -38,7 +38,7 @@ Las condiciones que pueden influir en los síntomas desde fuera de la red forman
 
 Si todos los síntomas de una red interactúan entre sí y estas interacciones también tienen la misma fuerza, los síntomas son intercambiables, excepto por su dependencia del campo externo. En este caso, si las conexiones son fuertes, los síntomas de la red mostrarán un comportamiento muy sincronizado: si un síntoma está activo, es más probable que los demás también lo estén. Sin embargo, si no todos los síntomas interactúan directamente o si ciertas interacciones son mucho más fuertes que otras, es posible que ciertos síntomas de la red estén activos mientras que otros no. En este caso, la estructura de la red se caracteriza por la agrupación: dentro del conjunto de síntomas psicopatológicos, encontraremos determinados grupos de sintomas que están muy estrechamente relacionados y, por lo tanto, se influyen mutuamente en mayor grado (Borsboom et al., 2011). Por ejemplo, el insomnio probablemente tenga un fuerte efecto directo sobre la fatiga, pero un efecto mucho más débil sobre los sentimientos de culpa. Si el insomnio influye en los sentimientos de culpa, es probable que ese efecto esté mediado por, por ejemplo, la pérdida de interés o problemas de concentración (Borsboom, 2017).
 
-![**Figura 1.** Una red de síntomas de cuatro síntomas (S1 -S4 ). Si dos síntomas tienden a activarse mutuamente, están conectados por una línea (por ejemplo, S1-S2 ). Los síntomas que no están directamente conectados entre sí (por ejemplo, S1 -S4 ) pueden sincronizarse si comparten un vecino común en la red (por ejemplo, S3 ). Los factores externos que afectan a la red (por ejemplo, acontecimientos vitales adversos) se representan en el campo externo. Estos pueden ser específicos de un síntoma (E1 , E3 ) o compartidos entre síntomas (E2).](./img/Fig1.png)
+![**Figura 1.** Una red de síntomas de cuatro síntomas (S1 -S4 ). Si dos síntomas tienden a activarse mutuamente, están conectados por una línea (por ejemplo, S1-S2 ). Los síntomas que no están directamente conectados entre sí (por ejemplo, S1 -S4 ) pueden sincronizarse si comparten un vecino común en la red (por ejemplo, S3 ). Los factores externos que afectan a la red (por ejemplo, acontecimientos vitales adversos) se representan en el campo externo. Estos pueden ser específicos de un síntoma (E1 , E3 ) o compartidos entre síntomas (E2).](/images/articles/T_R_T_M/Fig1.png)
 
 **Figura 1.** Una red de síntomas de cuatro síntomas (S1 -S4 ). Si dos síntomas tienden a activarse mutuamente, están conectados por una línea (por ejemplo, S1-S2 ). Los síntomas que no están directamente conectados entre sí (por ejemplo, S1 -S4 ) pueden sincronizarse si comparten un vecino común en la red (por ejemplo, S3 ). Los factores externos que afectan a la red (por ejemplo, acontecimientos vitales adversos) se representan en el campo externo. Estos pueden ser específicos de un síntoma (E1 , E3 ) o compartidos entre síntomas (E2).
 
@@ -63,7 +63,7 @@ El principio 4, los trastornos mentales siguen la estructura de la red, sostiene
 
 Una consecuencia importante de los principios anteriores es que la comorbilidad es una característica intrínseca de los trastornos mentales (Cramer et al., 2010). Es decir, aunque los procesos de interacción síntoma-síntoma pueden ser más activos dentro de los conjuntos de síntomas que se asocian con un trastorno mental determinado, no se detendrán en la frontera de un diagnóstico DSM. Por ejemplo, si una persona desarrolla insomnio en el contexto de un trastorno de estrés postraumático, esto puede causar fatiga y problemas de concentración, que son síntomas puente que también pertenecen a redes asociadas con el episodio depresivo mayor y el trastorno de ansiedad generalizada. Como resultado, surgirán patrones comórbidos de interacciones de síntomas en la red del episodio depresivo mayor/trastorno de ansiedad generalizada.  Así pues, en lugar de una molestia que desaparecerá cuando tengamos mejores equipos de medición, más conocimiento de la biología del cerebro o más conocimiento de la estructura genética de los trastornos, la comorbilidad debe considerarse como parte integrante de la psicopatología (Borsboom, 2017).
 
-![**Figura 2.** Dos trastornos (A y B) que están conectados a través de síntomas puente (S5 y S6 ) que desempeñan un papel en ambas redes. Aunque la asociación de síntomas será más fuerte dentro de cada red, el solapamiento estructural entre los trastornos es inevitable y, como resultado, surgirá la comorbilidad.](./img/Fig2.png)
+![**Figura 2.** Dos trastornos (A y B) que están conectados a través de síntomas puente (S5 y S6 ) que desempeñan un papel en ambas redes. Aunque la asociación de síntomas será más fuerte dentro de cada red, el solapamiento estructural entre los trastornos es inevitable y, como resultado, surgirá la comorbilidad.](/images/articles/T_R_T_M/Fig2.png) 
 
 **Figura 2.** Dos trastornos (A y B) que están conectados a través de síntomas puente (S5 y S6 ) que desempeñan un papel en ambas redes. Aunque la asociación de síntomas será más fuerte dentro de cada red, el solapamiento estructural entre los trastornos es inevitable y, como resultado, surgirá la comorbilidad.
 
@@ -73,7 +73,7 @@ Las implicaciones del enfoque de red para la estructura y la comorbilidad de los
 
 Supongamos que partimos de una Fase 1 totalmente asintomática. En esta fase, no hay síntomas presentes, y las propiedades que subyacen a las interacciones causales entre los síntomas en fases posteriores son latentes (es decir, disposicionales, en el sentido de que describen lo que ocurriría al activarse los síntomas, pero no lo que ocurre en ese momento). En la Fase 2, los acontecimientos desencadenantes en el campo externo (por ejemplo, acontecimientos vitales adversos) producen la activación de la red. En la Fase 3, la activación de los síntomas se propagará por la red a través de las conexiones entre los síntomas. En una red de síntomas fuertemente conectada, los síntomas pueden entrar en la Fase 4, en la que se mantienen activados unos a otros debido a las relaciones de retroalimentación. Como resultado, la red puede llegar a ser autosuficiente, y puede permanecer activa mucho después de que los acontecimientos en el campo externo que desencadenaron su activación hayan disminuido (Borsboom, 2017).
 
-![**Figura 3**. Fases en el desarrollo de los trastornos mentales según la teoría de redes. Tras una fase asintomática, en la que la red está inactiva (Fase 1), un acontecimiento externo (E1 ) activa algunos de los síntomas (Fase 2), que a su vez activan síntomas conectados (Fase 3). Si la red está fuertemente conectada, la supresión del suceso externo no conduce a la recuperación: la red se autoalimenta y queda estancada en su estado activo (Fase 4).](./img/fig3.png)
+![**Figura 3**. Fases en el desarrollo de los trastornos mentales según la teoría de redes. Tras una fase asintomática, en la que la red está inactiva (Fase 1), un acontecimiento externo (E1 ) activa algunos de los síntomas (Fase 2), que a su vez activan síntomas conectados (Fase 3). Si la red está fuertemente conectada, la supresión del suceso externo no conduce a la recuperación: la red se autoalimenta y queda estancada en su estado activo (Fase 4).](/images/articles/T_R_T_M/fig3.png)
 
 **Figura 3**. Fases en el desarrollo de los trastornos mentales según la teoría de redes. Tras una fase asintomática, en la que la red está inactiva (Fase 1), un acontecimiento externo (E1 ) activa algunos de los síntomas (Fase 2), que a su vez activan síntomas conectados (Fase 3). Si la red está fuertemente conectada, la supresión del suceso externo no conduce a la recuperación: la red se autoalimenta y queda estancada en su estado activo (Fase 4).
 
@@ -85,9 +85,9 @@ Obsérvese que esta dinámica sólo se produce en redes fuertemente conectadas, 
 
 Un proceso que puede ejemplificar este fenómeno en redes de síntomas de depresión es el duelo normal. El duelo normal puede causar un patrón sintomático indistinguible de la depresión mayor, pero como los síntomas no se retroalimentan, el patrón sintomático no es autosostenible, de modo que con el tiempo el sistema vuelve a su estado estable saludable. Esta diferencia se representa en la Figura 4 (Borsboom, 2017).
 
-![red resiliente.PNG](./img/red_resiliente.png)
+![red resiliente.PNG](/images/articles/T_R_T_M/red_resiliente.png)
 
-![**Figura 4.** Una red débilmente conectada (panel superior) es resistente. Los síntomas pueden ser activados por acontecimientos del campo externo, pero las interacciones síntoma-síntoma no son lo suficientemente fuertes como para conducir a una actividad sintomática auto-sostenida. Una red fuertemente conectada (panel inferior), en cambio, puede mantener su propia actividad y convertirse así en un estado de trastorno.](./img/red_vulnerable.png)
+![**Figura 4.** Una red débilmente conectada (panel superior) es resistente. Los síntomas pueden ser activados por acontecimientos del campo externo, pero las interacciones síntoma-síntoma no son lo suficientemente fuertes como para conducir a una actividad sintomática auto-sostenida. Una red fuertemente conectada (panel inferior), en cambio, puede mantener su propia actividad y convertirse así en un estado de trastorno.](/images/articles/T_R_T_M/red_vulnerable.png)
 
 **Figura 4.** Una red débilmente conectada (panel superior) es resistente. Los síntomas pueden ser activados por acontecimientos del campo externo, pero las interacciones síntoma-síntoma no son lo suficientemente fuertes como para conducir a una actividad sintomática auto-sostenida. Una red fuertemente conectada (panel inferior), en cambio, puede mantener su propia actividad y convertirse así en un estado de trastorno.
 
@@ -97,10 +97,8 @@ Las diferentes dinámicas de las redes de síntomas bajo diversas parametrizacio
 
 |  | *Conectividad **Débil*** | *Conectividad **Fuerte*** |
 | --- | --- | --- |
-| *Estresor
-**Débil*** | *Salud mental con alta resiliencia* | *Vulnerabilidad elevada (posiblemente estado de remisión)* |
-| *Estresor
-**Fuerte*** | *Sintomatología elevada* | *Trastorno mental* |
+| **Estresor Débil** | *Salud mental con alta resiliencia* | *Vulnerabilidad elevada (posiblemente estado de remisión)* |
+| **Estresor Fuerte** | *Sintomatología elevada* | *Trastorno mental* |
 |  |  |  |
 
 *Una red débilmente conectada, bajo niveles bajos de estrés externo, ocupará un estado estable de salud mental (celda superior izquierda). La red es resistente porque — incluso si puede presentar sintomatología si se somete a estrés del campo externo (celda inferior izquierda) — volverá a su estado estable cuando ese nivel de estrés disminuya. En contraste, una red altamente conectada puede ser asintomática (celda superior derecha), pero es vulnerable porque — tan pronto como surja un factor de estrés en el campo externo — puede transitar a un estado estable alternativo de trastorno mental (celda inferior derecha).*

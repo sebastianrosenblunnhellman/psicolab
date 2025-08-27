@@ -17,6 +17,7 @@ interface ContentDetails {
   title: string;
   excerpt: string;
   category?: string;
+  image?: string;
 }
 
 export default function GuardadosPage() {
@@ -54,7 +55,8 @@ export default function GuardadosPage() {
                   ...item,
                   title: details.title,
                   excerpt: details.excerpt,
-                  category: details.category || details.tag || 'Sin categoría'
+                  category: details.category || details.tag || 'Sin categoría',
+                  image: details.image
                 };
               }
               
@@ -84,14 +86,13 @@ export default function GuardadosPage() {
       const itemToDelete = savedItems.find(item => item.id === id);
       if (!itemToDelete) return;
 
-      const response = await fetch(`/api/saved-content/${user.id}`, {
+    const response = await fetch(`/api/saved-content/${user.id}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          content_id: itemToDelete.content_id,
-          content_type: itemToDelete.content_type
+      content_id: itemToDelete.content_id,
         })
       });
 
@@ -106,8 +107,8 @@ export default function GuardadosPage() {
     }
   };
 
-  const contentTypes = [...new Set(savedItems.map(item => item.content_type))].filter(Boolean);
-  const categories = [...new Set(savedItems.map(item => item.category))].filter(Boolean);
+  const contentTypes = ['article'];
+  const categories: string[] = [...new Set(savedItems.map(item => item.category || undefined))].filter((v): v is string => !!v);
 
   const filteredItems = savedItems.filter(item => {
     const matchesSearch = searchTerm === '' || 
@@ -165,6 +166,7 @@ export default function GuardadosPage() {
                   saved_at={item.saved_at}
                   title={item.title}
                   excerpt={item.excerpt}
+                  image={item.image}
                   onDelete={handleDeleteSavedContent}
                 />
               ))}

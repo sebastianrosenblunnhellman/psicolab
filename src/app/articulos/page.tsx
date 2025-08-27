@@ -3,8 +3,7 @@ import ArticlesList from '@/components/ArticlesList';
 import { getAllArticles } from '@/utils/articles';
 
 export const metadata = {
-  title: 'Artículos | Psi Colab',
-  description: 'Explora nuestros artículos sobre psicología, investigación y práctica clínica.',
+  title: 'Psi Colab | Artículos'
 };
 
 export default async function ArticulosPage() {

@@ -84,16 +84,15 @@ export default function SavedContentFilter({
                 >
                   {allTypesLabel}
                 </button>
-                {contentTypes.map((type) => (
+                {contentTypes
+                  .filter((t) => t === 'article')
+                  .map((type) => (
                   <button
                     key={type}
                     onClick={() => onTypeChange(type)}
                     className={`w-full text-left px-2 py-1 rounded ${selectedType === type ? 'bg-blue-50 text-blue-600' : 'text-gray-600 hover:bg-gray-50'}`}
                   >
-                    {type === 'article' ? 'Artículo' : 
-                    type === 'course' ? 'Curso' : 
-                    type === 'resource' ? 'Recurso' : 
-                    type}
+                    {type === 'article' ? 'Artículo' : type}
                   </button>
                 ))}
               </div>

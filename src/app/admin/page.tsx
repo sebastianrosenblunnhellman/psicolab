@@ -19,6 +19,7 @@ export default function AdminPage() {
   const [author, setAuthor] = useState("");
   const [tags, setTags] = useState(""); // comma-separated
   const [date, setDate] = useState("");
+  const [md, setMd] = useState("");
 
   // Resource specific
   const [type, setType] = useState("");
@@ -45,11 +46,12 @@ export default function AdminPage() {
     setAuthor("");
     setTags("");
     setDate("");
-    setType("");
+  setType("");
     setLink("");
     setImage("");
     setNivel("");
     setCourseTime("");
+  setMd("");
   };
 
   const createContent = async () => {
@@ -69,18 +71,19 @@ export default function AdminPage() {
 
       let url = "";
       if (creating === "article") {
-        url = "/api/pages/add"; // Reutilizamos endpoint de páginas/artículos si existe
-        payload.type = "article";
+        url = "/api/articles/upload-markdown";
+        payload.published = true;
+        payload.md = md;
       } else if (creating === "resource") {
-        url = "/api/resources/add";
-        payload.type = type || "recurso";
-        payload.link = link;
-        payload.image = image;
+        url = "/api/resources/upload-markdown";
+        payload.fileName = slug; // ese endpoint espera fileName
+        payload.content = `---\n${title ? `title: '${title.replace(/'/g, "''")}'\n` : ''}${type ? `type: '${type.replace(/'/g, "''")}'\n` : ''}${excerpt ? `excerpt: '${excerpt.replace(/'/g, "''")}'\n` : ''}${date ? `date: '${date.replace(/'/g, "''")}'\n` : ''}${author ? `author: '${author.replace(/'/g, "''")}'\n` : ''}${tags ? `tags: [${tags.split(',').map(t=>`'${t.trim().replace(/'/g, "''")}'`).join(', ')}]\n` : ''}${image ? `image: '${image.replace(/'/g, "''")}'\n` : ''}${link ? `link: '${link.replace(/'/g, "''")}'\n` : ''}---\n\n${md || ''}`;
       } else if (creating === "course") {
-        url = "/api/lessons/add"; // Fallback: podrías tener un endpoint específico para cursos
+        url = "/api/courses/upload-markdown";
         payload.type = "course";
         payload.nivel = nivel;
         payload.courseTime = courseTime;
+        payload.md = md;
       }
 
       const res = await fetch(url, {
@@ -147,6 +150,7 @@ export default function AdminPage() {
           <input className="w-full border rounded px-3 py-2" placeholder="tags (separadas por coma)" value={tags} onChange={(e) => setTags(e.target.value)} />
           <input className="w-full border rounded px-3 py-2" placeholder="fecha (YYYY-MM-DD)" value={date} onChange={(e) => setDate(e.target.value)} />
           <textarea className="w-full border rounded px-3 py-2" placeholder="extracto" value={excerpt} onChange={(e) => setExcerpt(e.target.value)} />
+          <textarea className="w-full border rounded px-3 py-2 min-h-40" placeholder="Contenido Markdown (MD)" value={md} onChange={(e) => setMd(e.target.value)} />
         </div>
 
         <div className="space-y-3">

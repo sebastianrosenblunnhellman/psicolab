@@ -17,7 +17,6 @@ export default function CoursesList({ initialCourses }: CoursesListProps) {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedTag, setSelectedTag] = useState('');
   const [selectedNivel, setSelectedNivel] = useState('');
-  const [savedCourses, setSavedCourses] = useState<string[]>([]);
   const coursesPerPage = 4;
   const user = useUser();
   const { getCachedData, invalidateCache } = useCache();
@@ -50,97 +49,7 @@ export default function CoursesList({ initialCourses }: CoursesListProps) {
     if (selectedNivel && !availableNiveles.includes(selectedNivel)) setSelectedNivel('');
   }, [availableNiveles, selectedNivel]);
 
-  // Fetch saved courses for the user
-  useEffect(() => {
-    if (user) {
-      fetchSavedCourses();
-    }
-  }, [user]);
-
-  const fetchSavedCourses = async () => {
-    try {
-      // Use the cache system to fetch saved courses
-      const cacheKey = `user_${user?.id}_saved_courses`;
-      
-      const data = await getCachedData(
-        cacheKey,
-        async () => {
-          const response = await fetch(`/api/saved-content/${user?.id}`);
-          if (!response.ok) throw new Error('Failed to fetch saved courses');
-          return response.json();
-        },
-        // Cache for 5 minutes
-        5 * 60 * 1000
-      );
-      
-      const courseIds = data
-        .filter((item: any) => item.content_type === 'course')
-        .map((item: any) => item.content_id);
-      setSavedCourses(courseIds);
-    } catch (error) {
-      console.error('Error fetching saved courses:', error);
-    }
-  };
-
-  // Handle saving/unsaving a course
-  const handleSaveToggle = async (courseId: string) => {
-    if (!user) {
-      alert('Debes iniciar sesión para guardar cursos');
-      return;
-    }
-
-    try {
-      const isSaved = savedCourses.includes(courseId);
-      
-      if (isSaved) {
-        // Unsave the course
-        const response = await fetch(`/api/saved-content/${user.id}`, {
-          method: 'DELETE',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            content_id: courseId,
-            content_type: 'course'
-          }),
-        });
-
-        if (response.ok) {
-          setSavedCourses(savedCourses.filter(id => id !== courseId));
-          
-          // Invalidate the cache for saved courses
-          invalidateCache(`user_${user.id}_saved_courses`);
-          
-          // Also invalidate any specific course cache
-          invalidateCache(`user_${user.id}_saved_course_${courseId}`);
-        }
-      } else {
-        // Save the course
-        const response = await fetch(`/api/saved-content/${user.id}`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            content_id: courseId,
-            content_type: 'course'
-          }),
-        });
-
-        if (response.ok) {
-          setSavedCourses([...savedCourses, courseId]);
-          
-          // Invalidate the cache for saved courses
-          invalidateCache(`user_${user.id}_saved_courses`);
-          
-          // Also invalidate any specific course cache
-          invalidateCache(`user_${user.id}_saved_course_${courseId}`);
-        }
-      }
-    } catch (error) {
-      console.error('Error toggling saved course:', error);
-    }
-  };
+  // Saving courses is disabled; UI simplified.
 
   // Filter courses based on search term, selected tag, and selected nivel
   const filteredCourses = useMemo(() => {
@@ -216,8 +125,6 @@ export default function CoursesList({ initialCourses }: CoursesListProps) {
                 duration={course.courseTime}
                 level={course.nivel}
                 tags={course.tags}
-                isSaved={savedCourses.includes(course.slug)}
-                onSaveToggle={handleSaveToggle}
               />
             ))}
           </div>

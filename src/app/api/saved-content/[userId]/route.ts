@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
+import { getArticleBySlug } from '@/utils/articles';
 
 // GET: Fetch saved content for a user
 export async function GET(
@@ -35,11 +36,12 @@ export async function GET(
     
     const savedContent = await prisma.saved_content.findMany({
       where: {
-        user_id: params.userId
+        user_id: params.userId,
+        content_type: 'article',
       },
       orderBy: {
-        saved_at: 'desc'
-      }
+        saved_at: 'desc',
+      },
     });
 
     return NextResponse.json(savedContent);
@@ -58,13 +60,13 @@ export async function DELETE(
 ) {
   try {
     const body = await request.json();
-    const { content_id, content_type } = body;
+  const { content_id } = body;
 
-    await prisma.saved_content.deleteMany({
+  await prisma.saved_content.deleteMany({
       where: {
         user_id: params.userId,
         content_id,
-        content_type
+    content_type: 'article',
       }
     });
 
@@ -83,10 +85,10 @@ export async function POST(
   { params }: { params: { userId: string } }
 ) {
   try {
-    const body = await request.json();
-    const { content_id, content_type } = body;
+  const body = await request.json();
+  const { content_id } = body;
     
-    console.log('Saving content:', { userId: params.userId, content_id, content_type });
+  console.log('Saving content:', { userId: params.userId, content_id, content_type: 'article' });
     
     // Ensure user exists
     const user = await prisma.users_sync.findUnique({
@@ -112,13 +114,22 @@ export async function POST(
       }
     }
     
+    // Validate article exists
+    const article = await getArticleBySlug(content_id);
+    if (!article) {
+      return NextResponse.json(
+        { error: 'Artículo no encontrado' },
+        { status: 404 }
+      );
+    }
+
     // Check if the item already exists to avoid unique constraint violation
     const existingItem = await prisma.saved_content.findFirst({
       where: {
         user_id: params.userId,
         content_id,
-        content_type
-      }
+        content_type: 'article',
+      },
     });
     
     if (existingItem) {
@@ -130,7 +141,7 @@ export async function POST(
       data: {
         user_id: params.userId,
         content_id,
-        content_type
+        content_type: 'article',
       },
     });
 

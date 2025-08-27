@@ -4,10 +4,10 @@ type: "articulo"
 excerpt: "El análisis de la conducta clínica, surgido en los noventa, se enfoca en clientes verbalmente competentes, utilizando intervenciones basadas en el lenguaje. Difiere de la terapia cognitivo-conductual en enfoque filosófico y metodológico, siendo contextual y funcional."
 date: "2024-02-02"
 author: "S. Hayes"
-tags: ["Conductismo", "Contextual", "Analisis Funcional"]
+tags: ["Conductismo", "Contextual"]
 readTime: "10 min"
 published: true
-image: "/images/miniatura.jpg"
+image: "/images/articles/A_C_C/miniatura.png"
 ---
 
 [Descargar](https://drive.google.com/file/d/1nYGav3_X2Xj_MaU6r73oxllPWim_LkF-/view?usp=sharing)

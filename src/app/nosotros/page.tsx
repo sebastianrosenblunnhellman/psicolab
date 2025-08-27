@@ -1,6 +1,5 @@
 'use client';
 
-import NetworkAnimation from '@/components/NetworkAnimation';
 import { FaChevronDown, FaEnvelope } from 'react-icons/fa';
 import { useState } from 'react';
 
@@ -83,11 +82,7 @@ export default function NosotrosPage() {
                 </li>
                 <li className="flex items-start">
                   <span className="w-2 h-2 mt-2 mr-2 bg-teal-500 rounded-full"></span>
-                  <span><strong>Traducción de Material Audiovisual:</strong> Facilitamos el acceso a contenido multimedia de alto valor para el aprendizaje y la actualización profesional.</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="w-2 h-2 mt-2 mr-2 bg-teal-500 rounded-full"></span>
-                  <span><strong>Cursos y Hojas de Ruta:</strong> Proporcionamos cursos y guías en diferentes formatos para apoyar el desarrollo de estudiantes y profesionales de la psicología.</span>
+                  <span><strong>Cursos:</strong> Actualmente estamos trabajando para proporcionar cursos y guías en diferentes formatos para apoyar el desarrollo de estudiantes y profesionales de la psicología.</span>
                 </li>
               </ul>
             </div>
@@ -180,7 +175,7 @@ export default function NosotrosPage() {
               rel="noopener noreferrer"
             >
               <FaEnvelope className="animate-pulse" />
-              Contacta!
+              Participa!
             </a>
           </div>
         </div>

@@ -13,17 +13,6 @@ type BlogCardProps = Partial<Article> & {
   title: string;
 };
 
-interface BlogCardProps {
-  slug: string;
-  title: string;
-  date?: string;
-  excerpt?: string;
-  tags?: string[];
-  readTime?: string;
-  author?: string;
-  image?: string;
-}
-
 export default function BlogCard({
   slug,
   title,
@@ -114,19 +103,19 @@ export default function BlogCard({
   return (
     <Link 
       href={`/articulos/${slug}`} 
-      className="block h-48"
+      className="block h-auto md:h-48"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
       <article className="bg-white rounded-lg shadow-sm border border-gray-100 hover:shadow-lg hover:border-teal-500 transition-all duration-300 flex flex-col md:flex-row overflow-hidden h-full">
         {/* Image column - square shape */}
-        <div className="md:w-48 w-full h-full relative flex-shrink-0">
+        <div className="relative w-full md:w-48 aspect-square md:aspect-auto md:h-full flex-shrink-0">
           <Image 
             src={image} 
             alt={title}
-            width={192}
-            height={192}
-            className="object-cover h-full w-full"
+            fill
+            sizes="(max-width: 768px) 100vw, 192px"
+            className="object-cover"
             priority
           />
         </div>

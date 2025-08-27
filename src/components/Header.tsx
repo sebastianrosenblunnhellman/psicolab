@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { useState, useEffect, Suspense } from 'react';
 import { FiMenu, FiX } from 'react-icons/fi';
-import { FaBook, FaTools, FaUsers, FaGraduationCap } from 'react-icons/fa';
+import { FaBook, FaTools, FaUsers } from 'react-icons/fa';
 import { useUser } from "@stackframe/stack";
 import { usePathname } from 'next/navigation';
 
@@ -19,6 +19,7 @@ function HeaderComponent() {
   const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
   const user = useUser();
   const [profilePicture, setProfilePicture] = useState<string | null>(null);
+  const [authPopup, setAuthPopup] = useState<Window | null>(null);
 
   // Define mobile menu items - simplified without submenus
   const mobileMenuItems: MobileMenuItem[] = [
@@ -26,11 +27,6 @@ function HeaderComponent() {
       label: 'Artículos',
       href: '/articulos',
       icon: <FaBook className="h-5 w-5" />
-    },
-    {
-      label: 'Aprendizaje',
-      href: '/aprendizaje',
-      icon: <FaGraduationCap className="h-5 w-5" />
     },
     {
       label: 'Recursos',
@@ -72,6 +68,70 @@ function HeaderComponent() {
     return pathname.startsWith(path);
   };
 
+  const openAuthPopup = () => {
+    if (typeof window === 'undefined') return;
+    const width = 520;
+    const height = 720;
+    const left = window.screenX + Math.max(0, (window.outerWidth - width) / 2);
+    const top = window.screenY + Math.max(0, (window.outerHeight - height) / 3);
+  const urlObj = new URL(window.location.href);
+  urlObj.searchParams.set('popup', '1');
+  const url = `/handler/sign-up?returnTo=${encodeURIComponent(urlObj.toString())}`;
+    const features = `popup=yes,width=${width},height=${height},left=${left},top=${top},resizable=yes,scrollbars=yes`;
+    const popup = window.open(url, 'auth_popup', features);
+    if (!popup) {
+      // Fallback if popup is blocked
+      window.location.href = url;
+      return;
+    }
+    setAuthPopup(popup);
+    // In case the popup was immediately closed, fallback to navigation
+    setTimeout(() => {
+      if (popup.closed) {
+        try { window.location.href = url; } catch {}
+      }
+    }, 200);
+  };
+
+  // When the user logs in (cookie updated by Stack Auth), close the popup
+  useEffect(() => {
+    if (user && authPopup && !authPopup.closed) {
+      authPopup.close();
+      setAuthPopup(null);
+    }
+  }, [user, authPopup]);
+
+  // Listen for popup completion messages and refresh parent
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const onMessage = (ev: MessageEvent) => {
+      if (ev.origin !== window.location.origin) return;
+      if (ev.data === 'auth:done') {
+        try {
+          // Close any remaining popup
+          if (authPopup && !authPopup.closed) authPopup.close();
+        } catch {}
+        // Force reload to update auth state if SDK doesn't auto-sync
+        window.location.reload();
+      }
+    };
+    window.addEventListener('message', onMessage);
+    return () => window.removeEventListener('message', onMessage);
+  }, [authPopup]);
+
+  // If we're inside the popup after redirect (returnTo), notify opener and close
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    try {
+      const params = new URLSearchParams(window.location.search);
+      const inPopup = params.get('popup') === '1';
+      if (inPopup && window.opener && window.opener !== window) {
+        window.opener.postMessage('auth:done', window.location.origin);
+        window.close();
+      }
+    } catch {}
+  }, []);
+
   return (
     <header className="bg-white fixed w-full top-0 z-50 shadow-sm">
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -93,13 +153,6 @@ function HeaderComponent() {
             >
               <FaBook className="h-5 w-5" />
               Artículos
-            </Link>
-            <Link
-              href="/aprendizaje"
-              className="flex items-center gap-2 text-gray-600 hover:text-blue-600 pt-1 transition-all"
-            >
-              <FaGraduationCap className="h-5 w-5" />
-              Aprendizaje!
             </Link>
             <Link
               href="/recursos"
@@ -155,12 +208,12 @@ function HeaderComponent() {
                 )}
               </div>
             ) : (
-              <a
-                href="/handler/sign-up"
+              <button
+                onClick={openAuthPopup}
                 className="ml-4 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
               >
                 Iniciar Sesión
-              </a>
+              </button>
             )}
           </div>
 
@@ -247,13 +300,12 @@ function HeaderComponent() {
               </div>
             ) : (
               <div className="mt-4 pt-4 border-t border-gray-200">
-                <a
-                  href="/handler/sign-up"
+                <button
+                  onClick={() => { openAuthPopup(); setIsOpen(false); }}
                   className="block w-full py-3 mt-2 px-4 bg-blue-500 text-white rounded-md text-center"
-                  onClick={() => setIsOpen(false)}
                 >
                   Iniciar Sesión
-                </a>
+                </button>
               </div>
             )}
           </div>

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo } from 'react';
 import { Resource } from '@/utils/resources';
 import SidebarFilter from '@/components/SidebarFilter';
 import ResourceCard from '@/components/ResourceCard';
@@ -12,93 +12,76 @@ interface ResourcesListPageProps {
 
 export default function ResourcesListPage({ initialResources }: ResourcesListPageProps) {
   const [currentPage, setCurrentPage] = useState(1);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [selectedTag, setSelectedTag] = useState('');
+  const [selectedType, setSelectedType] = useState('');
   const [selectedAuthor, setSelectedAuthor] = useState('');
-  const resourcesPerPage = 4;
+  const [searchTerm, setSearchTerm] = useState('');
+  const resourcesPerPage = 8;
 
-  // Available tags based on search + selectedAuthor
-  const availableTags = useMemo(() => {
-    const tags = new Set<string>();
-    initialResources
-      .filter(r => r.title.toLowerCase().includes(searchTerm.toLowerCase()) || r.excerpt.toLowerCase().includes(searchTerm.toLowerCase()))
-      .filter(r => selectedAuthor === '' || r.author === selectedAuthor)
-      .forEach(r => r.tags?.forEach(t => tags.add(t)));
-    return Array.from(tags).sort();
-  }, [initialResources, searchTerm, selectedAuthor]);
+  // Available types (from front matter "type")
+  const availableTypes = useMemo(() => {
+    const types = new Set<string>();
+    initialResources.forEach(r => r.type && types.add(r.type));
+    return Array.from(types).sort();
+  }, [initialResources]);
 
-  // Available authors based on search + selectedTag
+  // Available authors (from front matter "author")
   const availableAuthors = useMemo(() => {
     const authors = new Set<string>();
-    initialResources
-      .filter(r => r.title.toLowerCase().includes(searchTerm.toLowerCase()) || r.excerpt.toLowerCase().includes(searchTerm.toLowerCase()))
-      .filter(r => selectedTag === '' || r.tags?.includes(selectedTag))
-      .forEach(r => { if (r.author) authors.add(r.author); });
+    initialResources.forEach(r => r.author && authors.add(r.author));
     return Array.from(authors).sort();
-  }, [initialResources, searchTerm, selectedTag]);
+  }, [initialResources]);
 
-  // Ensure selections remain valid
-  useEffect(() => {
-    if (selectedTag && !availableTags.includes(selectedTag)) setSelectedTag('');
-  }, [availableTags, selectedTag]);
-  useEffect(() => {
-    if (selectedAuthor && !availableAuthors.includes(selectedAuthor)) setSelectedAuthor('');
-  }, [availableAuthors, selectedAuthor]);
-
-  // Filter resources based on search term, selected tag, and selected author
+  // Filter by search term and type
   const filteredResources = useMemo(() => {
+    const q = searchTerm.trim().toLowerCase();
     return initialResources.filter(resource => {
-      const matchesSearch = resource.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        resource.excerpt.toLowerCase().includes(searchTerm.toLowerCase());
-      const matchesTag = selectedTag === '' || resource.tags?.includes(selectedTag);
+      const matchesType = selectedType === '' || resource.type === selectedType;
       const matchesAuthor = selectedAuthor === '' || resource.author === selectedAuthor;
-      return matchesSearch && matchesTag && matchesAuthor;
+      const matchesSearch = q === '' || resource.title.toLowerCase().includes(q) || resource.excerpt.toLowerCase().includes(q);
+      return matchesType && matchesAuthor && matchesSearch;
     });
-  }, [initialResources, searchTerm, selectedTag, selectedAuthor]);
-  
-  // Calculate pagination
+  }, [initialResources, selectedType, selectedAuthor, searchTerm]);
+
+  // Pagination
   const totalPages = Math.ceil(filteredResources.length / resourcesPerPage);
   const paginatedResources = filteredResources.slice(
     (currentPage - 1) * resourcesPerPage,
     currentPage * resourcesPerPage
   );
-  
-  // Reset to first page when filters change
-  const handleSearch = (value: string) => {
-    setSearchTerm(value);
-    setCurrentPage(1);
-  };
-  
-  const handleTagChange = (value: string) => {
-    setSelectedTag(value);
-    setCurrentPage(1);
-  };
 
+  const handleTypeChange = (value: string) => {
+    setSelectedType(value);
+    setCurrentPage(1);
+  };
   const handleAuthorChange = (value: string) => {
     setSelectedAuthor(value);
     setCurrentPage(1);
   };
-
-  // Simple mock function for save toggle (to be replaced with actual implementation)
-  const handleSaveToggle = (resourceId: string) => {
-    console.log(`Toggle save for resource: ${resourceId}`);
-    // Implement actual save logic here
+  const handleSearch = (value: string) => {
+    setSearchTerm(value);
+    setCurrentPage(1);
   };
 
   return (
     <FilteredLayout
       filterComponent={
-        <SidebarFilter 
-          tags={availableTags}
-          authors={availableAuthors}
-          selectedTag={selectedTag}
-          selectedAuthor={selectedAuthor}
-          onTagChange={handleTagChange}
-          onAuthorChange={handleAuthorChange}
+        <SidebarFilter
+          // Usamos 'authors' para representar listas genéricas; aquí pasamos tipos y autores reales.
+          authors={[...availableTypes]}
+          selectedAuthor={selectedType}
+          onAuthorChange={handleTypeChange}
+          authorsLabel="Tipo"
+          allAuthorsLabel="Todos los tipos"
+          // Añadimos un segundo bloque como 'tags' para autores reales (aprovechamos el componente existente)
+          tags={[...availableAuthors]}
+          selectedTag={selectedAuthor}
+          onTagChange={handleAuthorChange}
+          tagsLabel="Autor"
+          allTagsLabel="Todos los autores"
         />
       }
     >
-  <div className="space-y-6">
+      <div className="space-y-6">
         {/* Search Bar */}
         <div>
           <input
@@ -109,29 +92,12 @@ export default function ResourcesListPage({ initialResources }: ResourcesListPag
             onChange={(e) => handleSearch(e.target.value)}
           />
         </div>
-        
-        {/* Selected filters indicator on mobile */}
-        {(selectedTag || selectedAuthor) && (
-          <div className="lg:hidden flex flex-wrap gap-2 bg-gray-50 p-3 rounded-lg">
-            <span className="text-sm text-gray-700">Filtros:</span>
-            {selectedTag && (
-              <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs flex items-center">
-                {selectedTag}
-              </span>
-            )}
-            {selectedAuthor && (
-              <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs flex items-center">
-                {selectedAuthor}
-              </span>
-            )}
-          </div>
-        )}
 
-        {/* Resources Grid - Using ResourceCard component */}
+        {/* Lista vertical de cards (misma forma que artículos) */}
         {paginatedResources.length > 0 ? (
           <div className="flex flex-col space-y-6">
             {paginatedResources.map((resource) => (
-              <ResourceCard 
+              <ResourceCard
                 key={resource.slug}
                 id={resource.slug}
                 title={resource.title}
@@ -141,19 +107,17 @@ export default function ResourcesListPage({ initialResources }: ResourcesListPag
                 author={resource.author}
                 downloadUrl={resource.link}
                 tags={resource.tags}
-                onSaveToggle={handleSaveToggle}
               />
             ))}
           </div>
         ) : (
           <p className="text-center text-gray-600 py-8">
-            No se encontraron recursos que coincidan con tu búsqueda.
+            No se encontraron recursos con el filtro seleccionado.
           </p>
         )}
-        
         {/* Pagination Controls */}
         {totalPages > 1 && (
-          <div className="flex justify-center items-center gap-3 sm:gap-4 mt-8">
+          <div className="flex justify-center items-center gap-3 sm:gap-4 mt-6">
             <button
               onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
               disabled={currentPage === 1}

@@ -1,13 +1,11 @@
 import { NextResponse } from 'next/server';
 import { getArticleBySlug } from '@/utils/articles';
-import { getCourseBySlug } from '@/utils/courses';
-import { getResourceBySlug } from '@/utils/resources';
 
 export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
     const contentId = searchParams.get('content_id');
-    const contentType = searchParams.get('content_type');
+  const contentType = searchParams.get('content_type');
 
     if (!contentId || !contentType) {
       return NextResponse.json(
@@ -18,22 +16,14 @@ export async function GET(request: Request) {
 
     let contentDetails = null;
 
-    switch (contentType) {
-      case 'article':
-        contentDetails = await getArticleBySlug(contentId);
-        break;
-      case 'course':
-        contentDetails = await getCourseBySlug(contentId);
-        break;
-      case 'resource':
-        contentDetails = await getResourceBySlug(contentId);
-        break;
-      default:
-        return NextResponse.json(
-          { error: 'Tipo de contenido no válido' },
-          { status: 400 }
-        );
+    if (contentType !== 'article') {
+      return NextResponse.json(
+        { error: 'Solo se permite tipo de contenido article' },
+        { status: 400 }
+      );
     }
+
+    contentDetails = await getArticleBySlug(contentId);
 
     if (!contentDetails) {
       return NextResponse.json(

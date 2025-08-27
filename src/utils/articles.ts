@@ -21,6 +21,7 @@ export interface Article {
   readTime: number;
   content: string;
   published: boolean;
+  image?: string;
 }
 
 const articlesDirectory = path.join(process.cwd(), 'content/articles');
@@ -100,7 +101,8 @@ export async function getArticleBySlug(slug: string, fields: string[] = []): Pro
       readTime: readTime,
       author: data.author || 'Anónimo',
       content: '', // Initialize with empty string
-      published: data.published !== false, // Default to true if not specified
+  published: data.published !== false, // Default to true if not specified
+  image: typeof data.image === 'string' && data.image.length > 0 ? data.image : '/images/miniatura.jpg',
     };
 
     // Only add content if specifically requested or if fields array is empty (get all)

@@ -26,29 +26,11 @@ export default function SavedContentCard({
   image = '/images/miniatura.jpg'
 }: SavedContentCardProps) {
   const getContentLink = () => {
-    switch (content_type) {
-      case 'article':
-        return `/articulos/${content_id}`;
-      case 'course':
-        return `/aprendizaje/${content_id}`;
-      case 'resource':
-        return `/recursos/${content_id}`;
-      default:
-        return '#';
-    }
+  return `/articulos/${content_id}`;
   };
 
   const getContentTypeLabel = () => {
-    switch (content_type) {
-      case 'article':
-        return 'Artículo';
-      case 'course':
-        return 'Curso';
-      case 'resource':
-        return 'Recurso';
-      default:
-        return content_type;
-    }
+  return 'Artículo';
   };
 
   const handleDelete = async () => {
@@ -58,15 +40,15 @@ export default function SavedContentCard({
   };
 
   return (
-    <article className="bg-white rounded-lg shadow-sm border border-gray-100 hover:shadow-lg hover:border-teal-500 transition-all duration-300 mb-4 w-full flex flex-col md:flex-row overflow-hidden h-48">
+    <article className="bg-white rounded-lg shadow-sm border border-gray-100 hover:shadow-lg hover:border-teal-500 transition-all duration-300 mb-4 w-full flex flex-col md:flex-row overflow-hidden h-auto md:h-48">
       {/* Image column - square shape */}
-      <div className="md:w-48 w-full h-full relative flex-shrink-0">
+      <div className="relative w-full md:w-48 aspect-square md:aspect-auto md:h-full flex-shrink-0">
         <Image 
           src={image} 
           alt={title || `${getContentTypeLabel()} ${content_id}`}
-          width={192}
-          height={192}
-          className="object-cover h-full w-full"
+          fill
+          sizes="(max-width: 768px) 100vw, 192px"
+          className="object-cover"
           priority
         />
       </div>

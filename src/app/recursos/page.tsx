@@ -2,8 +2,7 @@ import { getAllResources } from '@/utils/resources';
 import ResourcesListPage from '@/components/ResourcesListPage';
 
 export const metadata = {
-  title: 'Recursos - Psicolab',
-  description: 'Explora nuestra biblioteca de recursos de psicología',
+  title: 'Psicolab | Recursos'
 };
 
 export default async function ResourcesPage() {

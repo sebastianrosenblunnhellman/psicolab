@@ -10,8 +10,7 @@ interface CourseCardProps {
   image?: string;
   duration?: string;
   level?: string;
-  isSaved?: boolean;
-  onSaveToggle?: (courseId: string) => void;
+  // Saving disabled for courses
   tags?: string[];
 }
 
@@ -22,18 +21,12 @@ export default function CourseCard({
   image = '/images/miniatura.jpg',
   duration,
   level,
-  isSaved = false,
-  onSaveToggle,
+  // isSaved and onSaveToggle removed
   tags
 }: CourseCardProps) {
   const [isHovered, setIsHovered] = useState(false);
 
-  const handleSaveClick = (e: React.MouseEvent) => {
-    e.preventDefault();
-    if (onSaveToggle) {
-      onSaveToggle(id);
-    }
-  };
+  // Saving disabled
 
   return (
     <Link
@@ -44,13 +37,13 @@ export default function CourseCard({
     >
       <article className="bg-white rounded-lg shadow-sm border border-gray-100 hover:shadow-lg hover:border-teal-500 transition-all duration-300 flex flex-col sm:flex-row overflow-hidden h-full">
         {/* Image column - square shape */}
-        <div className="sm:w-48 w-full h-32 sm:h-full relative flex-shrink-0">
+        <div className="relative w-full sm:w-48 aspect-square sm:aspect-auto sm:h-full flex-shrink-0">
           <Image 
             src={image} 
             alt={title}
-            width={192}
-            height={192}
-            className="object-cover h-full w-full"
+            fill
+            sizes="(max-width: 640px) 100vw, 192px"
+            className="object-cover"
             priority
           />
         </div>
@@ -61,13 +54,7 @@ export default function CourseCard({
             <h3 className="text-lg font-bold text-gray-800 hover:text-teal-600 transition-colors line-clamp-2">
               {title}
             </h3>
-            <button
-              onClick={handleSaveClick}
-              className={`ml-2 transition-colors flex-shrink-0 ${isHovered ? 'opacity-100' : 'opacity-70'} ${isSaved ? 'text-teal-500 hover:text-teal-600' : 'text-gray-400 hover:text-teal-500'}`}
-              title={isSaved ? 'Quitar de guardados' : 'Guardar curso'}
-            >
-              {isSaved ? <FaBookmark className="w-4 h-4" /> : <FaRegBookmark className="w-4 h-4" />}
-            </button>
+            {/* Saving disabled for courses */}
           </div>
           <p className="text-sm text-gray-600 mb-2 line-clamp-2">{description}</p>
 

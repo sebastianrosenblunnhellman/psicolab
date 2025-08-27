@@ -1,9 +1,8 @@
 import Link from 'next/link';
-    import NetworkAnimation from '@/components/NetworkAnimation';
-    import BlogCard from '@/components/BlogCard';
-    import { getAllArticles } from '@/utils/articles';
-    import { featuredArticles } from '@/config/featured';
-    import FeaturedCarousel from '@/components/FeaturedCarousel';
+  import NetworkAnimation from '@/components/NetworkAnimation';
+  import BlogCard from '@/components/BlogCard';
+  import { getAllArticles } from '@/utils/articles';
+  import { featuredArticles } from '@/config/featured';
 
     export default async function Home() {
       const articles = await getAllArticles();
@@ -12,34 +11,22 @@ import Link from 'next/link';
       return (
         <div className="bg-white">
           {/* Hero Section */}
-          <section className="container mx-auto px-4 py-24 text-center relative min-h-[400px]">
+          <section className="container mx-auto px-4 pt-32 pb-24 sm:pt-36 sm:pb-28 md:pt-40 text-center relative min-h-[400px]">
             <div className="relative z-10">
-              <h1 className="text-5xl font-bold mb-6">
-                <span className="text-teal-500">CONECTANDO</span>{" "}
-                <span className="text-blue-500">CONOCIMIENTO</span>
+              <h1 className="mx-auto max-w-[20ch] text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-tight mb-6 break-words">
+                <span className="text-teal-500 block sm:inline">CONECTANDO</span>
+                <span className="text-blue-500 block sm:inline">CONOCIMIENTO</span>
               </h1>
-              <p className="text-xl text-gray-600 relative z-10">
-                Hecho por y para estudiantes
-              </p>
             </div>
             <div className="absolute inset-0">
               <NetworkAnimation />
             </div>
           </section>
 
-          {/* Featured Articles Carousel */}
-          <section className="container mx-auto px-4 py-16">
-            <h2 className="text-3xl font-bold text-gray-800 mb-8">
-              Destacado
-            </h2>
-            <FeaturedCarousel articles={featuredArticles} />
-          </section>
+          {/* Featured section removed (carousel deleted) */}
 
           {/* Recent Articles Section */}
           <section className="container mx-auto px-4 py-16">
-            <h2 className="text-3xl font-bold text-gray-800 mb-12">
-              Artículos Recientes
-            </h2>
             {recentArticles.length > 0 ? (
               <div className="grid grid-cols-1 gap-8 mb-12">
                 {recentArticles.map((article) => (
@@ -52,6 +39,7 @@ import Link from 'next/link';
                     tags={article.tags}
                     readTime={article.readTime}
                     author={article.author}
+                    image={article.image}
                   />
                 ))}
               </div>

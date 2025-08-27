@@ -60,6 +60,10 @@ model comments {
     created_at   DateTime @default(now()) @db.Timestamptz
     updated_at   DateTime @updatedAt @db.Timestamptz
     users_sync   users_sync @relation(fields: [user_id], references: [id])
+    // Threaded comments: optional parent and children
+    parent_id    Int?
+    parent       comments? @relation("CommentChildren", fields: [parent_id], references: [id])
+    children     comments[] @relation("CommentChildren")
     
     @@schema("neon_auth")
 }

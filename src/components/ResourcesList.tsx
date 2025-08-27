@@ -22,8 +22,7 @@ export default function ResourcesList({ initialResources }: ResourcesListProps) 
   
   const user = useUser();
   const { getCachedData, invalidateCache } = useCache();
-  const [savedResources, setSavedResources] = useState<Record<string, boolean>>({});
-  const [savingResources, setSavingResources] = useState<Record<string, boolean>>({});
+  // Saving resources has been disabled; only articles can be saved now
 
   // Get unique tags from all resources
   const allTags = useMemo(() => {
@@ -91,91 +90,7 @@ export default function ResourcesList({ initialResources }: ResourcesListProps) 
     }
   };
   
-  useEffect(() => {
-    const checkSavedStatus = async () => {
-      if (!user) return;
-      
-      try {
-        // Use the cache system to fetch saved resources
-        const cacheKey = `user_${user.id}_saved_resources`;
-        
-        const data = await getCachedData(
-          cacheKey,
-          async () => {
-            const response = await fetch(`/api/saved-content/${user.id}`);
-            if (!response.ok) throw new Error('Failed to fetch saved resources');
-            return response.json();
-          },
-          // Cache for 5 minutes
-          5 * 60 * 1000
-        );
-        
-        const savedMap: Record<string, boolean> = {};
-        
-        data.forEach((item: any) => {
-          if (item.content_type === 'resource') {
-            savedMap[item.content_id] = true;
-          }
-        });
-        
-        setSavedResources(savedMap);
-      } catch (error) {
-        console.error('Error checking saved resources:', error);
-      }
-    };
-    
-    checkSavedStatus();
-  }, [user, getCachedData]);
-  
-  const handleSaveResource = async (slug: string, event: React.MouseEvent) => {
-    event.preventDefault();
-    event.stopPropagation();
-    
-    if (!user || savingResources[slug]) return;
-    
-    setSavingResources(prev => ({ ...prev, [slug]: true }));
-    
-    try {
-      const isSaved = savedResources[slug];
-      const method = isSaved ? 'DELETE' : 'POST';
-      
-      const response = await fetch(`/api/saved-content/${user.id}`, {
-        method: method,
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          content_id: slug,
-          content_type: 'resource',
-        }),
-      });
-
-      if (response.ok) {
-        setSavedResources(prev => ({
-          ...prev,
-          [slug]: !isSaved
-        }));
-        
-        // Invalidate the cache for saved resources
-        invalidateCache(`user_${user.id}_saved_resources`);
-        
-        // Also invalidate any specific resource cache
-        invalidateCache(`user_${user.id}_saved_resource_${slug}`);
-        
-        setTimeout(() => {
-          setSavingResources(prev => ({ ...prev, [slug]: false }));
-        }, 1000);
-      } else {
-        const errorData = await response.json();
-        alert(`Error: ${errorData.error}`);
-        setSavingResources(prev => ({ ...prev, [slug]: false }));
-      }
-    } catch (error) {
-      console.error('Error saving resource:', error);
-      alert('Error al guardar el recurso');
-      setSavingResources(prev => ({ ...prev, [slug]: false }));
-    }
-  };
+  // Removed saved resources logic as only articles can be saved.
 
   return (
     <FilteredLayout
@@ -245,18 +160,7 @@ export default function ResourcesList({ initialResources }: ResourcesListProps) 
                   )}
                 </a>
                 
-                {user && (
-                  <button
-                    onClick={(e) => handleSaveResource(resource.slug, e)}
-                    className="absolute top-6 right-6 text-blue-500 hover:text-blue-600 transition-colors"
-                    aria-label={savedResources[resource.slug] ? 'Quitar de guardados' : 'Guardar recurso'}
-                    disabled={savingResources[resource.slug]}
-                  >
-                    {savedResources[resource.slug] ? 
-                      <FaBookmark className="w-5 h-5" /> : 
-                      <FaRegBookmark className="w-5 h-5" />}
-                  </button>
-                )}
+                {/* Saving resources disabled */}
               </div>
             ))}
           </div>

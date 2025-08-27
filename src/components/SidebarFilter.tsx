@@ -4,12 +4,12 @@ import { useState, useEffect } from 'react';
 import { FiChevronDown, FiChevronUp, FiFilter } from 'react-icons/fi';
 
 interface SidebarFilterProps {
-  tags: string[];
-  authors: string[];
-  selectedTag: string;
-  selectedAuthor: string;
-  onTagChange: (tag: string) => void;
-  onAuthorChange: (author: string) => void;
+  tags?: string[];
+  authors?: string[];
+  selectedTag?: string;
+  selectedAuthor?: string;
+  onTagChange?: (tag: string) => void;
+  onAuthorChange?: (author: string) => void;
   tagsLabel?: string;
   authorsLabel?: string;
   allTagsLabel?: string;
@@ -22,8 +22,8 @@ interface SidebarFilterProps {
 export default function SidebarFilter({
   tags,
   authors,
-  selectedTag,
-  selectedAuthor,
+  selectedTag = '',
+  selectedAuthor = '',
   onTagChange,
   onAuthorChange,
   tagsLabel = 'Categorías',
@@ -127,6 +127,7 @@ export default function SidebarFilter({
         {isFilterOpen && (
           <div className="space-y-6 pb-6">
           {/* Tags Filter */}
+          {tags && onTagChange && (
           <div className="mb-6">
             <button
               onClick={() => setIsTagsOpen(!isTagsOpen)}
@@ -159,8 +160,10 @@ export default function SidebarFilter({
               </div>
             </div>
           </div>
+          )}
 
           {/* Authors Filter */}
+          {authors && onAuthorChange && (
           <div className="mb-6">
             <button
               onClick={() => setIsAuthorsOpen(!isAuthorsOpen)}
@@ -193,13 +196,14 @@ export default function SidebarFilter({
               </div>
             </div>
           </div>
+          )}
           
           {/* Active filters indicator */}
-          {(selectedTag || selectedAuthor) && (
+      {(!!selectedTag || !!selectedAuthor) && (
             <div className="border-t border-gray-100 pt-4 text-sm">
               <p className="font-medium text-gray-700 mb-2">Filtros activos:</p>
               <div className="flex flex-wrap gap-2">
-                {selectedTag && (
+        {selectedTag && onTagChange && (
                   <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs flex items-center">
                     {selectedTag}
                     <button 
@@ -210,7 +214,7 @@ export default function SidebarFilter({
                     </button>
                   </span>
                 )}
-                {selectedAuthor && (
+        {selectedAuthor && onAuthorChange && (
                   <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs flex items-center">
                     {selectedAuthor}
                     <button 

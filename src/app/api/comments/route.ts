@@ -15,33 +15,54 @@ export async function GET(request: Request) {
     }
 
     console.log('Fetching comments for article:', articleId);
-    
-    // Get the comments using correct schema reference
-    const comments = await prisma.comments.findMany({
-      where: {
-        article_id: articleId,
-      },
-      orderBy: {
-        created_at: 'desc',
-      },
+
+    // Fetch all comments for the article, include user profile
+    const all = await (prisma as any).comments.findMany({
+      where: { article_id: articleId },
+      orderBy: { created_at: 'asc' },
       include: {
-        users_sync: true
-      }
+        users_sync: {
+          include: { user_profile: true },
+        },
+      },
     });
 
-    console.log('Found comments:', comments.length);
+    // Group into threads
+    const byId: Record<string, any> = {};
+    const roots: any[] = [];
+    for (const c of all) {
+      const base = {
+        id: String(c.id),
+        articleId: c.article_id,
+        userId: c.user_id,
+        userName: c.users_sync?.name || (c.users_sync as any)?.email || 'Usuario',
+        avatarUrl: (c.users_sync as any)?.user_profile?.profile_picture_url || null,
+        content: c.content,
+        createdAt: c.created_at.toISOString(),
+        updatedAt: c.updated_at.toISOString(),
+        parentId: (c as any).parent_id ? String((c as any).parent_id) : null,
+        replies: [] as any[],
+      };
+      byId[base.id] = base;
+    }
+    // Attach children
+    for (const id in byId) {
+      const node = byId[id];
+      if (node.parentId) {
+        const parent = byId[node.parentId];
+        if (parent) parent.replies.push(node);
+        else roots.push(node); // orphan safety
+      } else {
+        roots.push(node);
+      }
+    }
+    // Sort: newest threads first, replies oldest first
+    roots.sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1));
+    for (const r of roots) {
+      r.replies.sort((a: any, b: any) => (a.createdAt > b.createdAt ? 1 : -1));
+    }
 
-    // Transform the data to match the client's expected format
-    const formattedComments = comments.map(comment => ({
-      id: String(comment.id),
-      articleId: comment.article_id,
-      userId: comment.user_id,
-      userName: comment.users_sync?.name || comment.users_sync?.email || 'Usuario',
-      content: comment.content,
-      createdAt: comment.created_at.toISOString(),
-    }));
-
-    return NextResponse.json(formattedComments);
+    return NextResponse.json(roots);
   } catch (error) {
     console.error('Error fetching comments:', error);
     return NextResponse.json(
@@ -55,11 +76,11 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { articleId, content, userId, userName } = body;
+  const { articleId, content, userId, userName, parentId } = body;
 
     console.log('Received comment data:', { articleId, content, userId });
 
-    if (!articleId || !content || !userId) {
+  if (!articleId || !content || !userId) {
       console.error('Missing required fields for comment:', { articleId, content, userId });
       return NextResponse.json(
         { error: 'Missing required fields', received: { articleId, content, userId } },
@@ -96,14 +117,21 @@ export async function POST(request: Request) {
 
     // Create comment
     console.log('Creating comment for article:', articleId);
-    const newComment = await prisma.comments.create({
+    // Create comment or reply
+  const newComment = await (prisma as any).comments.create({
       data: {
         user_id: userId,
         article_id: articleId,
         content,
+    parent_id: parentId ? parseInt(parentId) : null,
         created_at: new Date(),
         updated_at: new Date(),
-      }
+      },
+      include: {
+        users_sync: {
+          include: { user_profile: true },
+        },
+      },
     });
 
     console.log('Comment created successfully:', newComment.id);
@@ -114,8 +142,11 @@ export async function POST(request: Request) {
       articleId: newComment.article_id,
       userId: newComment.user_id,
       userName: userName || (userExists?.name || 'Usuario'),
+      avatarUrl: (newComment as any)?.users_sync?.user_profile?.profile_picture_url || null,
       content: newComment.content,
       createdAt: newComment.created_at.toISOString(),
+      updatedAt: newComment.updated_at.toISOString(),
+      parentId: parentId ? String(parentId) : null,
     };
 
     return NextResponse.json(formattedComment, { status: 201 });

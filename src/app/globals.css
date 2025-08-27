@@ -68,6 +68,12 @@ body {
   @apply mb-4 text-gray-700;
 }
 
+/* Ensure inline article images are responsive */
+.article-content img {
+  max-width: 100%;
+  height: auto;
+}
+
 .article-content blockquote {
   @apply pl-4 border-l-4 border-gray-300 italic my-4 text-gray-600;
 }

@@ -1,13 +1,13 @@
 ---
-title: "Teoría del nombrar, Equivalencia de Estímulos y Teoría del Marco Relacional"
+title: "Teorias Conductuales del Lenguaje"
 type: "articulo"
-excerpt: "La investigación sobre el lenguaje humano comenzó a cambiar cuando Murray Sidman y colaboradores demostraron que un participante era capaz de derivar relaciones de estímulo no reforzadas después de un entrenamiento en discriminación condicional. Este trabajo proporcionó la base para un enfoque novedoso en la investigación sobre la conducta simbólica y fomentó el desarrollo de tres principales marcos teóricos: la equivalencia de estímulos (EE), la teoría del marco relacional (TMR) y la teoría del nombrar (TN). Estos marcos se desarrollaron en las últimas décadas del siglo XX, promoviendo un intenso debate y discusión dentro del análisis de la conducta. Aunque la investigación experimental que surge de estos tres marcos sigue siendo muy activa hoy en día, las discusiones teóricas, en gran medida, se han desvanecido. Considerando la importancia de reavivar un diálogo, este artículo tiene como objetivo describir las diferencias entre los tres marcos, pero centrándose en sus puntos comunes. Concluimos argumentando que el desarrollo de un marco analítico-conductual más completo del lenguaje humano se beneficiaría enormemente al considerar tanto la investigación como los análisis teóricos de la EE, la TMR y la TN. Finalmente, proporcionamos ejemplos de dos grupos de investigación exitosos que adoptaron este enfoque y, al hacerlo, han avanzado nuestra comprensión del lenguaje dentro del análisis de la conducta."
+excerpt: "La investigación sobre el lenguaje humano comenzó a cambiar cuando Murray Sidman y colaboradores demostraron que un participante era capaz de derivar relaciones de estímulo no reforzadas después de un entrenamiento en discriminación condicional. Este trabajo proporcionó la base para un enfoque novedoso en la investigación sobre la conducta simbólica y fomentó el desarrollo de tres principales marcos teóricos: la equivalencia de estímulos (EE), la teoría del marco relacional (TMR) y la teoría del nombrar (TN)."
 date: "2024-02-02"
 author: "Alceu Regaço et al"
-tags: ["TMR"]
+tags: ["Lenguaje", "Conductismo"]
 readTime: "10 min"
 published: true
-image: "/images/miniatura.jpg"
+image: "/images/articles/T_C_L/miniatura.png"
 ---
 
 [Descargar](https://drive.google.com/file/d/1nYGav3_X2Xj_MaU6r73oxllPWim_LkF-/view?usp=sharing)

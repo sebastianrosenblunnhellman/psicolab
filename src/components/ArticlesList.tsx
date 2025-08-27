@@ -105,13 +105,13 @@ function BlogCard({ slug, title, date, excerpt, tags, image = '/images/miniatura
     >
       <article className="bg-white rounded-lg shadow-sm border border-gray-100 hover:shadow-lg hover:border-teal-500 transition-all duration-300 flex flex-col md:flex-row overflow-hidden h-full">
         {/* Image column - square shape */}
-        <div className="w-full md:w-48 h-40 md:h-full relative flex-shrink-0">
+        <div className="relative w-full md:w-48 aspect-square md:aspect-auto md:h-full flex-shrink-0">
           <Image 
             src={image} 
             alt={title}
-            width={192}
-            height={192}
-            className="object-cover h-full w-full"
+            fill
+            sizes="(max-width: 768px) 100vw, 192px"
+            className="object-cover"
             priority
           />
         </div>
@@ -285,6 +285,7 @@ export default function ArticlesList({ initialArticles }: ArticlesListProps) {
                 date={article.date}
                 excerpt={article.excerpt}
                 tags={article.tags}
+                image={article.image}
                 readTime={article.readTime}
                 author={article.author}
               />
