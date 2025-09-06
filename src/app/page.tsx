@@ -14,7 +14,7 @@ import Link from 'next/link';
           <section className="container mx-auto px-4 pt-32 pb-24 sm:pt-36 sm:pb-28 md:pt-40 text-center relative min-h-[400px]">
             <div className="relative z-10">
               <h1 className="mx-auto max-w-[20ch] text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-tight mb-6 break-words">
-                <span className="text-teal-500 block sm:inline">CONECTANDO</span>
+                <span className="text-teal-500 block sm:inline">CONECTANDO </span>
                 <span className="text-blue-500 block sm:inline">CONOCIMIENTO</span>
               </h1>
             </div>

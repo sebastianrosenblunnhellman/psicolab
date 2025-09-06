@@ -1,6 +1,4 @@
 import './globals.css'
-import { StackProvider, StackTheme } from "@stackframe/stack";
-import { stackServerApp } from "../stack";
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import Header from '@/components/Header'
@@ -34,19 +32,15 @@ export default function RootLayout({
 }) {
   return (
     <html lang="es">
-      <head>
-        <StackTheme />
-      </head>
+  <head></head>
       <body className={`${inter.className} bg-white min-h-screen flex flex-col`}>
-        <StackProvider app={stackServerApp}>
-          <CacheProvider>
-            <Header />
-            <main className="flex-grow mt-20 pb-10">
-              {children}
-            </main>
-            <Footer />
-          </CacheProvider>
-        </StackProvider>
+        <CacheProvider>
+          <Header />
+          <main className="flex-grow mt-20 pb-10">
+            {children}
+          </main>
+          <Footer />
+        </CacheProvider>
       </body>
     </html>
   )

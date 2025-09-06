@@ -4,23 +4,18 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "prisma generate && next build",
+    "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "clean": "rm -rf .next node_modules && npm install",
-    "postinstall": "prisma generate"
+    "clean": "rm -rf .next node_modules && npm install"
   },
   "dependencies": {
-    "@clerk/nextjs": "^6.12.3",
-    "@prisma/client": "^6.4.1",
-    "@stackframe/stack": "^2.7.21",
     "@tailwindcss/typography": "^0.5.10",
     "@types/prismjs": "^1.26.3",
     "gray-matter": "^4.0.3",
     "markdown-it": "^14.0.0",
-    "next": "14.1.0",
+    "next": "^14.2.32",
     "next-mdx-remote": "^5.0.0",
-    "prisma": "^6.4.1",
     "prismjs": "^1.29.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

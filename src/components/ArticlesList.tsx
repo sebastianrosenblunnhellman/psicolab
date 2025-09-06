@@ -5,9 +5,7 @@ import Link from 'next/link';
 import { Article } from '@/utils/articles';
 import SidebarFilter from './SidebarFilter';
 import Image from 'next/image';
-import { FaRegBookmark, FaBookmark } from 'react-icons/fa';
-import { useUser } from '@stackframe/stack';
-import { useCache } from '@/utils/cache';
+// Saved/bookmark and auth removed
 import FilteredLayout from './FilteredLayout';
 
 interface ArticlesListProps {
@@ -26,75 +24,13 @@ interface BlogCardProps {
 }
 
 function BlogCard({ slug, title, date, excerpt, tags, image = '/images/miniatura.jpg', readTime, author }: BlogCardProps) {
-  const user = useUser();
-  const { getCachedData, invalidateCache } = useCache();
-  const [isSaved, setIsSaved] = useState(false);
-  const [isSaving, setIsSaving] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   
   // Check if the article is saved
-  useEffect(() => {
-    const checkSavedStatus = async () => {
-      if (!user) return;
-      
-      try {
-        // Use the cache system to fetch saved status
-        const cacheKey = `user_${user.id}_saved_article_${slug}`;
-        
-        const data = await getCachedData(
-          cacheKey,
-          async () => {
-            const response = await fetch(`/api/saved-content/${user.id}?content_id=${slug}`);
-            if (!response.ok) throw new Error('Failed to fetch saved status');
-            return response.json();
-          },
-          5 * 60 * 1000
-        );
-        
-        setIsSaved(data.some((item: any) => item.content_id === slug));
-      } catch (error) {
-        console.error('Error checking saved status:', error);
-      }
-    };
-    
-    checkSavedStatus();
-  }, [user, slug, getCachedData]);
+  // Saved status removed
   
   // Handle save/unsave
-  const handleSaveClick = async (e: React.MouseEvent) => {
-    e.preventDefault();
-    if (!user || isSaving) return;
-    
-    setIsSaving(true);
-    try {
-      const method = isSaved ? 'DELETE' : 'POST';
-      const response = await fetch(`/api/saved-content/${user.id}`, {
-        method: method,
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          content_id: slug,
-          content_type: 'article',
-        }),
-      });
-
-      if (response.ok) {
-        setIsSaved(!isSaved);
-        invalidateCache(`user_${user.id}_saved_article_${slug}`);
-        invalidateCache(`user_${user.id}_saved_content`);
-        setTimeout(() => setIsSaving(false), 1000);
-      } else {
-        const errorData = await response.json();
-        alert(`Error: ${errorData.error}`);
-        setIsSaving(false);
-      }
-    } catch (error) {
-      console.error('Error saving content:', error);
-      alert('Error al guardar el contenido');
-      setIsSaving(false);
-    }
-  };
+  // Save/unsave removed
   
   return (
     <Link
@@ -121,18 +57,7 @@ function BlogCard({ slug, title, date, excerpt, tags, image = '/images/miniatura
           <div className="flex justify-between items-start mb-2">
             <h3 className="text-lg font-bold text-gray-900 hover:text-teal-500 transition-colors line-clamp-2">{title}</h3>
             
-            {user && (
-              <button
-                onClick={(e) => {
-                  e.preventDefault();
-                  handleSaveClick(e);
-                }}
-                className={`ml-2 transition-colors flex-shrink-0 ${isHovered ? 'opacity-100' : 'opacity-70'} ${isSaved ? 'text-teal-500 hover:text-teal-600' : 'text-gray-400 hover:text-teal-500'}`}
-                title={isSaved ? 'Quitar de guardados' : 'Guardar artículo'}
-              >
-                {isSaved ? <FaBookmark className="w-4 h-4" /> : <FaRegBookmark className="w-4 h-4" />}
-              </button>
-            )}
+            {/* Bookmark removed */}
           </div>
           
           <div className="flex flex-wrap items-center text-xs text-gray-600 mb-2">

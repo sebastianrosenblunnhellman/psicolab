@@ -2,10 +2,7 @@
 
 import Link from 'next/link';
 import { Article } from '@/utils/articles';
-import { FaRegBookmark, FaBookmark } from 'react-icons/fa';
-import { useUser } from '@stackframe/stack';
 import { useState, useEffect } from 'react';
-import { useCache } from '@/utils/cache';
 import Image from 'next/image';
 
 type BlogCardProps = Partial<Article> & {
@@ -23,78 +20,12 @@ export default function BlogCard({
   author,
   image = '/images/miniatura.jpg'
 }: BlogCardProps) {
-  const user = useUser();
-  const { getCachedData, invalidateCache } = useCache();
-  const [isSaved, setIsSaved] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   
-  useEffect(() => {
-    const checkSavedStatus = async () => {
-      if (!user) return;
-      
-      try {
-        // Use the cache system to fetch saved status
-        const cacheKey = `user_${user.id}_saved_article_${slug}`;
-        
-        const data = await getCachedData(
-          cacheKey,
-          async () => {
-            const response = await fetch(`/api/saved-content/${user.id}?content_id=${slug}`);
-            if (!response.ok) throw new Error('Failed to fetch saved status');
-            return response.json();
-          },
-          // Cache for 5 minutes
-          5 * 60 * 1000
-        );
-        
-        setIsSaved(data.some((item: any) => item.content_id === slug));
-      } catch (error) {
-        console.error('Error checking saved status:', error);
-      }
-    };
-    
-    checkSavedStatus();
-  }, [user, slug, getCachedData]);
+  // Saved status removed
   
-  const handleSave = async () => {
-    if (!user || isSaving) return;
-    
-    setIsSaving(true);
-    try {
-      const method = isSaved ? 'DELETE' : 'POST';
-      const response = await fetch(`/api/saved-content/${user.id}`, {
-        method: method,
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          content_id: slug,
-          content_type: 'article',
-        }),
-      });
-
-      if (response.ok) {
-        setIsSaved(!isSaved);
-        
-        // Invalidate the cache for this article's saved status
-        invalidateCache(`user_${user.id}_saved_article_${slug}`);
-        
-        // Also invalidate any cached lists of saved content
-        invalidateCache(`user_${user.id}_saved_content`);
-        
-        setTimeout(() => setIsSaving(false), 1000);
-      } else {
-        const errorData = await response.json();
-        alert(`Error: ${errorData.error}`);
-        setIsSaving(false);
-      }
-    } catch (error) {
-      console.error('Error saving content:', error);
-      alert('Error al guardar el contenido');
-      setIsSaving(false);
-    }
-  };
+  // Save/unsave removed
   
   if (!slug || !title) {
     return null;
@@ -127,16 +58,7 @@ export default function BlogCard({
               {title}
             </h2>
             
-            <button
-              onClick={(e) => {
-                e.preventDefault();
-                handleSave();
-              }}
-              className={`ml-2 transition-colors flex-shrink-0 ${isHovered ? 'opacity-100' : 'opacity-70'} ${isSaved ? 'text-teal-500 hover:text-teal-600' : 'text-gray-400 hover:text-teal-500'}`}
-              aria-label={isSaved ? 'Quitar de guardados' : 'Guardar artículo'}
-            >
-              {isSaved ? <FaBookmark className="w-4 h-4" /> : <FaRegBookmark className="w-4 h-4" />}
-            </button>
+            {/* Bookmark removed */}
           </div>
           
           <div className="flex items-center gap-2 text-xs text-gray-600 mb-2">

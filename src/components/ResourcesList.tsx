@@ -4,9 +4,7 @@ import { useState, useMemo, useEffect } from 'react';
 import { Resource } from '@/utils/resources';
 import SidebarFilter from './SidebarFilter';
 import Link from 'next/link';
-import { FaBook, FaVideo, FaExternalLinkAlt, FaRegBookmark, FaBookmark } from 'react-icons/fa';
-import { useUser } from '@stackframe/stack';
-import { useCache } from '@/utils/cache';
+import { FaBook, FaVideo, FaExternalLinkAlt } from 'react-icons/fa';
 import FilteredLayout from './FilteredLayout';
 
 interface ResourcesListProps {
@@ -20,9 +18,7 @@ export default function ResourcesList({ initialResources }: ResourcesListProps) 
   const [selectedType, setSelectedType] = useState('');
   const resourcesPerPage = 4;
   
-  const user = useUser();
-  const { getCachedData, invalidateCache } = useCache();
-  // Saving resources has been disabled; only articles can be saved now
+  // Auth and saving removed
 
   // Get unique tags from all resources
   const allTags = useMemo(() => {

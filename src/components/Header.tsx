@@ -4,7 +4,6 @@ import Link from 'next/link';
 import { useState, useEffect, Suspense } from 'react';
 import { FiMenu, FiX } from 'react-icons/fi';
 import { FaBook, FaTools, FaUsers } from 'react-icons/fa';
-import { useUser } from "@stackframe/stack";
 import { usePathname } from 'next/navigation';
 
 interface MobileMenuItem {
@@ -17,9 +16,6 @@ function HeaderComponent() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
-  const user = useUser();
-  const [profilePicture, setProfilePicture] = useState<string | null>(null);
-  const [authPopup, setAuthPopup] = useState<Window | null>(null);
 
   // Define mobile menu items - simplified without submenus
   const mobileMenuItems: MobileMenuItem[] = [
@@ -46,91 +42,22 @@ function HeaderComponent() {
     setIsUserDropdownOpen(false);
   }, [pathname]);
 
-  useEffect(() => {
-    const fetchProfilePicture = async () => {
-      if (user && user.id) {
-        try {
-          const response = await fetch(`/api/profile/${user.id}`);
-          if (response.ok) {
-            const data = await response.json();
-            setProfilePicture(data.profile_picture_url);
-          }
-        } catch (error) {
-          console.error("Error fetching profile picture:", error);
-        }
-      }
-    };
-
-    fetchProfilePicture();
-  }, [user]);
+  // Auth removed: no profile picture or user state
 
   const isActive = (path: string) => {
     return pathname.startsWith(path);
   };
 
-  const openAuthPopup = () => {
-    if (typeof window === 'undefined') return;
-    const width = 520;
-    const height = 720;
-    const left = window.screenX + Math.max(0, (window.outerWidth - width) / 2);
-    const top = window.screenY + Math.max(0, (window.outerHeight - height) / 3);
-  const urlObj = new URL(window.location.href);
-  urlObj.searchParams.set('popup', '1');
-  const url = `/handler/sign-up?returnTo=${encodeURIComponent(urlObj.toString())}`;
-    const features = `popup=yes,width=${width},height=${height},left=${left},top=${top},resizable=yes,scrollbars=yes`;
-    const popup = window.open(url, 'auth_popup', features);
-    if (!popup) {
-      // Fallback if popup is blocked
-      window.location.href = url;
-      return;
-    }
-    setAuthPopup(popup);
-    // In case the popup was immediately closed, fallback to navigation
-    setTimeout(() => {
-      if (popup.closed) {
-        try { window.location.href = url; } catch {}
-      }
-    }, 200);
-  };
+  // Auth removed: no login popup
 
   // When the user logs in (cookie updated by Stack Auth), close the popup
-  useEffect(() => {
-    if (user && authPopup && !authPopup.closed) {
-      authPopup.close();
-      setAuthPopup(null);
-    }
-  }, [user, authPopup]);
+  // Auth removed
 
   // Listen for popup completion messages and refresh parent
-  useEffect(() => {
-    if (typeof window === 'undefined') return;
-    const onMessage = (ev: MessageEvent) => {
-      if (ev.origin !== window.location.origin) return;
-      if (ev.data === 'auth:done') {
-        try {
-          // Close any remaining popup
-          if (authPopup && !authPopup.closed) authPopup.close();
-        } catch {}
-        // Force reload to update auth state if SDK doesn't auto-sync
-        window.location.reload();
-      }
-    };
-    window.addEventListener('message', onMessage);
-    return () => window.removeEventListener('message', onMessage);
-  }, [authPopup]);
+  // Auth removed
 
   // If we're inside the popup after redirect (returnTo), notify opener and close
-  useEffect(() => {
-    if (typeof window === 'undefined') return;
-    try {
-      const params = new URLSearchParams(window.location.search);
-      const inPopup = params.get('popup') === '1';
-      if (inPopup && window.opener && window.opener !== window) {
-        window.opener.postMessage('auth:done', window.location.origin);
-        window.close();
-      }
-    } catch {}
-  }, []);
+  // Auth removed
 
   return (
     <header className="bg-white fixed w-full top-0 z-50 shadow-sm">
@@ -145,8 +72,8 @@ function HeaderComponent() {
             </Link>
           </div>
 
-          {/* Navigation Links - Centered */}
-          <div className="hidden md:flex md:items-center md:space-x-8 mx-auto">
+          {/* Navigation Links - Right aligned */}
+          <div className="hidden md:flex md:items-center md:space-x-8 ml-auto">
             <Link
               href="/articulos"
               className="flex items-center gap-2 text-gray-600 hover:text-blue-600 pt-1 transition-all"
@@ -170,70 +97,11 @@ function HeaderComponent() {
             </Link>
           </div>
 
-          {/* Login Button / User Dropdown - Right */}
-          <div className="hidden md:flex items-center">
-            {user ? (
-              <div className="relative">
-                <button
-                  onClick={() => setIsUserDropdownOpen(!isUserDropdownOpen)}
-                  className="ml-4 flex items-center justify-center overflow-hidden rounded-full w-10 h-10 border-2 border-gray-200 hover:border-blue-400 transition-all"
-                >
-                  {profilePicture ? (
-                    <img 
-                      src={profilePicture} 
-                      alt="Perfil de usuario" 
-                      className="w-full h-full object-cover"
-                    />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center bg-blue-100 text-blue-500">
-                      {user.displayName ? user.displayName.charAt(0).toUpperCase() : 'U'}
-                    </div>
-                  )}
-                </button>
-                {isUserDropdownOpen && (
-                  <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg">
-                    <Link
-                      href="/guardados"
-                      className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
-                    >
-                      Guardados
-                    </Link>
-                    <button
-                      onClick={async () => await user.signOut()}
-                      className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
-                    >
-                      Cerrar Sesión
-                    </button>
-                  </div>
-                )}
-              </div>
-            ) : (
-              <button
-                onClick={openAuthPopup}
-                className="ml-4 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
-              >
-                Iniciar Sesión
-              </button>
-            )}
-          </div>
+          {/* Right placeholder removed to keep links aligned right */}
 
           {/* Mobile Menu Button */}
           <div className="md:hidden flex items-center gap-2">
-            {user && (
-              <div className="flex items-center justify-center overflow-hidden rounded-full w-8 h-8 border-2 border-gray-200">
-                {profilePicture ? (
-                  <img 
-                    src={profilePicture} 
-                    alt="Perfil de usuario" 
-                    className="w-full h-full object-cover"
-                  />
-                ) : (
-                  <div className="w-full h-full flex items-center justify-center bg-blue-100 text-blue-500">
-                    {user.displayName ? user.displayName.charAt(0).toUpperCase() : 'U'}
-                  </div>
-                )}
-              </div>
-            )}
+            {/* Auth removed: no user avatar */}
             <button
               onClick={() => setIsOpen(!isOpen)}
               className="inline-flex items-center justify-center p-2 rounded-md text-gray-600 hover:text-blue-600 hover:bg-gray-100 transition-colors"
@@ -269,45 +137,7 @@ function HeaderComponent() {
                 </Link>
               </div>
             ))}
-            
-            {/* Mobile User Menu */}
-            {user ? (
-              <div className="mt-4 pt-4 border-t border-gray-200 space-y-2">
-                <p className="text-sm text-gray-500 pb-2">Cuenta</p>
-                <Link
-                  href="/guardados"
-                  className="flex items-center gap-2 py-2 text-gray-700"
-                  onClick={() => setIsOpen(false)}
-                >
-                  <span>Guardados</span>
-                </Link>
-                <Link
-                  href="/perfil"
-                  className="flex items-center gap-2 py-2 text-gray-700"
-                  onClick={() => setIsOpen(false)}
-                >
-                  <span>Editar Perfil</span>
-                </Link>
-                <button
-                  onClick={async () => {
-                    await user.signOut();
-                    setIsOpen(false);
-                  }}
-                  className="w-full flex items-center gap-2 py-2 text-left text-red-600"
-                >
-                  <span>Cerrar Sesión</span>
-                </button>
-              </div>
-            ) : (
-              <div className="mt-4 pt-4 border-t border-gray-200">
-                <button
-                  onClick={() => { openAuthPopup(); setIsOpen(false); }}
-                  className="block w-full py-3 mt-2 px-4 bg-blue-500 text-white rounded-md text-center"
-                >
-                  Iniciar Sesión
-                </button>
-              </div>
-            )}
+            {/* Auth removed: no user menu */}
           </div>
         </div>
       </nav>
