@@ -98,4 +98,75 @@ Hay una enorme diferencia entre la psicología cognitiva y una psicología condu
 
 El análisis conductual es uno de los pocos campos en la psicología que mantienen una alianza clara y efectiva entre las ramas básica y aplicada. Los analistas de conducta clínica se sienten bastante cómodos dirigiendo algunos de sus esfuerzos hacia la generación de conocimiento básico sobre los procesos verbales que es necesario para su trabajo clínico. Un buen ejemplo es la transformación de las funciones de estímulo a través de las clases de equivalencia y otras relaciones derivadas. Una amplia proporción de la investigación en esta área ha venido de los laboratorios de los analistas de conducta clínica. La transformación de las funciones de estímulo a través de las relaciones de estímulos derivadas es una de las áreas obviamente aplicable de la investigación analítica conductual básica dentro de los procesos del lenguaje. El análisis de conducta clínica es un campo orientado hacia el desarrollo de aproximaciones analíticas conductuales modernas a los eventos verbales. De esta forma, el análisis de conducta clínica extiende el rango de áreas dentro del análisis de conducta: básico, aplicado, teórico y filosófico.
 
----
+
+### **Referencias**
+
+Bandura, A. (1969). *Principles of behavior modification*. Holt, Rinehart and Winston.
+
+Bandura, A. (1977). Self-efficacy: Toward a unifying theory of behavior change. *Psychological Review, 84*, 191-215.
+
+Bandura, A. (1996). Comment on the crusade against the causal efficacy of human thought. *Journal of Behavior Therapy and Experimental Psychiatry, 28*, 1-15.
+
+Barlow, D. H., Hayes, S. C., & Nelson, R. O. (1984). *The scientist practitioner: Research and accountability in clinical and educational settings*. Pergamon.
+
+Biglan, A. (1987). A behavior analytic critique of Bandura’s self-efficacy theory. *The Behavior Analyst, 10*, 1-6.
+
+Chomsky, N. (1959). A review of Verbal Behavior by B.F. Skinner. *Language, 35*, 26-58.
+
+Day, W. F. (1969). On the difference between radical and methodological behaviorism. *Behaviorism, 11*, 89-102.
+
+Dougher, M. J. (1993). On the advantages and implications of a radical behavioral perspective on private events. *The Behavior Therapist*, 204-206.
+
+Dougher, M. J. (1995). A bigger picture: Cause and cognition in relation to differing scientific frameworks. *Journal of Behavior Therapy and Experimental Psychiatry, 26*, 215-219.
+
+Ferster, C. B. (1973). A functional analysis of depression. *American Psychologist, 28*, 857-870.
+
+Franks, C. M., & Wilson G. T. (1974). *Annual review of behavior therapy: Theory and practice*. Brunner/Mazel.
+
+Hawkins, R. M. F. (1992). Self efficacy: A predictor but not a cause of behavior. *Journal of Behavior Therapy and Experimental Psychiatry, 23*, 251-256.
+
+Hayes, S. C. (1993). Analytic goals and the varieties of scientific contextualism. En S. C. Hayes, L. J. Hayes, H. W. Reese, & T. R. Sarbin (Eds.), *Varieties of scientific contextualism* (pp. 11-27). Context Press.
+
+Hayes, S. C., & Brownstein, A. J. (1986). Mentalism, behavior-behavior relations, and a behavior analytic view of the purpose of science. *The Behavior Analyst, 9*, 175-190.
+
+Hayes, S. C., Hayes, L. J., & Reese, H. W. (1988). Finding the philosophical core: A review of Stephen C. Pepper’s World Hypotheses. *Journal of the Experimental Analysis of Behavior, 50*, 97-111.
+
+James, W. (1981). *Pragmatism*. Hackett. (Obra original publicada en 1907).
+
+Kohlenberg, R. J., & Tsai, M. (1991). *Functional analytic psychotherapy: Creating intense and curative therapeutic relationships*. Plenum.
+
+Kohlenberg, R. J., Tsai, M., & Dougher, M. J. (1993). The dimensions of clinical behavior analysis. *The Behavior Analyst*, 271-282.
+
+Lee, C. (1992). On cognitive theories and causation in human behavior. *Journal of Behavior Therapy and Experimental Psychiatry, 23*, 257-268.
+
+MacCorquodale, K. (1970). On Chomsky’s review of Skinner’s Verbal Behavior. *Journal of the Experimental Analysis of Behavior, 13*, 83-100.
+
+Mahoney, M. J. (1974). *Cognition and behavior modification*. Ballinger.
+
+Mahoney, M. J., Kazdin, A. E., & Lesswing, N. J. (1974). Behavior modification: Delusion or deliverance? En C. M. Franks & G. T. Wilson (Eds.), *Annual review of behavior therapy: Theory and practice* (pp. 11-40). Brunner/Mazel.
+
+Meichenbaum, D. H. (1977). *Cognitive-behavior modification: An integrative approach*. Plenum.
+
+Moore, J. (1980). On behaviorism and private events. *The Psychological Record, 30*, 459-475.
+
+Morris, E. K. (1988). Contextualism: The world view of behavior analysis. *Journal of Experimental Child Psychology, 46*, 289-323.
+
+Peirce, C. S. (1940). *Philosophical writings of Peirce* (J. Buchler, Ed.). Dover.
+
+Pepper, S. C. (1942). *World hypotheses*. University of California Press.
+
+Skinner, B. F. (1945). The operational analysis of psychological terms. *Psychological Review, 52*, 270-277, 291-294.
+
+Skinner, B. F. (1953). *Science and human behavior*. The Free Press/Macmillan.
+
+Skinner, B. F. (1957). *Verbal behavior*. Appleton-Century-Crofts.
+
+Skinner, B. F. (1974). *About behaviorism*. Alfred A. Knopf, Inc.
+
+Watson, J. B. (1913). Psychology as a behaviorist views it. *Psychological Review, 20*, 158-177.
+
+Watson, J. B. (1920). Is thinking merely the action of language mechanism? *British Journal of Psychology, 11*, 87-104.
+
+Watson, J. B. (1924). *Behaviorism*. Norton.
+
+Watson, J. B., & Raynor, R. (1920). Conditioned emotional reactions. *Journal of Experimental Psychology, 3*, 1-14.

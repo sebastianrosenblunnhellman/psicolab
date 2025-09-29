@@ -11,6 +11,32 @@ const md = new MarkdownIt({
   linkify: true
 });
 
+function wrapReferencesSection(html: string): string {
+  if (!html || html.includes('references-section')) {
+    return html;
+  }
+
+  const headingRegex = /<h[1-6][^>]*>.*?Referencias.*?<\/h[1-6]>/i;
+  const match = headingRegex.exec(html);
+
+  if (!match || match.index === undefined) {
+    return html;
+  }
+
+  const headingMarkup = match[0];
+  const summaryText = headingMarkup.replace(/<[^>]+>/g, '').trim() || 'Referencias';
+  const headingStart = match.index;
+  const contentStart = headingStart + headingMarkup.length;
+
+  const before = html.slice(0, headingStart);
+  const after = html.slice(contentStart);
+
+  return (
+    `${before}<details class="references-section"><summary>${summaryText}</summary>` +
+    `<div class="references-content">${after}</div></details>`
+  );
+}
+
 export interface Article {
   slug: string;
   title: string;
@@ -107,7 +133,8 @@ export async function getArticleBySlug(slug: string, fields: string[] = []): Pro
 
     // Only add content if specifically requested or if fields array is empty (get all)
     if (fields.length === 0 || fields.includes('content')) {
-      article.content = md.render(content);
+      const renderedHtml = md.render(content);
+      article.content = wrapReferencesSection(renderedHtml);
     }
 
     return article;

@@ -114,4 +114,209 @@ El objetivo del presente artículo fue discutir las posibles razones de la relat
 
 Aunque estas diferencias son importantes y deben abordarse en la investigación experimental y teórica, argumentamos aquí que no deben eclipsar ni dominar las similitudes en los marcos que hemos descrito. Además, sostenemos que considerar la investigación de todos los marcos podría ser la forma más eficaz de desarrollar un marco integral para una gama creciente de fenómenos del lenguaje. Como ejemplos de buenas prácticas, consideramos brevemente los programas de dos grupos de investigación que adoptaron ese enfoque y, como resultado, parece que lograron avances importantes hacia la comprensión analítico-conductual del desarrollo del lenguaje. Finalmente, esperamos que este artículo pueda ayudar a elucidar los contextos en los que se desarrollaron la TN, la EE y la TMR y esperamos que fomente una visión más comprensible y equitativa de los diferentes marcos sobre la investigación de relaciones derivadas dentro del análisis de la conducta.
 
----
+
+### **Referencias**
+
+Albuquerque, A. R. de, & Melo, R. M. de. (2021). *Contribuições da análise do comportamento para a compreensão da leitura e escrita: Aspectos históricos, conceituais e procedimentos de ensino - Volume I*. Faculdade de Filosofia e Ciências. [https://doi.org/10.36311/2021.978-65-5954-075-4](https://doi.org/10.36311/2021.978-65-5954-075-4)
+
+Almeida-Verdu, A. C. M., das Neves, A. J., de Souza, D. G., & Postalli, L. M. M. (2021). Subsídios necessários para ampliar o programa de ensino de repertórios verbais visando sentenças. En A. R. de Albuquerque & R. M. de Melo (Eds.), *Contribuições da análise do comportamento para a compreensão da leitura e escrita: Aspectos históricos, conceituais e procedimentos de ensino—Volume I* (pp. 249–286). Faculdade de Filosofia e Ciências. [https://doi.org/10.36311/2021.978-65-5954-075-4.p249-286](https://doi.org/10.36311/2021.978-65-5954-075-4.p249-286)
+
+Alonso-Álvarez, B., & Pérez-González, L. A. (2017). Contextual control over equivalence and nonequivalence explains apparent arbitrary applicable relational responding in accordance with sameness and opposition. *Learning & Behavior, 45*(3), 228–242. [https://doi.org/10.3758/s13420-017-0258-1](https://doi.org/10.3758/s13420-017-0258-1)
+
+Alonso-Álvarez, B., & Pérez-González, L. A. (2021). Equivalence class analysis of responding consistent with the relational frame of opposition. *Journal of the Experimental Analysis of Behavior, 116*(1), 64–81. [https://doi.org/10.1002/jeab.690](https://doi.org/10.1002/jeab.690)
+
+Arntzen, E. (2012). Training and testing parameters in formation of stimulus equivalence: Methodological issues. *European Journal of Behavior Analysis, 13*(1), 123–135. [https://doi.org/10.1080/15021149.2012.11434412](https://www.google.com/search?q=https://doi.org/10.1080/15021149.2012.11434412)
+
+Arntzen, E., Norbom, A., & Fields, L. (2015). Sorting: An alternative measure of class formation? *The Psychological Record, 65*, 615–625. [https://doi.org/10.1007/s40732-015-0132-5](https://doi.org/10.1007/s40732-015-0132-5)
+
+Barnes-Holmes, D., & Harte, C. (2022). Relational frame theory 20 years on: The Odysseus voyage and beyond. *Journal of the Experimental Analysis of Behavior, 117*(2), 240–266. [https://doi.org/10.1002/jeab.733](https://doi.org/10.1002/jeab.733)
+
+Barnes-Holmes, D., Barnes-Holmes, Y., & Cullinan, V. (2000). Relational frame theory and Skinner’s Verbal Behavior: A possible synthesis. *The Behavior Analyst, 23*(1), 69–84. [https://doi.org/10.1007/BF03392000](https://doi.org/10.1007/BF03392000)
+
+Barnes-Holmes, D., Hayes, S. C., & Dymond, S. (2001a). Self and self-directed rules. En S. C. Hayes, D. Barnes-Holmes, & B. Roche (Eds.), *Relational frame theory* (pp. 119–139). Kluwer Academic. [https://doi.org/10.1007/0-306-47638-X\_7](https://doi.org/10.1007/0-306-47638-X_7)
+
+Barnes-Holmes, D., O’Hora, D., Roche, B., Hayes, S. C., Bissett, R. T., & Lyddy, F. (2001b). Understanding and verbal regulation. En S. C. Hayes, D. Barnes-Holmes, & B. Roche (Eds.), *Relational frame theory* (pp. 103–117). Kluwer Academic. [https://doi.org/10.1007/0-306-47638-X\_6](https://doi.org/10.1007/0-306-47638-X_6)
+
+Belisle, J. (2020). Model dependent realism and the rule-governed behavior of behavior analysts: Applications to derived relational responding. *Perspectives on Behavior Science, 43*(2), 321–342. [https://doi.org/10.1007/s40614-020-00247-x](https://doi.org/10.1007/s40614-020-00247-x)
+
+Benitez, P., & Domeniconi, C. (2016). Use of a computerized reading and writing teaching program for families of students with intellectual disabilities. *The Psychological Record, 66*(1), 127–138. [https://doi.org/10.1007/s40732-015-0158-8](https://doi.org/10.1007/s40732-015-0158-8)
+
+Benitez, P., & Domeniconi, C. (2023). Equivalence-based instruction to teaching reading by families and teachers students with autism and/or intellectual disabilities. *Behavioral Interventions, 38*(3), 861–880. [https://doi.org/10.1002/bin.1932](https://doi.org/10.1002/bin.1932)
+
+Bortoloti, R., & de Rose, J. C. (2012). Equivalent stimuli are more strongly related after training with delayed matching than after simultaneous matching: A study using the Implicit Relational Assessment Procedure (IRAP). *The Psychological Record, 62*(1), 41–54. [https://doi.org/10.1007/BF03395785](https://www.google.com/search?q=https://doi.org/10.1007/BF03395785)
+
+Brodsky, J., & Fienup, D. M. (2018). Sidman goes to college: A meta-analysis of equivalence-based instruction in higher education. *Perspectives on Behavior Science, 41*(1), 95–119. [https://doi.org/10.1007/s40614-018-0150-0](https://www.google.com/search?q=https://doi.org/10.1007/s40614-018-0150-0)
+
+Cassidy, S., Roche, B., Colbert, D., Stewart, I., & Grey, I. M. (2016). A relational frame skills training intervention to increase general intelligence and scholastic aptitude. *Learning & Individual Differences, 47*, 222–235. [https://doi.org/10.1016/j.lindif.2016.03.001](https://doi.org/10.1016/j.lindif.2016.03.001)
+
+Clayton, M. C., & Hayes, L. J. (1999). Conceptual differences in the analysis of stimulus equivalence. *The Psychological Record, 49*(1), 145–161. [https://doi.org/10.1007/BF03395312](https://doi.org/10.1007/BF03395312)
+
+Clayton, M. C., & Hayes, L. J. (2004). A comparison of match-to-sample and respondent-type training of equivalence classes. *The Psychological Record, 54*, 579–602. [https://doi.org/10.1007/BF03395493](https://doi.org/10.1007/BF03395493)
+
+Conceição, D. B., Greer, R. D., & Moschella, J. L. (2022). A general outline of the verbal behavior developmental theory. *Revista Brasileira de Terapia Comportamental e Cognitiva, 24*, 1–39. [https://doi.org/10.31505/rbtcc.v24i1.1646](https://www.google.com/search?q=https://doi.org/10.31505/rbtcc.v24i1.1646)
+
+de Almeida, J. H., Cortez, M. D., & de Rose, J. C. (2020). The effects of monitoring on children’s rule-following in a computerized procedure. *Analysis of Verbal Behavior, 36*(2), 295–307. [https://doi.org/10.1007/s40616-020-00130-5](https://doi.org/10.1007/s40616-020-00130-5)
+
+de Rose, J. C., de Souza, D. G., & Hanna, E. S. (1996). Teaching reading and spelling: Exclusion and stimulus equivalence. *Journal of Applied Behavior Analysis, 29*(4), 451–469. [https://doi.org/10.1901/jaba.1996.29-451](https://doi.org/10.1901/jaba.1996.29-451)
+
+de Rose, J. C., de Souza, D. G., Rossito, A. L., & de Rose, T. (1992). Stimulus equivalence and generalization in reading after matching to sample by exclusion. En S. C. Hayes & L. J. Hayes (Eds.), *Understanding verbal relations* (pp. 69–82). Context Press.
+
+de Souza, D. G., de Rose, J. C., Faleiros, T. C., Bortoloti, R., Hanna, E. S., & McIlvane, W. J. (2009). Teaching generative reading via recombination of minimal textual units: A legacy of verbal behavior to children in Brazil. *International Journal of Psychology & Psychological Therapy, 9*(1), 19–44.
+
+Debert, P., Matos, M. A., & McIlvane, W. (2007). Conditional relations with compound abstract stimuli using a go/no-go procedure. *Journal of the Experimental Analysis of Behavior, 87*(1), 89–96. [https://doi.org/10.1901/jeab.2007.46-05](https://doi.org/10.1901/jeab.2007.46-05)
+
+Dickins, D. W., & Bentall, R. P. (1996). Learning names may help to make the right connections. *Journal of the Experimental Analysis of Behavior, 65*(1), 259–261. [https://doi.org/10.1901/jeab.1996.65-259](https://www.google.com/search?q=https://doi.org/10.1901/jeab.1996.65-259)
+
+Dymond, S., May, R. J., Munnelly, A., & Hoon, A. E. (2010). Evaluating the evidence base for relational frame theory: A citation analysis. *The Behavior Analyst, 33*(1), 97–117. [https://doi.org/10.1007/BF03392206](https://www.google.com/search?q=https://doi.org/10.1007/BF03392206)
+
+Edwards, D. J., McEnteggart, C., Barnes-Holmes, Y., Lowe, R., Evans, N., & Vilardaga, R. (2017). The impact of mindfulness and perspective-taking on implicit associations toward the elderly: A relational frame theory account. *Mindfulness, 8*(6), 1615–1622. [https://doi.org/10.1007/s12671-017-0734-x](https://doi.org/10.1007/s12671-017-0734-x)
+
+Fields, L. (1996). The evidence for naming as a cause or facilitator of equivalence class formation. *Journal of the Experimental Analysis of Behavior, 65*(1), 279–282. [https://doi.org/10.1901/jeab.1996.65-279](https://doi.org/10.1901/jeab.1996.65-279)
+
+Fields, L. (2023). Under-explored effects of structure on equivalence class formation: A commentary. *The Psychological Record, 73*(3), 507–512. [https://doi.org/10.1007/s40732-023-00552-2](https://doi.org/10.1007/s40732-023-00552-2)
+
+Fienup, D. M., & Brodsky, J. (2020). Equivalence-based instruction: Designing instruction using stimulus equivalence. En M. Fryling, R. A. Rehfeldt, J. Tarbox, & L. J. Hayes (Eds.), *Applied behavior analysis of language and cognition: Core concepts and principles for practitioners* (Vol. 1, pp. 157–173). Context Press.
+
+Frampton, S. E., Axe, J. B., & Miguel, C. F. (2023). The effects of note taking as a visual mediation strategy on the formation of equivalence classes. *Journal of the Experimental Analysis of Behavior, 119*(3), 429–447. [https://doi.org/10.1002/jeab.844](https://doi.org/10.1002/jeab.844)
+
+Galizio, M. (1979). Contingency-shaped and rule-governed behavior: Instructional control of human loss avoidance. *Journal of the Experimental Analysis of Behavior, 31*(1), 53–70. [https://doi.org/10.1901/jeab.1979.31-53](https://doi.org/10.1901/jeab.1979.31-53)
+
+Gilmore, A., Barnes-Holmes, D., & Sivaraman, M. (2024). A modern collaborative behavior analytic approach to incidental naming. *Perspectives on Behavior Science, 47*(3), 581–601. [https://doi.org/10.1007/s40614-024-00399-0](https://www.google.com/search?q=https://doi.org/10.1007/s40614-024-00399-0)
+
+Golfeto, R. M., & Postalli, L. M. M. (2021). Ensino de palavras irregulares por meio do programa de ensino aprendendo a ler e a escrever em pequenos passos. En A. R. de Albuquerque & R. M. de Melo (Eds.), *Contribuições da análise do comportamento para a compreensão da leitura e escrita: Aspectos históricos, conceituais e procedimentos de ensino* (Vol. 1, pp. 191–224). Faculdade de Filosofia e Ciências. [https://doi.org/10.36311/2021.978-65-5954-075-4.p191-224](https://www.google.com/search?q=https://doi.org/10.36311/2021.978-65-5954-075-4.p191-224)
+
+Greer, R. D., Dudek, J., & Chang, H. (2024). Observation, language learning, and development: The verbal behavior development theory. *The Psychological Record*. [https://doi.org/10.1007/s40732-024-00585-1](https://doi.org/10.1007/s40732-024-00585-1)
+
+Greer, R. D., & Ross, D. E. (2008). *Verbal behavior analysis: Inducing and expanding new verbal capabilities in children with language delays*. Pearson Education.
+
+Greer, R. D., & Speckman, J. (2009). The integration of speaker and listener responses: A theory of verbal development. *The Psychological Record, 59*(3), 449–488. [https://doi.org/10.1007/BF03395674](https://doi.org/10.1007/BF03395674)
+
+Gross, A. C., & Fox, E. J. (2009). Relational frame theory: An overview of the controversy. *Analysis of Verbal Behavior, 25*(1), 87–98. [https://doi.org/10.1007/BF03393073](https://doi.org/10.1007/BF03393073)
+
+Harte, C., Barnes-Holmes, D., Barnes-Holmes, Y., & Kissi, A. (2020). The study of rule-governed behavior and derived stimulus relations: Bridging the gap. *Perspectives on Behavior Science, 43*(2), 361–385. [https://doi.org/10.1007/s40614-020-00256-w](https://doi.org/10.1007/s40614-020-00256-w)
+
+Hawkins, E., Gautreaux, G., & Chiesa, M. (2018). Deconstructing common bidirectional naming: A proposed classification framework. *Analysis of Verbal Behavior, 34*, 44–61. [https://doi.org/10.1007/s40616-018-0100-7](https://doi.org/10.1007/s40616-018-0100-7)
+
+Hayes, L. J. (1991a). Substitution and reference. En L. J. Hayes & P. N. Chase (Eds.), *Dialogues on verbal behavior: The First International Institute on Verbal Relations* (pp. 3–14). Context Press.
+
+Hayes, S. C. (Ed.). (1989). *Rule-governed behavior: Cognition, contingencies, and instructional control*. Plenum Press. [https://doi.org/10.1007/978-1-4757-0447-1](https://doi.org/10.1007/978-1-4757-0447-1)
+
+Hayes, S. C. (1991). A relational control theory of stimulus equivalence. En L. J. Hayes & P. N. Chase (Eds.), *Dialogues on verbal behavior* (Vol. 1). Context Press.
+
+Hayes, S. C. (1996). Developing a theory of derived stimulus relations. *Journal of the Experimental Analysis of Behavior, 65*(1), 309–311. [https://doi.org/10.1901/jeab.1996.65-309](https://doi.org/10.1901/jeab.1996.65-309)
+
+Hayes, S. C., & Barnes, D. (1997). Analyzing derived stimulus relations requires more than the concept of stimulus class. *Journal of the Experimental Analysis of Behavior, 68*(2), 235–244. [https://doi.org/10.1901/jeab.1997.68-235](https://www.google.com/search?q=https://doi.org/10.1901/jeab.1997.68-235)
+
+Hayes, S. C., Barnes-Holmes, D., & Roche, B. (2001a). *Relational frame theory: A post-Skinnerian account of human language and cognition*. Plenum Press.
+
+Hayes, S. C., Brownstein, A. J., Zettle, R. D., Rosenfarb, I., & Korn, Z. (1986). Rule-governed behavior and sensitivity to changing consequences of responding. *Journal of the Experimental Analysis of Behavior, 45*(3), 237–256. [https://doi.org/10.1901/jeab.1986.45-237](https://doi.org/10.1901/jeab.1986.45-237)
+
+Hayes, S. C., Gifford, E. V., Townsend, R. C., & Barnes-Holmes, D. (2001b). Thinking, problem-solving, and pragmatic verbal analysis. En S. C. Hayes, D. Barnes-Holmes, & B. Roche (Eds.), *Relational frame theory* (pp. 87–101). Springer US. [https://doi.org/10.1007/0-306-47638-X\_5](https://doi.org/10.1007/0-306-47638-X_5)
+
+Hayes, S. C., & Hayes, L. J. (1992). *Understanding verbal relations: The Second and Third International Institute on Verbal Relations*. Context Press.
+
+Hayes, S. C., & Hofmann, S. G. (2023). A biphasic relational approach to the evolution of human consciousness. *International Journal of Clinical & Health Psychology, 23*(4), 100380. [https://doi.org/10.1016/j.ijchp.2023.100380](https://www.google.com/search?q=https://doi.org/10.1016/j.ijchp.2023.100380)
+
+Hayes, S. C., Law, S., Assemi, K., Falletta-Cowden, N., Shamblin, M., Burleigh, K., Olla, R., Forman, M., & Smith, P. (2021). Relating is an operant: A fly over of 35 years of RFT research. *Perspectivas Em Análise Do Comportamento*. [https://doi.org/10.18761/PAC.2021.v12.RFT.02](https://doi.org/10.18761/PAC.2021.v12.RFT.02)
+
+Hayes, S. C., & Sanford, B. T. (2014). Cooperation came first: Evolution and human cognition. *Journal of the Experimental Analysis of Behavior, 101*(1), 112–129. [https://doi.org/10.1002/jeab.64](https://doi.org/10.1002/jeab.64)
+
+Horne, P. J., & Lowe, C. F. (1996). On the origins of naming and other symbolic behavior. *Journal of the Experimental Analysis of Behavior, 65*(1), 185–241. [https://doi.org/10.1901/jeab.1996.65-185](https://doi.org/10.1901/jeab.1996.65-185)
+
+Horne, P. J., Lowe, C. F., & Randle, V. R. L. (2004). Naming and categorization in young children: II. Listener behavior training. *Journal of the Experimental Analysis of Behavior, 81*(3), 267–288. [https://doi.org/10.1901/jeab.2004.81-267](https://doi.org/10.1901/jeab.2004.81-267)
+
+Hranchuk, K., & Greer, R. D. (2024). General reflections on interactions between cross-disciplinary theories of human language development. *The Psychological Record*. [https://doi.org/10.1007/s40732-024-00588-y](https://www.google.com/search?q=https://doi.org/10.1007/s40732-024-00588-y)
+
+Keller, F. S. (1968). Good-bye, teacher …. *Journal of Applied Behavior Analysis, 1*(1), 79–89. [https://doi.org/10.1901/jaba.1968.1-79](https://doi.org/10.1901/jaba.1968.1-79)
+
+Lipkens, R., Hayes, S. C., & Hayes, L. J. (1993). Longitudinal study of the development of derived relations in an infant. *Journal of Experimental Child Psychology, 56*(2), 201–239. [https://doi.org/10.1006/jecp.1993.1032](https://doi.org/10.1006/jecp.1993.1032)
+
+Lowe, C. F., & Horne, P. J. (1996). Reflections on naming and other symbolic behavior. *Journal of the Experimental Analysis of Behavior, 65*(1), 315–340. [https://doi.org/10.1901/jeab.1996.65-315](https://doi.org/10.1901/jeab.1996.65-315)
+
+Lowe, C. F., Horne, P. J., Harris, F. D. A., & Randle, V. R. L. (2002). Naming and categorization in young children: Vocal tact training. *Journal of the Experimental Analysis of Behavior, 78*(3), 527–549. [https://doi.org/10.1901/jeab.2002.78-527](https://doi.org/10.1901/jeab.2002.78-527)
+
+Lowe, C. F., Horne, P. J., & Hughes, J. C. (2005). Naming and categorization in young children: III. Vocal tact training and transfer of function. *Journal of the Experimental Analysis of Behavior, 83*(1), 47–65. [https://doi.org/10.1901/jeab.2005.31-04](https://doi.org/10.1901/jeab.2005.31-04)
+
+Lowenkron, B. (1998). Some logical functions of joint control. *Journal of the Experimental Analysis of Behavior, 69*(3), 327–354. [https://doi.org/10.1901/jeab.1998.69-327](https://doi.org/10.1901/jeab.1998.69-327)
+
+Lowenkron, B. (2006). An introduction to joint control. *Analysis of Verbal Behavior, 22*, 123–127. [https://doi.org/10.1007/BF03393034](https://doi.org/10.1007/BF03393034)
+
+Lucchesi, F. D. M., Almeida-Verdu, A. C. M., Bolsoni-Silva, A. T., Buffa, M. J. M. B., & de Souza, D. G. (2022). Speech accuracy and reading in children with cochlear implants. *The Psychological Record, 72*(4), 697–711. [https://doi.org/10.1007/s40732-022-00518-w](https://doi.org/10.1007/s40732-022-00518-w)
+
+Mackay, H. A., & Sidman, M. (1984). Teaching new behavior via equivalence relations. En B. Sperber, C. MacCauley, & P. H. Brookes (Eds.), *Learning and cognition in the mentally retarded* (pp. 493–513). Lawrence Erlbaum Associates.
+
+Marin, R., & Fienup, D. M. (2024). Relating in the wild: Toward an analysis of equivalence relations under more naturalistic conditions. *Perspectives on Behavior Science, 47*, 603–626. [https://doi.org/10.1007/s40614-024-00420-6](https://www.google.com/search?q=https://doi.org/10.1007/s40614-024-00420-6)
+
+McIlvane, W. J., & Stoddard, T. (1981). Acquisition of matching-to-sample performances in severe retardation: Learning by exclusion. *Journal of Intellectual Disability Research, 25*(1), 33–48. [https://doi.org/10.1111/j.1365-2788.1981.tb00091.x](https://www.google.com/search?q=https://doi.org/10.1111/j.1365-2788.1981.tb00091.x)
+
+Melchiori, L. E., de Souza, D. G., & de Rose, J. C. (2000). Reading, equivalence, and recombination of units: A replication with students with different learning histories. *Journal of Applied Behavior Analysis, 33*(1), 97–100. [https://doi.org/10.1901/jaba.2000.33-97](https://doi.org/10.1901/jaba.2000.33-97)
+
+Michael, J. (1984). Verbal behavior. *Journal of the Experimental Analysis of Behavior, 42*(3), 363–376. [https://doi.org/10.1901/jeab.1984.42-363](https://doi.org/10.1901/jeab.1984.42-363)
+
+Michael, J. (1996). Separate repertoires or naming? *Journal of the Experimental Analysis of Behavior, 65*(1), 296. [https://doi.org/10.1901/jeab.1996.65-296](https://doi.org/10.1901/jeab.1996.65-296)
+
+Miguel, C. F. (2016). Common and intraverbal bidirectional naming. *Analysis of Verbal Behavior, 32*(2), 125–138. [https://doi.org/10.1007/s40616-016-0066-2](https://doi.org/10.1007/s40616-016-0066-2)
+
+Miguel, C. F. (2018). Problem-solving, bidirectional naming, and the development of verbal repertoires. *Behavior Analysis: Research & Practice, 18*(4), 340–353. [https://doi.org/10.1037/bar0000110](https://doi.org/10.1037/bar0000110)
+
+Murphy, C., & Barnes-Holmes, D. (2009). Establishing derived manding for specific amounts with three children: An attempt at synthesizing Skinner’s verbal behavior with relational frame theory. *The Psychological Record, 59*(1), 75–91. [https://doi.org/10.1007/BF03395650](https://doi.org/10.1007/BF03395650)
+
+Murphy, C., Lyons, K., Kelly, M., Barnes-Holmes, Y., & Barnes-Holmes, D. (2019). Using the Teacher IRAP (T-IRAP) interactive computerized programme to teach complex flexible relational responding with children with diagnosed autism spectrum disorder. *Behavior Analysis in Practice, 12*, 52–65. [https://doi.org/10.1007/s40617-018-00302-9](https://doi.org/10.1007/s40617-018-00302-9)
+
+O’Connor, M., Farrell, L., Munnelly, A., & McHugh, L. (2017). Citation analysis of relational frame theory: 2009–2016. *Journal of Contextual Behavioral Science, 6*(2), 152–158. [https://doi.org/10.1016/j.jcbs.2017.04.009](https://doi.org/10.1016/j.jcbs.2017.04.009)
+
+Parrott, L. J. (1984). Listening and understanding. *The Behavior Analyst, 7*(1), 29–39. [https://doi.org/10.1007/BF03391883](https://www.google.com/search?q=https://doi.org/10.1007/BF03391883)
+
+Perez, W. F. (2023). Skinner and relational frame theory: Integrating units of analysis on a continuum of complexity. *The Psychological Record*. [https://doi.org/10.1007/s40732-023-00559-9](https://doi.org/10.1007/s40732-023-00559-9)
+
+Petursdottir, A. I. (2018). The current status of the experimental analysis of verbal behavior. *Behavior Analysis: Research & Practice, 18*(2), 151–168. [https://doi.org/10.1037/bar0000109](https://doi.org/10.1037/bar0000109)
+
+Petursdottir, A. I. (2023). To dismantle or not to dismantle: Components of derived relational responding. *The Psychological Record*. [https://doi.org/10.1007/s40732-023-00573-x](https://doi.org/10.1007/s40732-023-00573-x)
+
+Petursdottir, A. I., & Devine, B. (2017). The impact of verbal behavior on the scholarly literature from 2005 to 2016. *The Analysis of Verbal Behavior, 33*(2), 212–228. [https://doi.org/10.1007/s40616-017-0089-3](https://www.google.com/search?q=https://doi.org/10.1007/s40616-017-0089-3)
+
+Pilgrim, C. (1996). Can the naming hypothesis be falsified? *Journal of the Experimental Analysis of Behavior, 65*(1), 284–286. [https://doi.org/10.1901/jeab.1996.65-284](https://doi.org/10.1901/jeab.1996.65-284)
+
+Pilgrim, C. (2020). Equivalence-based instruction. En J. O. Cooper, T. E. Heron, & W. L. Heward (Eds.), *Applied behavior analysis* (3a ed., pp. 442–496). Pearson.
+
+Pomorska, K., Ostaszewski, P., Barnes-Holmes, Y., & McEnteggart, C. (2021). Protocols for assessing derived relations in typically developing children and children with autism spectrum disorder. *The Psychological Record, 71*(3), 435–460. [https://doi.org/10.1007/s40732-020-00442-x](https://doi.org/10.1007/s40732-020-00442-x)
+
+Regaço, A., Zapparoli, H. R., Aggio, N. M., Silveira, M. V., & Arntzen, E. (2023). Maintenance of stimulus equivalence classes: A bibliographic review. *The Psychological Record, 73*, 1–11. [https://doi.org/10.1007/s40732-023-00535-3](https://doi.org/10.1007/s40732-023-00535-3)
+
+Ribeiro, G. W., Kawasaki, H. N., Menzori, L. R., Amd, M., de Rose, J. C., & de Souza, D. G. (2020). Emergent reading via stimulus pairing with orientation response. *The Psychological Record, 70*(3), 397–410. [https://doi.org/10.1007/s40732-020-00398-y](https://doi.org/10.1007/s40732-020-00398-y)
+
+Rosales-Ruiz, J., & Baer, D. M. (1997). Behavioral cusps: A developmental and pragmatic concept for behavior analysis. *Journal of Applied Behavior Analysis, 30*(3), 533–544. [https://doi.org/10.1901/jaba.1997.30-533](https://doi.org/10.1901/jaba.1997.30-533)
+
+Saunders, K. J., & Spradlin, J. E. (1996). Naming and equivalence relations. *Journal of the Experimental Analysis of Behavior, 65*(1), 304–308. [https://doi.org/10.1901/jeab.1996.65-304](https://doi.org/10.1901/jeab.1996.65-304)
+
+Schlinger, H. D., Jr., & Blakely, E. (2024). A mediational theory of equivalence relations and transformation of function. *Journal of the Experimental Analysis of Behavior, 122*(2), 207–223. [https://doi.org/10.1002/jeab.4204](https://doi.org/10.1002/jeab.4204)
+
+Sidman, M. (1971). Reading and auditory-visual equivalence. *Journal of Speech & Hearing Research, 14*(1), 5–13.
+
+Sidman, M. (1994). *Equivalence relations and behavior: A research story*. Authors Cooperative.
+
+Sidman, M. (2000). Equivalence relations and the reinforcement contingency. *Journal of the Experimental Analysis of Behavior, 74*(1), 127–146. [https://doi.org/10.1901/jeab.2000.74-127](https://doi.org/10.1901/jeab.2000.74-127)
+
+Sidman, M., & Tailby, W. (1982). Conditional discrimination vs. matching to sample: An expansion of the testing paradigm. *Journal of the Experimental Analysis of Behavior, 37*(1), 5–22. [https://doi.org/10.1901/jeab.1982.37-5](https://doi.org/10.1901/jeab.1982.37-5)
+
+Sidman, M., Willson-Morris, M., & Kirk, B. (1986). Matching-to-sample procedures and the development of equivalence relations: The role of naming. *Analysis & Intervention in Developmental Disabilities, 6*(1–2), 1–19. [https://doi.org/10.1016/0270-4684(86)90003-0](https://doi.org/10.1016/0270-4684\(86\)90003-0)
+
+Sivaraman, M., & Barnes-Holmes, D. (2023). Naming: What do we know so far? A systematic review. *Perspectives on Behavior Science, 46*(3–4), 585–615. [https://doi.org/10.1007/s40614-023-00374-1](https://doi.org/10.1007/s40614-023-00374-1)
+
+Sivaraman, M., Barnes-Holmes, D., Greer, R. D., Fienup, D. M., & Roeyers, H. (2023). Verbal behavior development theory and relational frame theory: Reflecting on similarities and differences. *Journal of the Experimental Analysis of Behavior, 119*(3), 539–553. [https://doi.org/10.1002/jeab.836](https://doi.org/10.1002/jeab.836)
+
+Sivaraman, M., Barnes-Holmes, D., & Roeyers, H. (2021). Nonsimultaneous stimulus presentations and their role in listener naming. *Journal of the Experimental Analysis of Behavior, 116*(3), 300–313. [https://doi.org/10.1002/jeab.715](https://doi.org/10.1002/jeab.715)
+
+Skinner, B. F. (1957). *Verbal behavior*. Appleton-Century-Crofts.
+
+Skinner, B. F. (1966). An operant analysis of problem solving. En B. Kleinmuntz (Ed.), *Problem-solving: Research, method, and theory* (pp. 225–257). Wiley.
+
+Skinner, B. F. (1969). *Contingencies of reinforcement: A theoretical analysis*. BF Skinner Foundation.
+
+Stewart, I., & Barnes-Holmes, D. (2004). Relational frame theory and analogical reasoning: Empirical investigations. *International Journal of Psychology & Psychological Therapy, 4*(2), 241–262.
+
+Sundberg, C. T., Sundberg, M. L., & Michael, J. (2018). Covert verbal mediation in arbitrary matching to sample. *Journal of the Experimental Analysis of Behavior, 109*(3), 600–623. [https://doi.org/10.1002/jeab.434](https://www.google.com/search?q=https://doi.org/10.1002/jeab.434)
+
+Sundberg, M. L., & Michael, J. (2001). The benefits of Skinner’s analysis of verbal behavior for children with autism. *Behavior Modification, 25*(5), 698–724. [https://doi.org/10.1177/0145445501255003](https://doi.org/10.1177/0145445501255003)
+
+Zapparoli, H. R., Marin, R., & Harte, C. (2021). Rule-governed behavior: An ongoing RFT-based operant analysis. *Perspectivas Em Análise Do Comportamento, 12*(1), 197–213. [https://doi.org/10.18761/PAC.2021.v12.RFT.09](https://doi.org/10.18761/PAC.2021.v12.RFT.09)

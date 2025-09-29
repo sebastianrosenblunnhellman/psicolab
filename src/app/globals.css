@@ -66,6 +66,13 @@ body {
 
 .article-content p {
   @apply mb-4 text-gray-700;
+  text-align: justify;
+  text-justify: inter-word;
+}
+
+.article-content li {
+  text-align: justify;
+  text-justify: inter-word;
 }
 
 /* Ensure inline article images are responsive */
@@ -76,6 +83,22 @@ body {
 
 .article-content blockquote {
   @apply pl-4 border-l-4 border-gray-300 italic my-4 text-gray-600;
+}
+
+.article-content details.references-section {
+  @apply border border-gray-200 rounded-lg bg-gray-50 px-4 py-3 mb-6;
+}
+
+.article-content details.references-section summary {
+  @apply cursor-pointer font-semibold text-gray-800;
+}
+
+.article-content details.references-section[open] {
+  @apply bg-gray-100;
+}
+
+.article-content details.references-section .references-content {
+  @apply mt-4 space-y-4;
 }
 
 pre {

@@ -12,11 +12,9 @@ image: "/images/articles/T_R_T_M/miniatura.png"
 
 [Descargar](https://drive.google.com/file/d/1nYGav3_X2Xj_MaU6r73oxllPWim_LkF-/view?usp=sharing)
 
-# Una Teoría de Red de los Trastornos Mentales
 
 Este artículo ha sido adaptado de Borsboom, D. (2017). A network theory of mental disorders. *World Psychiatry*, 16, 5-13. https://doi.org/10.1002/wps.20375.
 
-## Una teoría en red de los trastornos mentales
 
 En los últimos años, ha surgido un enfoque innovador para comprender los trastornos mentales, basado en la teoría de redes. Este modelo propone que los síntomas de la psicopatología están conectados causalmente a través de una compleja variedad de mecanismos biológicos, psicológicos y sociales (Borsboom, 2017). Esta idea da lugar de  a un modelo integral de psicopatología que abarca un modelo explicativo común para los trastornos mentales, así como definiciones novedosas de conceptos asociados como salud mental, tales como resiliencia y vulnerabilidad. Además, la teoría de redes tiene implicaciones directas en la forma de entender el diagnóstico y el tratamiento, y sugiere una agenda clara para la investigación futura en salud mental (Borsboom, 2017).
 
@@ -128,5 +126,130 @@ Cabe señalar que la teoría propuesta en este documento es muy simple. Especial
 Por último, como puede desprenderse de los ejemplos que se dan en este documento, las conexiones entre síntomas son a menudo prosaicas. Si no duermes, te cansas; si ves cosas que no están ahí, te angustias; si consumes demasiadas drogas, te metes en problemas legales, etc. En mi opinión, es probable que estas conexiones síntoma-síntoma tengan su origen en procesos biológicos, psicológicos y sociales muy comunes (y, por tanto, pueden implicar disfunciones perjudiciales en estos procesos (Wakefield, 1999)). Esto es sorprendente, porque significa que los trastornos no son entidades efímeras mal comprendidas, cuya naturaleza tendrá que ser descubierta por futuras investigaciones psicológicas, neurocientíficas o genéticas (lo que parece una convicción generalizada, si no la opinión recibida, entre los investigadores). Más bien, el hecho de que dispongamos del conjunto de síntomas básicos, y también comprendamos muchas de las relaciones entre ellos, significa que ya tenemos un modelo de trabajo bastante razonable de lo que son los trastornos y cómo funcionan (Borsboom, 2017).
 
 Si es así, es posible que nuestra actual falta de comprensión de los trastornos mentales no se deba a una capacidad de observación limitada, a instrumentos de medición ruidosos o a datos inadecuados, como se suele suponer. En cambio, puede que simplemente nos haya faltado un marco teórico para organizar los hechos empíricos disponibles (Borsboom, 2017).
+
+
+### **Referencias**
+
+Bak, M., Drukker, M., Hasmi, L., & van Os, J. (2016). An n=1 clinical network analysis of symptoms and treatment in psychosis. *PLoS One, 11*(10), e0162811.
+
+Beard, C., Millner, A. J., Forgeard, M. J., Fried, E. I., & Hsu, K. J. (2016). Network analysis of depression and anxiety symptom relationships in a psychiatric sample. *Psychological Medicine, 46*(14), 1-11.
+
+Borsboom, D. (2008). Psychometric perspectives on diagnostic systems. *Journal of Clinical Psychology, 64*(9), 1089-1108.
+
+Borsboom, D. (in press). Mental disorders, network models, and dynamical systems. In K. S. Kendler & J. Parnas (Eds.), *Philosophical issues in psychiatry, Vol. 4: Nosology*. Oxford University Press.
+
+Borsboom, D., & Cramer, A. O. J. (2013). Network analysis: An integrative approach to the structure of psychopathology. *Annual Review of Clinical Psychology, 9*, 91-121.
+
+Borsboom, D., Cramer, A. O. J., Schmittmann, V. D., Epskamp, S., & Waldorp, L. J. (2011). The small world of psychopathology. *PLoS One, 6*(11), e27407.
+
+Boschloo, L., van Borkulo, C. D., Borsboom, D., & Schoevers, R. A. (2016). A prospective study on how symptoms in a network predict the onset of depression. *Psychotherapy and Psychosomatics, 85*(3), 183-184.
+
+Boschloo, L., Schoevers, R. A., van Borkulo, C. D., Borsboom, D., & Oldehinkel, A. J. (2016). The network structure of psychopathology in a community sample of preadolescents. *Journal of Abnormal Psychology, 125*(5), 599-606.
+
+Boschloo, L., van Borkulo, C. D., Rhemtulla, M., Keyes, K. M., Borsboom, D., & Schoevers, R. A. (2015). The network structure of symptoms of the Diagnostic and Statistical Manual of Mental Disorders. *PLoS One, 10*(9), e0137621.
+
+Bringmann, L. F., Lemmens, L. H. J., Huibers, M. J. H., Borsboom, D., & Tuerlinckx, F. (2016). Revealing the dynamic network structure of the Beck Depression Inventory-II. *Psychological Medicine, 45*(4), 747-757.
+
+Bringmann, L. F., Vissers, N., Wichers, M., Geschwind, N., Kuppens, P., Peeters, F., ... & Tuerlinckx, F. (2013). A network approach to psychopathology: new insights into clinical longitudinal data. *PLoS One, 8*(4), e60188.
+
+Bringmann, L. F., Pe, M. L., Vissers, N., Ceulemans, E., Borsboom, D., Vanpaemel, W., ... & Tuerlinckx, F. (in press). Assessing temporal emotion dynamics using networks. *Assessment*.
+
+Caspi, A., Houts, R. M., Belsky, D. W., Goldman-Mellor, S. J., Harrington, H., Israel, S., ... & Moffitt, T. E. (2014). The p factor: One general psychopathology factor in the structure of psychiatric disorders? *Clinical Psychological Science, 2*(2), 119-137.
+
+Costantini, G., Epskamp, S., Borsboom, D., Perugini, M., Mõttus, R., Waldorp, L. J., & Cramer, A. O. J. (2014). State of the art personality research: A tutorial on network analysis of personality data in R. *Journal of Research in Personality, 54*, 13-29.
+
+Cramer, A. O. J. (2013). *The glue of (ab)normal mental life: Networks of interacting thoughts, feelings and behaviors* [Doctoral dissertation, University of Amsterdam].
+
+Cramer, A. O. J., Borsboom, D., Aggen, S. H., & Kendler, K. S. (2011). The pathoplasticity of dysphoric episodes: Differential impact of stressful life events on the pattern of depressive symptom inter-correlations. *Psychological Medicine, 42*(5), 957-965.
+
+Cramer, A. O. J., van der Sluis, S., Noordhof, A., Wichers, M., Geschwind, N., Aggen, S. H., ... & Borsboom, D. (2012). Dimensions of normal personality as networks in search of equilibrium: You can’t like parties if you don’t like people. *European Journal of Personality, 26*(4), 414-431.
+
+Cramer, A. O. J., Waldorp, L. J., van der Maas, H. L. J., & Borsboom, D. (2010). Comorbidity: a network perspective. *Behavioral and Brain Sciences, 33*(2-3), 137-193.
+
+Cramer, A. O. J., van Borkulo, C. D., Giltay, E. J., van der Maas, H. L. J., Kendler, K. S., & Borsboom, D. (in press). Major depression as a complex dynamic system. *PLoS One*.
+
+Deserno, M. K., Borsboom, D., Begeer, S., & Geurts, H. M. (in press). Multicausal systems ask for multicausal approaches: A network perspective on subjective well-being in individuals with autism spectrum disorder. *Autism*.
+
+Epskamp, S., Cramer, A. O. J., Waldorp, L. J., Schmittmann, V. D., & Borsboom, D. (2012). qgraph: Network visualizations of relationships in psychometric data. *Journal of Statistical Software, 48*(4), 1-18.
+
+Epskamp, S., Maris, G., Waldorp, L. J., & Borsboom, D. (in press). Network psychometrics. In P. Irwing, D. Hughes, & T. Booth (Eds.), *Handbook of psychometrics*. Wiley.
+
+Frewen, P. A., Allen, S. L., Lanius, R. A., & Neufeld, R. W. J. (2012). Perceived causal relations: Novel methodology for assessing client attributions about causal associations between variables including symptoms and functional impairment. *Assessment, 19*(4), 480-493.
+
+Frewen, P. A., Schmittmann, V. D., Bringmann, L. F., & Borsboom, D. (2013). Perceived causal relations between anxiety, posttraumatic stress and depression: Extension to moderation, mediation, and network analysis. *European Journal of Psychotraumatology, 4*(1), 20656.
+
+Fried, E. I., Bockting, C., Arjadi, R., Borsboom, D., Amshoff, M., Cramer, A. O. J., ... & Hollon, S. D. (2015). From loss to loneliness: The relationship between bereavement and depressive symptoms. *Journal of Abnormal Psychology, 124*(2), 256-265.
+
+Fried, E. I., Epskamp, S., Nesse, R. M., Tuerlinckx, F., & Borsboom, D. (2016). What are ‘good’ depression symptoms? Comparing the centrality of DSM and non-DSM symptoms of depression in a network analysis. *Journal of Affective Disorders, 189*, 314-320.
+
+Goekoop, R., & Goekoop, J. G. (2014). A network view on psychiatric disorders: network clusters of symptoms as elementary syndromes of psychopathology. *PLoS One, 9*(11), e112734.
+
+Haslbeck, J., & Waldorp, L. J. (in press). mgm: Structure estimation for time-varying mixed graphical models in high-dimensional data. *Journal of Statistical Software*.
+
+Heeren, A., & McNally, R. J. (2016). An integrative network approach to social anxiety disorder: The complex dynamic interplay among attentional bias for threat, attentional control, and symptoms. *Journal of Anxiety Disorders, 42*, 95-104.
+
+Hoorelbeke, K., Marchetti, I., De Schryver, M., & Koster, E. H. W. (2016). The interplay between cognitive risk and resilience factors in remitted depression: A network analysis. *Journal of Affective Disorders, 195*, 96-104.
+
+Hyland, M. E. (2011). *The origins of health and disease*. Cambridge University Press.
+
+Insel, T. R., & Cuthbert, B. N. (2015). Brain disorders? Precisely. *Science, 348*(6234), 499-500.
+
+Isvoranu, A. M., Borsboom, D., van Os, J., & Guloksuz, S. (2016). A network approach to environmental impact in psychotic disorder: brief theoretical framework. *Schizophrenia Bulletin, 42*(4), 870-873.
+
+Isvoranu, A. M., van Borkulo, C. D., Boyette, L., Wigman, J. T. W., Vinkers, C. H., & Borsboom, D. (in press). A network approach to psychosis: Pathways between childhood trauma and psychotic symptoms. *Schizophrenia Bulletin*.
+
+Jokela, M., Virtanen, M., & Batty, G. D. (2016). Inflammation and specific symptoms of depression. *JAMA Psychiatry, 73*(8), 1-6.
+
+Kendler, K. S. (2013). The dappled nature of causes of psychiatric illness: replacing the organic-functional/hardware-software dichotomy with empirically based pluralism. *Molecular Psychiatry, 17*(4), 377-388.
+
+Kendler, K. S., Zachar, P., & Craver, C. (2011). What kinds of things are psychiatric disorders? *Psychological Medicine, 41*(6), 1143-1150.
+
+Kim, N. S., & Ahn, W. (2002). Clinical psychologists’ theory-based representations of mental disorders predict their diagnostic reasoning and memory. *Journal of Experimental Psychology: General, 131*(3), 451-476.
+
+Kossakowski, J. J., Epskamp, S., Kieffer, J. M., van Borkulo, C. D., Rhemtulla, M., & Borsboom, D. (2015). The application of a network approach to health-related quality of life: Introducing a new method for assessing HRQoL in healthy adults and cancer patients. *Quality of Life Research, 25*(4), 781-792.
+
+Kramer, I., Simons, C. J. P., Wigman, J. T. W., & Myin-Germeys, I. (2014). Time-lagged moment-to-moment interplay between negative affect and paranoia: New insights in the affective pathway to psychosis. *Schizophrenia Bulletin, 40*(2), 278-286.
+
+Krueger, R. F. (1999). The structure of common mental disorders. *Archives of General Psychiatry, 56*(10), 921-926.
+
+Marsman, M., Maris, G., Bechger, T., & Glas, C. A. W. (2015). Bayesian inference for low-rank Ising networks. *Scientific Reports, 5*, 9050.
+
+McNally, R. J., Robinaugh, D. J., Wu, G. W. Y., Wang, L., Deserno, M. K., & Borsboom, D. (2014). Mental disorders as causal systems: A network approach to Posttraumatic Stress Disorder. *Clinical Psychological Science, 3*(6), 836-849.
+
+Myin-Germeys, I., Oorschot, M., Collip, D., Lataster, J., Delespaul, P., & van Os, J. (2009). Experience sampling research in psychopathology: Opening the black box of daily life. *Psychological Medicine, 39*(9), 1533-1547.
+
+Nolen-Hoeksema, S., & Watkins, E. R. (2011). A heuristic for developing transdiagnostic models of psychopathology: Explaining multifinality and divergent trajectories. *Perspectives on Psychological Science, 6*(6), 589-609.
+
+Pearl, J. (2000). *Causality: Models, reasoning and inference*. MIT Press.
+
+Pe, M. L., Kircanski, K., Thompson, R. J., Bringmann, L. F., Tuerlinckx, F., Mestdagh, M., ... & Gotlib, I. H. (2015). Emotion-network density in major depressive disorder. *Clinical Psychological Science, 3*(2), 292-300.
+
+Rhemtulla, M., Fried, E. I., Aggen, S. H., Tuerlinckx, F., Kendler, K. S., & Borsboom, D. (2016). Network analysis of substance abuse and dependence symptoms. *Drug and Alcohol Dependence, 161*, 230-237.
+
+Robinaugh, D. J., LeBlanc, N. J., Vuletich, H. A., & McNally, R. J. (2014). Network analysis of persistent complex bereavement disorder in conjugally bereaved adults. *Journal of Abnormal Psychology, 123*(3), 510-522.
+
+Ruzzano, L., Borsboom, D., & Geurts, H. M. (2014). Repetitive behaviors in autism and obsessive-compulsive disorder: New perspectives from a network analysis. *Journal of Autism and Developmental Disorders, 45*(1), 192-202.
+
+Segal, Z. V., Williams, J. M., & Teasdale, J. D. (1996). A cognitive science perspective on kindling and episode sensitization in recurrent affective disorder. *Psychological Medicine, 26*(2), 371-380.
+
+Tio, P., Epskamp, S., Noordhof, A., & Borsboom, D. (in press). Mapping the manuals of madness: Comparing the ICD-10 and DSM-IV-TR using a network approach. *International Journal of Methods in Psychiatric Research*.
+
+van Borkulo, C., Boschloo, L., Borsboom, D., Penninx, B. W. J. H., Waldorp, L. J., & Schoevers, R. A. (2015). Association of symptom network structure with the course of depression. *JAMA Psychiatry, 72*(12), 1219-1226.
+
+van Borkulo, C. D., Borsboom, D., Epskamp, S., Blanken, T. F., Boschloo, L., Schoevers, R. A., & Waldorp, L. J. (2014). A new method for constructing networks from binary data. *Scientific Reports, 4*, 5918.
+
+van der Maas, H. L. J., & Molenaar, P. C. M. (1992). Stagewise cognitive development: An application of catastrophe theory. *Psychological Review, 99*(3), 395-417.
+
+Wakefield, J. C. (1999). The concept of disorder as a foundation for the DSM’s theory-neutral nosology: Response to Folette and Houts, Part 2. *Behavior Research and Therapy, 37*(10), 1001-1027.
+
+Wichers, M. (2014). The dynamic nature of depression: A new micro-level perspective of mental disorder that meets current challenges. *Psychological Medicine, 44*(7), 1349-1360.
+
+Wichers, M., Geschwind, N., van Os, J., & Peeters, F. (2009). Scars in depression: Is a conceptual shift necessary to solve the puzzle? *Psychological Medicine, 40*(3), 359-365.
+
+Wichers, M., Groot, P., Simons, C. J. P., Tuerlinckx, F., & Kramer, I. (2016). Critical slowing down as a personalized early warning signal for depression. *Psychotherapy and Psychosomatics, 85*(2), 114-116.
+
+Wigman, J. T. W., van Os, J., Borsboom, D., Wardenaar, K. J., Epskamp, S., Klippel, A., ... & Schoevers, R. A. (2015). Exploring the underlying structure of mental disorders: Cross-diagnostic differences and similarities from a network perspective using both a top-down and a bottom-up approach. *Psychological Medicine, 45*(11), 1-13.
+
+Woodward, J. (2003). *Making things happen: A theory of causal explanation*. Oxford University Press.
 
 ---
