@@ -10,7 +10,7 @@ published: true
 image: "/images/articles/T_R_T_M/miniatura.png"  
 ---
 
-[Descargar](https://drive.google.com/file/d/1nYGav3_X2Xj_MaU6r73oxllPWim_LkF-/view?usp=sharing)
+[Descargar](https://drive.google.com/file/d/1ckx7waTYusiSj510_8pgQoYEwUn-et9B/view?usp=drive_link)
 
 
 Este artículo ha sido adaptado de Borsboom, D. (2017). A network theory of mental disorders. *World Psychiatry*, 16, 5-13. https://doi.org/10.1002/wps.20375.

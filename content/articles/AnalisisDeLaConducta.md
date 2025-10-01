@@ -10,7 +10,7 @@ published: true
 image: "/images/articles/A_C_C/miniatura.png"
 ---
 
-[Descargar](https://drive.google.com/file/d/1nYGav3_X2Xj_MaU6r73oxllPWim_LkF-/view?usp=sharing)
+[Descargar](https://drive.google.com/file/d/1YGVJA6H_XQHEmEm7jMi2zZTLzGVpshl9/view?usp=drive_link)
 
 
 
