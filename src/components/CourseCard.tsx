@@ -1,87 +1,116 @@
 import Link from 'next/link';
-import { useState } from 'react';
-import { FaBookmark, FaRegBookmark } from 'react-icons/fa';
 import Image from 'next/image';
+import { FaClock, FaUser, FaStar } from 'react-icons/fa';
 
 interface CourseCardProps {
-  id: string;
   title: string;
   description: string;
-  image?: string;
-  duration?: string;
-  level?: string;
-  // Saving disabled for courses
-  tags?: string[];
+  image: string;
+  instructor: string;
+  duration: string;
+  level: string;
+  rating: number;
+  students: number;
+  status: 'available' | 'coming_soon' | 'in_progress';
+  slug: string;
 }
 
 export default function CourseCard({
-  id,
   title,
   description,
-  image = '/images/miniatura.jpg',
+  image,
+  instructor,
   duration,
   level,
-  // isSaved and onSaveToggle removed
-  tags
+  rating,
+  students,
+  status,
+  slug
 }: CourseCardProps) {
-  const [isHovered, setIsHovered] = useState(false);
-
-  // Saving disabled
-
   return (
-    <Link
-      href={`/aprendizaje/${id}`}
-      className="block h-auto sm:h-48"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
-      <article className="bg-white rounded-lg shadow-sm border border-gray-100 hover:shadow-lg hover:border-teal-500 transition-all duration-300 flex flex-col sm:flex-row overflow-hidden h-full">
-        {/* Image column - square shape */}
-        <div className="relative w-full sm:w-48 aspect-square sm:aspect-auto sm:h-full flex-shrink-0">
-          <Image 
-            src={image} 
+    <div className="group bg-white rounded-2xl border border-neutral-100 shadow-soft hover:shadow-soft-lg transition-all duration-300 overflow-hidden flex flex-col h-full hover:-translate-y-1">
+      {/* Image Container */}
+      <div className="relative w-full pt-6 px-6 flex justify-center bg-neutral-50/50">
+        <div className="relative w-full aspect-square overflow-hidden rounded-xl shadow-sm">
+          <Image
+            src={image}
             alt={title}
-            fill
-            sizes="(max-width: 640px) 100vw, 192px"
-            className="object-cover"
-            priority
+            width={1080}
+            height={1080}
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
           />
         </div>
-        
-        {/* Content column */}
-        <div className="p-3 flex flex-col flex-grow overflow-hidden">
-          <div className="flex justify-between items-start mb-2">
-            <h3 className="text-lg font-bold text-gray-800 hover:text-teal-600 transition-colors line-clamp-2">
-              {title}
-            </h3>
-            {/* Saving disabled for courses */}
-          </div>
-          <p className="text-sm text-gray-600 mb-2 line-clamp-2">{description}</p>
-
-          {tags && tags.length > 0 && (
-            <div className="flex flex-wrap gap-1 mb-2">
-              {tags.map((tag) => (
-                <span key={tag} className="bg-gray-100 text-gray-800 text-xs px-2 py-0.5 rounded">{tag}</span>
-              ))}
-            </div>
+        {/* Status Badge */}
+        <div className="absolute top-8 right-8 z-10">
+          {status === 'coming_soon' && (
+            <span className="px-3 py-1 bg-accent-500 text-white text-xs font-bold rounded-full shadow-lg">
+              Próximamente
+            </span>
           )}
-          
-          <div className="flex items-center text-xs text-gray-500 space-x-4 mt-auto">
-            {duration && (
-              <span className="flex items-center">
-                <span className="mr-1">⏱</span>
-                {duration}
-              </span>
-            )}
-            {level && (
-              <span className="flex items-center">
-                <span className="mr-1">📚</span>
-                {level}
-              </span>
-            )}
+          {status === 'available' && (
+            <span className="px-3 py-1 bg-green-500 text-white text-xs font-bold rounded-full shadow-lg">
+              Disponible
+            </span>
+          )}
+        </div>
+
+        {/* Level Badge */}
+        <div className="absolute bottom-4 left-4">
+          <span className="px-3 py-1 bg-white/20 backdrop-blur-md text-white text-xs font-medium rounded-full border border-white/30">
+            {level}
+          </span>
+        </div>
+      </div>
+
+      {/* Content */}
+      <div className="p-6 flex flex-col flex-grow">
+        <div className="flex items-center gap-2 mb-3">
+          <div className="flex text-yellow-400 text-xs">
+            {[...Array(5)].map((_, i) => (
+              <FaStar key={i} className={i < Math.floor(rating) ? "fill-current" : "text-gray-300"} />
+            ))}
+          </div>
+          <span className="text-xs text-neutral-500 font-medium">({students} alumnos)</span>
+        </div>
+
+        <h3 className="text-xl font-bold text-neutral-900 mb-2 line-clamp-2 group-hover:text-primary-600 transition-colors">
+          {title}
+        </h3>
+        
+        <p className="text-sm text-neutral-600 mb-4 line-clamp-2 flex-grow">
+          {description}
+        </p>
+
+        <div className="flex items-center gap-4 text-xs text-neutral-500 mb-6">
+          <div className="flex items-center gap-1.5">
+            <FaUser className="text-primary-500" />
+            <span>{instructor}</span>
+          </div>
+          <div className="flex items-center gap-1.5">
+            <FaClock className="text-primary-500" />
+            <span>{duration}</span>
           </div>
         </div>
-      </article>
-    </Link>
+
+        {/* Footer / Action */}
+        <div className="mt-auto pt-4 border-t border-neutral-100 flex items-center justify-between">
+          <div className="flex flex-col">
+            <span className="text-xs text-neutral-500">Precio</span>
+            <span className="text-lg font-bold text-primary-600">Gratis</span>
+          </div>
+          <Link
+            href={status === 'available' ? `/aprendizaje/${slug}` : '#'}
+            className={`px-4 py-2 rounded-lg font-semibold text-sm transition-all ${
+              status === 'available'
+                ? 'bg-primary-50 text-primary-700 hover:bg-primary-100'
+                : 'bg-neutral-100 text-neutral-400 cursor-not-allowed'
+            }`}
+          >
+            {status === 'available' ? 'Ver Curso' : 'Notificarme'}
+          </Link>
+        </div>
+      </div>
+    </div>
   );
 }

@@ -19,21 +19,26 @@ export default function NetworkAnimation() {
 
   const initNodes = useCallback((width: number, height: number) => {
     const nodes: Node[] = [];
-    const nodeCount = 30;
+    const nodeCount = 80; // Increased density
 
     for (let i = 0; i < nodeCount; i++) {
+      // Bias towards right side (50% random, 50% right-biased)
+      const x = Math.random() > 0.3 
+        ? (width * 0.5) + (Math.random() * width * 0.5) 
+        : Math.random() * width;
+        
       nodes.push({
-        x: Math.random() * width,
+        x: x,
         y: Math.random() * height,
-        vx: (Math.random() - 0.5) * 1,
-        vy: (Math.random() - 0.5) * 1,
+        vx: (Math.random() - 0.5) * 1.5, // Slightly faster
+        vy: (Math.random() - 0.5) * 1.5,
         connections: []
       });
     }
 
     // Establecer conexiones
     nodes.forEach((node, i) => {
-      const connections = Math.floor(Math.random() * 3) + 1;
+      const connections = Math.floor(Math.random() * 4) + 1; // More connections
       for (let j = 0; j < connections; j++) {
         const targetIndex = Math.floor(Math.random() * nodeCount);
         if (targetIndex !== i && !node.connections.includes(targetIndex)) {
@@ -60,11 +65,20 @@ export default function NetworkAnimation() {
       ctx.beginPath();
       node.connections.forEach(targetIndex => {
         const target = nodes[targetIndex];
-        ctx.moveTo(node.x, node.y);
-        ctx.lineTo(target.x, target.y);
+        // Distancia check for cleaner visuals
+        const dx = node.x - target.x;
+        const dy = node.y - target.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        
+        if (dist < 200) { // Only draw if close
+            ctx.moveTo(node.x, node.y);
+            ctx.lineTo(target.x, target.y);
+            // Opacity based on distance
+            const lineOpacity = (1 - dist / 200) * 0.6 * opacity;
+            ctx.strokeStyle = `rgba(45, 212, 191, ${lineOpacity})`; // Teal color
+        }
       });
-      ctx.strokeStyle = `rgba(45, 212, 191, ${0.2 * opacity})`;
-      ctx.lineWidth = 1;
+      ctx.lineWidth = 1.5;
       ctx.stroke();
     });
   }, []);
@@ -72,8 +86,8 @@ export default function NetworkAnimation() {
   const drawNodes = useCallback((ctx: CanvasRenderingContext2D, nodes: Node[], opacity: number) => {
     nodes.forEach(node => {
       ctx.beginPath();
-      ctx.arc(node.x, node.y, 2, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(59, 130, 246, ${opacity})`;
+      ctx.arc(node.x, node.y, 3, 0, Math.PI * 2); // Larger nodes
+      ctx.fillStyle = `rgba(59, 130, 246, ${opacity * 0.8})`; // Blue nodes
       ctx.fill();
     });
   }, []);

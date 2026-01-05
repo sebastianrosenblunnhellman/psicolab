@@ -6,6 +6,7 @@ import SidebarFilter from './SidebarFilter';
 import Link from 'next/link';
 import { FaBook, FaVideo, FaExternalLinkAlt } from 'react-icons/fa';
 import FilteredLayout from './FilteredLayout';
+import ResourceCard from '@/components/ResourceCard';
 
 interface ResourcesListProps {
   initialResources: Resource[];
@@ -16,7 +17,7 @@ export default function ResourcesList({ initialResources }: ResourcesListProps) 
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedTag, setSelectedTag] = useState('');
   const [selectedType, setSelectedType] = useState('');
-  const resourcesPerPage = 4;
+  const resourcesPerPage = 9; // Increased for grid view
   
   // Auth and saving removed
 
@@ -73,18 +74,6 @@ export default function ResourcesList({ initialResources }: ResourcesListProps) 
     setSelectedType(value);
     setCurrentPage(1);
   };
-
-  // Helper function to render the appropriate icon based on resource type
-  const getResourceIcon = (type: string) => {
-    switch (type.toLowerCase()) {
-      case 'libro':
-        return <FaBook className="text-blue-600" />;
-      case 'video':
-        return <FaVideo className="text-red-600" />;
-      default:
-        return null;
-    }
-  };
   
   // Removed saved resources logic as only articles can be saved.
 
@@ -117,46 +106,18 @@ export default function ResourcesList({ initialResources }: ResourcesListProps) 
 
         {/* Resources List */}
         {paginatedResources.length > 0 ? (
-          <div className="grid grid-cols-1 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
             {paginatedResources.map((resource) => (
-              <div
-                key={resource.slug}
-                className="group block border border-gray-200 rounded-lg p-6 hover:shadow-lg hover:border-teal-500 transition-all duration-300 cursor-pointer relative"
-              >
-                <a
-                  href={resource.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block"
-                >
-                  <div className="flex justify-between items-start">
-                    <div>
-                      <h3 className="text-xl font-bold text-gray-800 group-hover:text-teal-500 transition-colors">
-                        {resource.title}
-                      </h3>
-                      <p className="text-gray-600 mt-2">{resource.excerpt}</p>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      {resource.type && getResourceIcon(resource.type)}
-                      <FaExternalLinkAlt className="text-gray-400 group-hover:text-teal-500 transition-colors" />
-                    </div>
-                  </div>
-                  
-                  {resource.tags && resource.tags.length > 0 && (
-                    <div className="flex flex-wrap gap-2 mt-4">
-                      {resource.tags.map((tag) => (
-                        <span
-                          key={tag}
-                          className="inline-block bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  )}
-                </a>
-                
-                {/* Saving resources disabled */}
+              <div key={resource.slug} className="h-full">
+                <ResourceCard
+                  id={resource.slug}
+                  title={resource.title}
+                  description={resource.excerpt}
+                  image={resource.image || '/images/miniatura.jpg'} // Fallback image
+                  type={resource.type}
+                  downloadUrl={resource.link}
+                  tags={resource.tags}
+                />
               </div>
             ))}
           </div>

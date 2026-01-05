@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { Article } from '@/utils/articles';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 
 type BlogCardProps = Partial<Article> & {
@@ -20,12 +20,7 @@ export default function BlogCard({
   author,
   image = '/images/miniatura.jpg'
 }: BlogCardProps) {
-  const [isSaving, setIsSaving] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
-  
-  // Saved status removed
-  
-  // Save/unsave removed
   
   if (!slug || !title) {
     return null;
@@ -34,76 +29,96 @@ export default function BlogCard({
   return (
     <Link 
       href={`/articulos/${slug}`} 
-      className="block h-auto md:h-48"
+      className="block group h-full"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <article className="bg-white rounded-lg shadow-sm border border-gray-100 hover:shadow-lg hover:border-teal-500 transition-all duration-300 flex flex-col md:flex-row overflow-hidden h-full">
-        {/* Image column - square shape */}
-        <div className="relative w-full md:w-48 aspect-square md:aspect-auto md:h-full flex-shrink-0">
-          <Image 
-            src={image} 
-            alt={title}
-            fill
-            sizes="(max-width: 768px) 100vw, 192px"
-            className="object-cover"
-            priority
-          />
+      <article className="bg-white rounded-2xl shadow-soft border border-neutral-100 hover:shadow-soft-lg hover:border-primary-200 transition-all duration-300 overflow-hidden h-full flex flex-col group-hover:-translate-y-1">
+        {/* Image */}
+        <div className="relative w-full pt-6 px-6 bg-neutral-50/50">
+          <div className="relative w-full aspect-square overflow-hidden rounded-xl bg-neutral-100 shadow-sm">
+            <Image 
+              src={image} 
+              alt={title}
+              width={1080}
+              height={1080}
+              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              priority
+            />
+          </div>
+          
+          {/* Read time badge */}
+          {readTime && (
+            <div className="absolute top-8 right-8 px-3 py-1 bg-white/95 backdrop-blur-sm rounded-full text-xs font-semibold text-neutral-700 shadow-soft z-10">
+              {readTime} min
+            </div>
+          )}
         </div>
         
-        {/* Content column */}
-        <div className="p-3 flex flex-col flex-grow overflow-hidden">
-          <div className="flex justify-between items-start mb-2">
-            <h2 className="text-lg font-bold text-gray-800 hover:text-teal-500 transition-colors line-clamp-2">
-              {title}
-            </h2>
-            
-            {/* Bookmark removed */}
-          </div>
-          
-          <div className="flex items-center gap-2 text-xs text-gray-600 mb-2">
-            {date && (
-              <time dateTime={date}>
-                {new Date(date).toLocaleDateString('es-ES', {
-                  year: 'numeric',
-                  month: 'short',
-                  day: 'numeric',
-                })}
-              </time>
-            )}
-            {readTime && (
-              <>
-                <span>·</span>
-                <span>{readTime} min</span>
-              </>
-            )}
-            {author && (
-              <>
-                <span>·</span>
-                <span className="truncate">{author}</span>
-              </>
-            )}
-          </div>
-          
-          {excerpt && <p className="text-sm text-gray-600 mb-2 line-clamp-2">{excerpt}</p>}
-          
+        {/* Content */}
+        <div className="p-6 flex flex-col flex-grow">
+          {/* Tags */}
           {tags && tags.length > 0 && (
-            <div className="flex flex-wrap gap-1 mt-auto">
+            <div className="flex flex-wrap gap-2 mb-3">
               {tags.slice(0, 2).map((tag) => (
                 <span
                   key={tag}
-                  className="inline-block bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full text-xs"
+                  className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-primary-50 text-primary-700 border border-primary-100"
                 >
                   {tag}
                 </span>
               ))}
               {tags.length > 2 && (
-                <span className="text-gray-500 text-xs">
+                <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-neutral-100 text-neutral-600">
                   +{tags.length - 2}
                 </span>
               )}
             </div>
           )}
+
+          {/* Title */}
+          <h2 className="text-xl font-bold text-neutral-900 mb-3 line-clamp-2 group-hover:text-primary-600 transition-colors leading-tight">
+            {title}
+          </h2>
+          
+          {/* Excerpt */}
+          {excerpt && (
+            <p className="text-sm text-neutral-600 mb-4 line-clamp-3 leading-relaxed flex-grow">
+              {excerpt}
+            </p>
+          )}
+          
+          {/* Footer */}
+          <div className="flex items-center justify-between pt-4 border-t border-neutral-100 mt-auto">
+            <div className="flex items-center gap-2 text-xs text-neutral-500">
+              {author && (
+                <div className="flex items-center gap-2">
+                  <div className="w-6 h-6 bg-gradient-to-br from-primary-500 to-accent-500 rounded-full flex items-center justify-center text-white text-xs font-bold">
+                    {author.charAt(0).toUpperCase()}
+                  </div>
+                  <span className="font-medium text-neutral-700">{author}</span>
+                </div>
+              )}
+              {date && author && <span>·</span>}
+              {date && (
+                <time dateTime={date} className="text-neutral-500">
+                  {new Date(date).toLocaleDateString('es-ES', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric',
+                  })}
+                </time>
+              )}
+            </div>
+
+            {/* Read more indicator */}
+            <div className="flex items-center gap-1 text-primary-600 font-medium text-sm">
+              <span className="group-hover:translate-x-1 transition-transform">Leer</span>
+              <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </div>
+          </div>
         </div>
       </article>
     </Link>

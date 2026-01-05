@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { useState, useEffect, Suspense } from 'react';
 import { FiMenu, FiX } from 'react-icons/fi';
-import { FaBook, FaTools, FaUsers } from 'react-icons/fa';
+import { FaBook, FaTools, FaGraduationCap } from 'react-icons/fa';
 import { usePathname } from 'next/navigation';
 
 interface MobileMenuItem {
@@ -15,129 +15,168 @@ interface MobileMenuItem {
 function HeaderComponent() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
-  const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
 
-  // Define mobile menu items - simplified without submenus
   const mobileMenuItems: MobileMenuItem[] = [
     {
-      label: 'Artículos',
+      label: 'Blog',
       href: '/articulos',
       icon: <FaBook className="h-5 w-5" />
     },
     {
-      label: 'Recursos',
+      label: 'Materiales',
       href: '/recursos',
       icon: <FaTools className="h-5 w-5" />
     },
     {
-      label: 'Nosotros',
-      href: '/nosotros',
-      icon: <FaUsers className="h-5 w-5" />
+      label: 'Aprendizaje',
+      href: '/aprendizaje',
+      icon: <FaGraduationCap className="h-5 w-5" />
     }
   ];
 
-  // Close menus when the path changes (user navigates)
   useEffect(() => {
     setIsOpen(false);
-    setIsUserDropdownOpen(false);
   }, [pathname]);
 
-  // Auth removed: no profile picture or user state
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 10);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const isActive = (path: string) => {
     return pathname.startsWith(path);
   };
 
-  // Auth removed: no login popup
-
-  // When the user logs in (cookie updated by Stack Auth), close the popup
-  // Auth removed
-
-  // Listen for popup completion messages and refresh parent
-  // Auth removed
-
-  // If we're inside the popup after redirect (returnTo), notify opener and close
-  // Auth removed
-
   return (
-    <header className="bg-white fixed w-full top-0 z-50 shadow-sm">
+    <header className={`fixed w-full top-0 z-50 transition-all duration-300 ${
+      isScrolled 
+        ? 'bg-white/95 backdrop-blur-md shadow-soft' 
+        : 'bg-white/80 backdrop-blur-sm'
+    }`}>
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-20">
+        <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <div className="flex-shrink-0 flex items-center">
-            <Link href="/" className="text-2xl font-bold transition-colors flex items-center gap-2">
-              <img src="/favicon.png" alt="Logo" className="h-8 w-8" />
-              <span className="text-teal-500">Psi</span>{" "}
-              <span className="text-blue-500">Colab</span>
+          <div className="flex-shrink-0">
+            <Link href="/" className="flex items-center gap-3 group">
+              <div className="relative">
+                <img 
+                  src="/favicon.png" 
+                  alt="Logo" 
+                  className="h-10 w-10 transition-transform group-hover:scale-110" 
+                />
+                <div className="absolute inset-0 bg-primary-500/20 rounded-full blur-md opacity-0 group-hover:opacity-100 transition-opacity"></div>
+              </div>
+              <span className="text-2xl font-bold">
+                <span className="bg-gradient-to-r from-primary-600 to-primary-500 bg-clip-text text-transparent">Psi</span>
+                <span className="bg-gradient-to-r from-accent-600 to-accent-500 bg-clip-text text-transparent">Colab</span>
+              </span>
             </Link>
           </div>
 
-          {/* Navigation Links - Right aligned */}
-          <div className="hidden md:flex md:items-center md:space-x-8 ml-auto">
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex md:items-center md:gap-8 flex-1 ml-8">
             <Link
               href="/articulos"
-              className="flex items-center gap-2 text-gray-600 hover:text-blue-600 pt-1 transition-all"
+              className={`flex items-center gap-2 px-3 py-2 rounded-lg font-medium transition-all duration-200 ${
+                isActive('/articulos')
+                  ? 'bg-primary-100 text-primary-700'
+                  : 'text-neutral-600 hover:bg-primary-50 hover:text-primary-600'
+              }`}
             >
-              <FaBook className="h-5 w-5" />
-              Artículos
+              <FaBook className="h-4 w-4" />
+              Blog
             </Link>
             <Link
               href="/recursos"
-              className="flex items-center gap-2 text-gray-600 hover:text-blue-600 pt-1 transition-all"
+              className={`flex items-center gap-2 px-3 py-2 rounded-lg font-medium transition-all duration-200 ${
+                isActive('/recursos')
+                  ? 'bg-primary-100 text-primary-700'
+                  : 'text-neutral-600 hover:bg-primary-50 hover:text-primary-600'
+              }`}
             >
-              <FaTools className="h-5 w-5" />
-              Recursos
+              <FaTools className="h-4 w-4" />
+              Materiales
             </Link>
             <Link
-              href="/nosotros"
-              className="flex items-center gap-2 text-gray-600 hover:text-blue-600 pt-1 transition-all"
+              href="/aprendizaje"
+              className={`flex items-center gap-2 px-3 py-2 rounded-lg font-medium transition-all duration-200 ${
+                isActive('/aprendizaje')
+                  ? 'bg-primary-100 text-primary-700'
+                  : 'text-neutral-600 hover:bg-primary-50 hover:text-primary-600'
+              }`}
             >
-              <FaUsers className="h-5 w-5" />
-              Nosotros
+              <FaGraduationCap className="h-4 w-4" />
+              Aprendizaje
             </Link>
           </div>
 
-          {/* Right placeholder removed to keep links aligned right */}
+          {/* Auth Buttons */}
+          <div className="hidden md:flex md:items-center md:gap-4">
+            <button
+              className="px-4 py-2 text-primary-600 font-medium hover:text-primary-700 transition-colors"
+            >
+              Iniciar Sesión
+            </button>
+            <button
+              className="px-4 py-2 bg-primary-600 text-white rounded-lg font-medium hover:bg-primary-700 transition-colors shadow-sm hover:shadow-md"
+            >
+              Registrarse
+            </button>
+          </div>
 
           {/* Mobile Menu Button */}
-          <div className="md:hidden flex items-center gap-2">
-            {/* Auth removed: no user avatar */}
+          <div className="md:hidden">
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="inline-flex items-center justify-center p-2 rounded-md text-gray-600 hover:text-blue-600 hover:bg-gray-100 transition-colors"
+              className="inline-flex items-center justify-center p-2 rounded-lg text-neutral-600 hover:bg-primary-50 hover:text-primary-600 transition-all"
               aria-expanded={isOpen}
               aria-label="Toggle menu"
             >
               {isOpen ? (
-                <FiX className="block h-6 w-6" />
+                <FiX className="h-6 w-6" />
               ) : (
-                <FiMenu className="block h-6 w-6" />
+                <FiMenu className="h-6 w-6" />
               )}
             </button>
           </div>
         </div>
 
-        {/* Mobile Menu - Simplified Hamburger Menu */}
-        <div className={`md:hidden fixed top-20 right-0 left-0 bottom-0 bg-white z-50 overflow-y-auto transform transition-transform duration-300 ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}>
-          <div className="pt-2 pb-3 space-y-1 px-4">
-            {/* Mobile Navigation Menu - Simple links without submenus */}
+        {/* Mobile Menu */}
+        <div className={`md:hidden overflow-hidden transition-all duration-300 ${
+          isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+        }`}>
+          <div className="py-4 space-y-1">
             {mobileMenuItems.map((item) => (
-              <div key={item.label} className="py-2 border-b border-gray-100">
-                <Link
-                  href={item.href}
-                  className={`flex items-center gap-3 py-3 ${
-                    isActive(item.href) 
-                      ? 'text-blue-600 font-medium' 
-                      : 'text-gray-600'
-                  }`}
-                  onClick={() => setIsOpen(false)}
-                >
-                  {item.icon}
-                  <span className="text-lg">{item.label}</span>
-                </Link>
-              </div>
+              <Link
+                key={item.label}
+                href={item.href}
+                className={`flex items-center gap-3 px-4 py-3 rounded-lg font-medium transition-all ${
+                  isActive(item.href)
+                    ? 'bg-primary-100 text-primary-700'
+                    : 'text-neutral-600 hover:bg-primary-50 hover:text-primary-600'
+                }`}
+                onClick={() => setIsOpen(false)}
+              >
+                {item.icon}
+                <span>{item.label}</span>
+              </Link>
             ))}
-            {/* Auth removed: no user menu */}
+            <div className="pt-4 mt-2 border-t border-gray-100 flex flex-col gap-2 px-4">
+              <button
+                className="w-full py-2 text-center text-primary-600 font-medium hover:text-primary-700 transition-colors border border-primary-100 rounded-lg"
+              >
+                Iniciar Sesión
+              </button>
+              <button
+                className="w-full py-2 text-center bg-primary-600 text-white rounded-lg font-medium hover:bg-primary-700 transition-colors shadow-sm"
+              >
+                Registrarse
+              </button>
+            </div>
           </div>
         </div>
       </nav>
@@ -147,7 +186,7 @@ function HeaderComponent() {
 
 export default function Header() {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<div className="h-16 bg-white"></div>}>
       <HeaderComponent />
     </Suspense>
   );

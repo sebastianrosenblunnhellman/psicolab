@@ -36,7 +36,7 @@ export default function RootLayout({
       <body className={`${inter.className} bg-white min-h-screen flex flex-col`}>
         <CacheProvider>
           <Header />
-          <main className="flex-grow mt-20 pb-10">
+          <main className="flex-grow mt-16">
             {children}
           </main>
           <Footer />

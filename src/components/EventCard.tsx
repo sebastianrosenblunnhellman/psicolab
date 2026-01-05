@@ -31,7 +31,7 @@ export default function EventCard({
 
   return (
     <Link href={`/eventos/${id}`} className="block h-auto md:h-48">
-      <article className="bg-white rounded-lg shadow-sm border border-gray-100 hover:shadow-lg hover:border-teal-500 transition-all duration-300 flex flex-col md:flex-row overflow-hidden h-full">
+      <article className="bg-white rounded-2xl shadow-soft border border-neutral-100 hover:shadow-soft-lg hover:border-primary-200 transition-all duration-300 flex flex-col md:flex-row overflow-hidden h-full group hover:-translate-y-1">
         {/* Image column - square shape */}
         <div className="relative w-full md:w-48 aspect-square md:aspect-auto md:h-full flex-shrink-0">
           <Image 

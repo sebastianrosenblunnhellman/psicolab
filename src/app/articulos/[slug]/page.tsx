@@ -7,6 +7,7 @@ import TableOfContents from '@/components/TableOfContents';
 import { getAllArticles, getArticleBySlug } from '@/utils/articles';
 import NetworkAnimation from '@/components/NetworkAnimation';
 import ArticleActions from '@/components/ArticleActions';
+import CommentsSection from '@/components/CommentsSection';
 
 interface ArticlePageProps {
   params: {
@@ -50,7 +51,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                  dangerouslySetInnerHTML={{ __html: article.content }} />
           )}
           
-          {/* Comments removed */}
+          <CommentsSection />
         </article>
       </div>
     </div>
