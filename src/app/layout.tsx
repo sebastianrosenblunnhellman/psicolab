@@ -32,15 +32,15 @@ export default function RootLayout({
 }) {
   return (
     <html lang="es">
-  <head></head>
+      <head></head>
       <body className={`${inter.className} bg-white min-h-screen flex flex-col`}>
-        <CacheProvider>
-          <Header />
-          <main className="flex-grow mt-16">
-            {children}
-          </main>
-          <Footer />
-        </CacheProvider>
+          <CacheProvider>
+            <Header />
+            <main className="flex-grow mt-16">
+              {children}
+            </main>
+            <Footer />
+          </CacheProvider>
       </body>
     </html>
   )
