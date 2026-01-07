@@ -1,16 +1,17 @@
 # Decap CMS Configuration for PsiColab
 
 # BACKEND: Netlify Git Gateway
-# Esto permite que Netlify maneje la autenticación con GitHub por ti.
 backend:
   name: git-gateway
-  branch: master 
+  branch: master # Rama master confirmada
 
-# LOCAL BACKEND: Para probar en localhost sin auth real (usando npx decap-cms-proxy-server)
+# LOCAL BACKEND
 local_backend: true 
 
-media_folder: "public/images"
-public_folder: "/images"
+# CARPETA DE IMÁGENES
+# Las imágenes subidas irán a esta carpeta para no ensuciar la raíz de images
+media_folder: "public/images/cms"
+public_folder: "/images/cms"
 
 collections:
   # COLECCIÓN DE ARTÍCULOS
@@ -19,6 +20,7 @@ collections:
     folder: "content/articles"
     create: true
     slug: "{{slug}}"
+    sortable_fields: ['title', 'date']
     fields:
       - {label: "Título", name: "title", widget: "string"}
       - {label: "Fecha", name: "date", widget: "datetime"}
@@ -29,7 +31,7 @@ collections:
       - {label: "Publicado", name: "published", widget: "boolean", default: true}
       - {label: "Cuerpo", name: "body", widget: "markdown"}
 
-  # COLECCIÓN DE RECURSOS / BIBLIOTECA
+  # COLECCIÓN DE RECURSOS
   - name: "resources"
     label: "Recursos"
     folder: "content/resources"
@@ -46,19 +48,29 @@ collections:
 
   # COLECCIÓN DE CURSOS (JERÁRQUICA)
   - name: "courses"
-    label: "Cursos"
+    label: "Cursos y Contenido"
+    label_singular: "Elemento de Curso"
     folder: "content/courses"
     create: true
-    nested: { depth: 3 }
+    # Depth 4 permite: Curso (1) -> Modulo (2) -> Leccion (3) -> (Extra)
+    nested: 
+      depth: 4 
+      summary: "{{title}}"
+      path: {label: "Ruta/Carpeta", index: true}
+    
+    # Decap usará estos campos. Como mezclamos carpetas (index.md) y archivos (lecciones),
+    # hacemos muchos campos opcionales.
     fields:
       - {label: "Título", name: "title", widget: "string"}
-      - {label: "Descripción (Portada)", name: "description", widget: "text", required: false}
+      
+      # Campos de Portada de Curso
+      - {label: "Imagen", name: "image", widget: "image", required: false}
       - {label: "Instructor", name: "instructor", widget: "string", required: false}
-      - {label: "Imagen Portada", name: "image", widget: "image", required: false}
+      - {label: "Descripción", name: "description", widget: "text", required: false}
       - {label: "Estado", name: "status", widget: "select", options: ["available", "coming_soon", "in_progress"], required: false}
-      - {label: "Categoría", name: "category", widget: "string", required: false}
-      - {label: "Nivel", name: "level", widget: "select", options: ["Principiante", "Intermedio", "Avanzado"], required: false}
-      - {label: "Duración Total", name: "duration", widget: "string", required: false}
+      
+      # Campos de Lección
       - {label: "Video URL", name: "videoUrl", widget: "string", required: false}
-      - {label: "Duración Lección", name: "duration_lesson", widget: "string", required: false, hint: "Ej: 15 min"}
+      - {label: "Duración", name: "duration", widget: "string", required: false}
+      
       - {label: "Cuerpo / Contenido", name: "body", widget: "markdown"}
