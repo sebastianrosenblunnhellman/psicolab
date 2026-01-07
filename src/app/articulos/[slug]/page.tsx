@@ -1,18 +1,10 @@
-import { useEffect, useState } from 'react';
-import { MDXRemote } from 'next-mdx-remote';
-import { serialize } from 'next-mdx-remote/serialize';
-import ArticleMeta from '@/components/ArticleMeta';
-import RelatedArticles from '@/components/RelatedArticles';
-import TableOfContents from '@/components/TableOfContents';
 import { getAllArticles, getArticleBySlug } from '@/utils/articles';
-import NetworkAnimation from '@/components/NetworkAnimation';
-import ArticleActions from '@/components/ArticleActions';
 import CommentsSection from '@/components/CommentsSection';
 
 interface ArticlePageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
 export async function generateStaticParams() {
@@ -23,10 +15,18 @@ export async function generateStaticParams() {
 }
 
 export default async function ArticlePage({ params }: ArticlePageProps) {
-  const article = await getArticleBySlug(params.slug, ['content']);
+  const { slug } = await params;
+  const article = await getArticleBySlug(slug, ['content']);
 
   if (!article) {
-    return <div>Article not found</div>;
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold text-gray-800">Artículo no encontrado</h1>
+          <p className="text-gray-600 mt-2">El artículo que buscas no existe o ha sido movido.</p>
+        </div>
+      </div>
+    );
   }
 
   return (
@@ -35,15 +35,12 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
         <article className="article-container max-w-4xl mx-auto">
           <h1 className="text-3xl md:text-4xl font-bold mb-4 md:mb-6">{article.title}</h1>
           <div className="flex flex-wrap items-center text-gray-600 mb-6 md:mb-8 space-x-2 md:space-x-4">
-            <span>{new Date(article.date).toLocaleDateString()}</span>
+            <span>{article.date ? new Date(article.date).toLocaleDateString() : ''}</span>
             <span>•</span>
             <span>{article.author}</span>
             <span>•</span>
             <span>{article.readTime} min de lectura</span>
-            {/* Bookmark functionality removed */}
           </div>
-          
-          {/* Interactive features removed */}
           
           {/* Server-rendered content */}
           {article.content && (
