@@ -1,0 +1,64 @@
+# Decap CMS Configuration for PsiColab
+
+# BACKEND: Netlify Git Gateway
+# Esto permite que Netlify maneje la autenticación con GitHub por ti.
+backend:
+  name: git-gateway
+  branch: main 
+
+# LOCAL BACKEND: Para probar en localhost sin auth real (usando npx decap-cms-proxy-server)
+local_backend: true 
+
+media_folder: "public/images"
+public_folder: "/images"
+
+collections:
+  # COLECCIÓN DE ARTÍCULOS
+  - name: "articles"
+    label: "Artículos"
+    folder: "content/articles"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "Título", name: "title", widget: "string"}
+      - {label: "Fecha", name: "date", widget: "datetime"}
+      - {label: "Autor", name: "author", widget: "string", default: "Psi Colab"}
+      - {label: "Etiquetas", name: "tags", widget: "list", default: ["Psicología"]}
+      - {label: "Extracto", name: "excerpt", widget: "text"}
+      - {label: "Imagen", name: "image", widget: "image", required: false}
+      - {label: "Publicado", name: "published", widget: "boolean", default: true}
+      - {label: "Cuerpo", name: "body", widget: "markdown"}
+
+  # COLECCIÓN DE RECURSOS / BIBLIOTECA
+  - name: "resources"
+    label: "Recursos"
+    folder: "content/resources"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "Título", name: "title", widget: "string"}
+      - {label: "Tipo", name: "type", widget: "string", default: "biblioteca"}
+      - {label: "Autor", name: "author", widget: "string"}
+      - {label: "Extracto", name: "excerpt", widget: "text"}
+      - {label: "Imagen", name: "image", widget: "image", required: false}
+      - {label: "Link Externo", name: "link", widget: "string", required: false}
+      - {label: "Cuerpo", name: "body", widget: "markdown", required: false}
+
+  # COLECCIÓN DE CURSOS (JERÁRQUICA)
+  - name: "courses"
+    label: "Cursos"
+    folder: "content/courses"
+    create: true
+    nested: { depth: 3 }
+    fields:
+      - {label: "Título", name: "title", widget: "string"}
+      - {label: "Descripción (Portada)", name: "description", widget: "text", required: false}
+      - {label: "Instructor", name: "instructor", widget: "string", required: false}
+      - {label: "Imagen Portada", name: "image", widget: "image", required: false}
+      - {label: "Estado", name: "status", widget: "select", options: ["available", "coming_soon", "in_progress"], required: false}
+      - {label: "Categoría", name: "category", widget: "string", required: false}
+      - {label: "Nivel", name: "level", widget: "select", options: ["Principiante", "Intermedio", "Avanzado"], required: false}
+      - {label: "Duración Total", name: "duration", widget: "string", required: false}
+      - {label: "Video URL", name: "videoUrl", widget: "string", required: false}
+      - {label: "Duración Lección", name: "duration_lesson", widget: "string", required: false, hint: "Ej: 15 min"}
+      - {label: "Cuerpo / Contenido", name: "body", widget: "markdown"}

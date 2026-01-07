@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PsiColab Admin | Decap CMS</title>
+    
+    <!-- Configuración del CMS -->
+    <link href="/admin/config.yml" type="text/yaml" rel="cms-config-url">
+    
+    <!-- Widget de Netlify Identity -->
+    <script type="text/javascript" src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  </head>
+  <body>
+    <!-- Script del CMS -->
+    <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+    
+    <script>
+      // Tu URL de Netlify vinculada
+      const NETLIFY_SITE_URL = "https://luxury-daifuku-d6560e.netlify.app"; 
+
+      // Conectamos el widget de identidad con tu instancia de Netlify
+      if (window.netlifyIdentity) {
+        window.netlifyIdentity.on("init", user => {
+          if (!user) {
+            window.netlifyIdentity.on("login", () => {
+              document.location.href = "/admin/";
+            });
+          }
+        });
+        // Forzamos la URL de la API de Netlify Identity
+        window.netlifyIdentity.setAPIUrl(NETLIFY_SITE_URL + "/.netlify/identity");
+      }
+    </script>
+  </body>
+</html>

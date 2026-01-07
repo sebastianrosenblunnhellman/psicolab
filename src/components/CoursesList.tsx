@@ -3,24 +3,25 @@
 import { useState, useMemo } from 'react';
 import PageHeader from '@/components/PageHeader';
 import CourseCard from '@/components/CourseCard';
-import { MOCK_COURSES } from '@/data/courses';
+import { Course } from '@/utils/courses';
 
-export default function CoursesList() {
+interface CoursesListProps {
+  initialCourses: Course[];
+}
+
+export default function CoursesList({ initialCourses }: CoursesListProps) {
   const [searchTerm, setSearchTerm] = useState('');
-  const [currentPage, setCurrentPage] = useState(1);
-  const coursesPerPage = 6;
-
+  
   const filteredCourses = useMemo(() => {
-    return MOCK_COURSES.filter(course => {
+    return initialCourses.filter(course => {
       const matchesSearch = course.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
                           course.description.toLowerCase().includes(searchTerm.toLowerCase());
       return matchesSearch;
     });
-  }, [searchTerm]);
+  }, [searchTerm, initialCourses]);
 
   const handleSearch = (value: string) => {
     setSearchTerm(value);
-    setCurrentPage(1);
   };
 
   return (
@@ -42,7 +43,7 @@ export default function CoursesList() {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {filteredCourses.map((course) => (
                   <CourseCard
-                    key={course.id}
+                    key={course.slug}
                     {...course}
                   />
                 ))}

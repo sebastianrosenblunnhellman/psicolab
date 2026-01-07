@@ -100,7 +100,7 @@ export default function CourseCard({
             <span className="text-lg font-bold text-primary-600">Gratis</span>
           </div>
           <Link
-            href={status === 'available' ? `/aprendizaje/${slug}` : '#'}
+            href={status === 'available' ? `/cursos/${slug}` : '#'}
             className={`px-4 py-2 rounded-lg font-semibold text-sm transition-all ${
               status === 'available'
                 ? 'bg-primary-50 text-primary-700 hover:bg-primary-100'

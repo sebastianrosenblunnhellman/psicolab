@@ -6,9 +6,12 @@ import CoursesCarousel from '@/components/CoursesCarousel';
 import NewsletterSection from '@/components/NewsletterSection';
 import BlogCarousel from '@/components/BlogCarousel';
 import { getAllArticles } from '@/utils/articles';
+import { getAllCourses } from '@/utils/courses';
 
 export default async function Home() {
   const articles = await getAllArticles();
+  const courses = await getAllCourses();
+  
   const recentArticles = articles.slice(0, 6);
   // Duplicate articles for carousel effect
   const carouselArticles = [...recentArticles, ...recentArticles, ...recentArticles];
@@ -19,7 +22,7 @@ export default async function Home() {
       <HeroSection />
 
       {/* Courses Carousel Section */}
-      <CoursesCarousel />
+      <CoursesCarousel courses={courses} />
 
       {/* Recent Articles Section */}
       {recentArticles.length > 0 ? (

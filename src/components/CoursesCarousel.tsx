@@ -2,15 +2,19 @@
 
 import { useRef, useEffect } from 'react';
 import Link from 'next/link';
-import { MOCK_COURSES } from '@/data/courses';
+import { Course } from '@/utils/courses';
 import CourseCard from '@/components/CourseCard';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 
-export default function CoursesCarousel() {
+interface CoursesCarouselProps {
+  courses: Course[];
+}
+
+export default function CoursesCarousel({ courses }: CoursesCarouselProps) {
   const carouselRef = useRef<HTMLDivElement>(null);
 
   // Duplicate courses for infinite scroll effect
-  const extendedCourses = [...MOCK_COURSES, ...MOCK_COURSES];
+  const extendedCourses = courses.length > 0 ? [...courses, ...courses] : [];
 
   const scroll = (direction: 'left' | 'right') => {
     if (carouselRef.current) {
@@ -25,6 +29,8 @@ export default function CoursesCarousel() {
   };
 
   useEffect(() => {
+    if (extendedCourses.length === 0) return;
+
     const interval = setInterval(() => {
       if (carouselRef.current) {
         const { current } = carouselRef;
@@ -38,7 +44,11 @@ export default function CoursesCarousel() {
     }, 4000); // Auto-scroll every 4 seconds
 
     return () => clearInterval(interval);
-  }, []);
+  }, [extendedCourses.length]);
+
+  if (courses.length === 0) {
+    return null;
+  }
 
   return (
     <section className="container mx-auto px-4 py-12">
@@ -78,7 +88,7 @@ export default function CoursesCarousel() {
             >
                 {extendedCourses.map((course, index) => (
                     <div 
-                        key={`${course.id}-${index}`} 
+                        key={`${course.slug}-${index}`} 
                         className="min-w-[280px] md:min-w-[320px] lg:min-w-[340px] snap-center h-full"
                     >
                         <CourseCard {...course} />
@@ -90,7 +100,7 @@ export default function CoursesCarousel() {
         {/* View All Button */}
         <div className="text-center mt-8">
             <Link
-                href="/aprendizaje"
+                href="/cursos"
                 className="group inline-flex items-center gap-2 px-8 py-4 bg-white text-primary-700 rounded-xl font-semibold border-2 border-primary-200 hover:border-primary-400 hover:bg-primary-50 transition-all duration-300 hover:-translate-y-1 shadow-soft hover:shadow-soft-lg"
             >
                 Ver todos los cursos

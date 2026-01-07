@@ -39,7 +39,7 @@ export default function HeaderClient({ user }: HeaderClientProps) {
     },
     {
       label: 'Aprendizaje',
-      href: '/aprendizaje',
+      href: '/cursos',
       icon: <FaGraduationCap className="h-5 w-5" />
     }
   ];
@@ -111,9 +111,9 @@ export default function HeaderClient({ user }: HeaderClientProps) {
               Materiales
             </Link>
             <Link
-              href="/aprendizaje"
+              href="/cursos"
               className={`flex items-center gap-2 px-3 py-2 rounded-lg font-medium transition-all duration-200 ${
-                isActive('/aprendizaje')
+                isActive('/cursos')
                   ? 'bg-primary-100 text-primary-700'
                   : 'text-neutral-600 hover:bg-primary-50 hover:text-primary-600'
               }`}
