@@ -4,7 +4,7 @@
 # Esto permite que Netlify maneje la autenticación con GitHub por ti.
 backend:
   name: git-gateway
-  branch: main 
+  branch: master 
 
 # LOCAL BACKEND: Para probar en localhost sin auth real (usando npx decap-cms-proxy-server)
 local_backend: true 
