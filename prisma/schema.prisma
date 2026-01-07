@@ -7,6 +7,9 @@ generator client {
   provider = "prisma-client-js"
 }
 
+// ---------------------------------------------------------
+// 1. USUARIO (Base intocable, solo añadimos las relaciones)
+// ---------------------------------------------------------
 model User {
   id            String    @id @default(cuid())
   email         String    @unique
@@ -15,6 +18,12 @@ model User {
   createdAt     DateTime  @default(now())
   
   emailVerificationTokens EmailVerificationToken[]
+
+  // Nuevas relaciones
+  profile     Profile?      // Relación 1 a 1: Un usuario tiene un perfil
+  enrollments Enrollment[]  // Relación 1 a N: Un usuario tiene muchas inscripciones
+  likes       Like[]        // Relación 1 a N: Un usuario da muchos likes
+  comments    Comment[]     // Relación 1 a N: Un usuario hace muchos comentarios
 }
 
 model EmailVerificationToken {
@@ -23,4 +32,165 @@ model EmailVerificationToken {
   userId    String
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   expiresAt DateTime
+}
+
+// ---------------------------------------------------------
+// 2. PERFIL (Datos personales y Rol Social)
+// ---------------------------------------------------------
+enum SocialRole {
+  ESTUDIANTE
+  PROFESIONAL
+  ENTUSIASTA
+}
+
+model Profile {
+  id        String   @id @default(cuid())
+  userId    String   @unique // @unique asegura la relación 1 a 1
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Datos básicos
+  firstName String
+  lastName  String
+  age       Int?
+  country   String?
+  avatarUrl String?  // URL de Vercel Blob
+
+  // Datos académicos/profesionales
+  universityAffiliation String? // Universidad o institución
+  socialRole            SocialRole @default(ESTUDIANTE)
+  
+  // Extras sugeridos ("lo que se te ocurra necesario")
+  bio          String?  @db.Text // Biografía corta
+  linkedinUrl  String?
+  websiteUrl   String?
+  
+  updatedAt DateTime @updatedAt
+}
+
+// ---------------------------------------------------------
+// 3. CURSOS E INSCRIPCIONES (Progreso y Notas)
+// ---------------------------------------------------------
+
+enum EnrollmentStatus {
+  EN_CURSO
+  COMPLETADO
+  ABANDONADO
+}
+
+// Esta tabla define qué es el curso en sí (Título, contenido, etc.)
+model Course {
+  id           String   @id @default(cuid())
+  title        String
+  slug         String   @unique // Para la URL (ej: /curso-rft-basico)
+  isFree       Boolean  @default(false)
+  totalLessons Int      // Necesario para calcular el % de progreso
+  description  String?  @db.Text
+  thumbnailUrl String?
+  
+  enrollments  Enrollment[] // Relación con los alumnos
+  
+  // Relación con el contenido (Lecciones, etc.) iría aquí luego
+}
+
+// Esta es la "Tabla courses" del usuario: Su relación personal con el curso
+model Enrollment {
+  id        String   @id @default(cuid())
+  userId    String
+  courseId  String
+  
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  course    Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  // Datos de progreso
+  status           EnrollmentStatus @default(EN_CURSO)
+  completedLessons Int              @default(0) // Cantidad de lecciones vistas
+  progressPct      Float            @default(0) // Porcentaje (0 a 100)
+  finalGrade       Float?           // Nota final (opcional hasta que termine)
+  certified        Boolean          @default(false) // ¿Obtuvo certificado?
+  
+  // Datos de compra/acceso
+  purchasedAt      DateTime?        // Si es null, asumimos que entró gratis
+  accessGranted    Boolean          @default(true) // Para bloquear acceso si fuera necesario
+  
+  // Relacion para traquear lecciones individuales
+  completedLessonSlugs CompletedLesson[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Un usuario no puede inscribirse dos veces al mismo curso
+  @@unique([userId, courseId]) 
+}
+
+model CompletedLesson {
+  id           String     @id @default(cuid())
+  enrollmentId String
+  enrollment   Enrollment @relation(fields: [enrollmentId], references: [id], onDelete: Cascade)
+  lessonSlug   String     // Identificador único de la lección (dentro del curso)
+  completedAt  DateTime   @default(now())
+
+  @@unique([enrollmentId, lessonSlug])
+}
+
+// ---------------------------------------------------------
+// 4. LIKES Y COMENTARIOS (Guardado de contenido y Social)
+// ---------------------------------------------------------
+
+// Modelos placeholder para Artículos y Materiales (para poder conectar los likes)
+// Nota: Si ya tienes manejo de Artículos por MDX/Archivos, esta tabla puede servir solo para referencias de ID
+// O puedes sincronizarla. Por ahora la creo para la integridad referencial de los Likes.
+model Article {
+  id       String    @id @default(cuid())
+  slug     String    @unique
+  title    String
+  likes    Like[]
+  comments Comment[] // Relación 1 a N: Un artículo tiene muchos comentarios
+}
+
+model Material {
+  id    String @id @default(cuid())
+  slug  String @unique
+  title String
+  likes Like[]
+}
+
+model Like {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Relación polimórfica simplificada (Like puede ser a Articulo O Material)
+  articleId String?
+  article   Article? @relation(fields: [articleId], references: [id])
+  
+  materialId String?
+  material   Material? @relation(fields: [materialId], references: [id])
+
+  createdAt DateTime @default(now())
+
+  // Validacion: No puedes dar like a nada o a dos cosas a la vez en la misma fila (Lógica de app)
+  // Base de datos asegura que un usuario solo da 1 like por item específico:
+  @@unique([userId, articleId])
+  @@unique([userId, materialId])
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  content   String   @db.Text
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  articleId String
+  article   Article  @relation(fields: [articleId], references: [id], onDelete: Cascade)
+
+  // Sistema de respuestas anidadas (Threading)
+  parentId  String?
+  parent    Comment?  @relation("CommentReplies", fields: [parentId], references: [id], onDelete: Cascade)
+  children  Comment[] @relation("CommentReplies")
+
+  // Opcional: Likes en comentarios (estilo YouTube/IG)
+  likesCount Int      @default(0)
 }

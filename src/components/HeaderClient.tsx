@@ -7,6 +7,9 @@ import { FaBook, FaTools, FaGraduationCap } from 'react-icons/fa';
 import { usePathname } from 'next/navigation';
 import { logout } from '@/actions/logout';
 
+import UserDropdown from './UserDropdown';
+import Avatar from './Avatar';
+
 interface MobileMenuItem {
   label: string;
   href: string;
@@ -123,18 +126,10 @@ export default function HeaderClient({ user }: HeaderClientProps) {
             </Link>
           </div>
           
-          {/* Auth Buttons */}
+          {/* Auth Buttons / User Dropdown */}
           <div className="hidden md:flex items-center gap-4">
              {user ? (
-               <div className="flex items-center gap-4">
-                 <span className="text-sm font-medium text-gray-700">{user.email}</span>
-                 <button 
-                   onClick={() => logout()}
-                   className="px-4 py-2 text-sm font-medium text-white bg-red-500 rounded-lg hover:bg-red-600 transition-colors"
-                 >
-                   Cerrar Sesión
-                 </button>
-               </div>
+               <UserDropdown user={user} />
              ) : (
                <>
                  <Link 
@@ -172,7 +167,7 @@ export default function HeaderClient({ user }: HeaderClientProps) {
 
         {/* Mobile Menu */}
         <div className={`md:hidden overflow-hidden transition-all duration-300 ${
-          isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+          isOpen ? 'max-h-[32rem] opacity-100' : 'max-h-0 opacity-0'
         }`}>
           <div className="py-4 space-y-1">
             {mobileMenuItems.map((item) => (
@@ -195,10 +190,42 @@ export default function HeaderClient({ user }: HeaderClientProps) {
             <div className="border-t border-gray-100 mt-4 pt-4 px-4 space-y-3">
               {user ? (
                 <>
-                  <div className="text-sm font-medium text-gray-700 mb-2">{user.email}</div>
+                  <div className="flex items-center gap-3 mb-4">
+                     <Avatar src={user.image} alt={user.name || 'User'} size="md" />
+                     <div>
+                       <div className="text-sm font-medium text-gray-900">{user.name || 'Usuario'}</div>
+                       <div className="text-xs text-gray-500">{user.email}</div>
+                     </div>
+                  </div>
+                  
+                  <Link 
+                    href="/profile"
+                    className="flex items-center gap-3 px-2 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-lg"
+                    onClick={() => setIsOpen(false)}
+                  >
+                     Configuración
+                  </Link>
+                  <Link 
+                    href="/mis-cursos"
+                    className="flex items-center gap-3 px-2 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-lg"
+                    onClick={() => setIsOpen(false)}
+                  >
+                     Mis Cursos
+                  </Link>
+                  <Link 
+                    href="/mi-contenido"
+                    className="flex items-center gap-3 px-2 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-lg"
+                    onClick={() => setIsOpen(false)}
+                  >
+                     Mi Contenido
+                  </Link>
+
                   <button 
-                    onClick={() => logout()}
-                    className="w-full text-center px-4 py-2 text-sm font-medium text-white bg-red-500 rounded-lg hover:bg-red-600 transition-colors"
+                    onClick={() => {
+                        setIsOpen(false);
+                        logout();
+                    }}
+                    className="w-full text-center px-4 py-2 mt-2 text-sm font-medium text-white bg-red-500 rounded-lg hover:bg-red-600 transition-colors"
                   >
                     Cerrar Sesión
                   </button>

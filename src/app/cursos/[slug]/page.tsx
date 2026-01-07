@@ -2,6 +2,7 @@ import { getCourseBySlug, getAllCourses, getCourseCurriculum } from '@/utils/cou
 import Image from 'next/image';
 import Link from 'next/link';
 import { FaClock, FaUser, FaStar, FaPlayCircle } from 'react-icons/fa';
+import EnrollButton from '@/components/EnrollButton';
 
 interface CoursePageProps {
   params: Promise<{
@@ -31,6 +32,10 @@ export default async function CoursePage({ params }: CoursePageProps) {
         </div>
     );
   }
+
+  const firstLessonUrl = curriculum.length > 0 && curriculum[0].lessons.length > 0
+     ? `/cursos/${course.slug}/${curriculum[0].slug}/${curriculum[0].lessons[0].slug}`
+     : '#';
 
   return (
     <div className="min-h-screen bg-white">
@@ -168,12 +173,7 @@ export default async function CoursePage({ params }: CoursePageProps) {
                     </div>
                     
                     {curriculum.length > 0 ? (
-                        <Link 
-                            href={`/cursos/${course.slug}/${curriculum[0].slug}/${curriculum[0].lessons[0].slug}`}
-                            className="block w-full text-center bg-primary-600 hover:bg-primary-700 text-white font-bold py-3 px-6 rounded-xl transition-colors mb-4"
-                        >
-                            Comenzar Curso
-                        </Link>
+                        <EnrollButton courseSlug={course.slug} firstLessonUrl={firstLessonUrl} />
                     ) : (
                         <button disabled className="w-full bg-neutral-300 text-neutral-500 font-bold py-3 px-6 rounded-xl cursor-not-allowed mb-4">
                             Próximamente

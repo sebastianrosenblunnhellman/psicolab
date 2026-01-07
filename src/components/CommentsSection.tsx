@@ -1,114 +1,83 @@
-'use client';
+import { auth } from '@/auth';
+import { getComments } from '@/actions/comment-actions';
+import CommentForm from './CommentSystem/CommentForm';
+import CommentItem from './CommentSystem/CommentItem';
+import { FaComments } from 'react-icons/fa';
 
-import { useState } from 'react';
-import { FaUser, FaPaperPlane } from 'react-icons/fa';
+interface CommentsSectionProps {
+  articleSlug?: string; // Optional because simpler to just pass slug than whole article object often
+}
 
-export default function CommentsSection() {
-  const [comment, setComment] = useState('');
-  const [name, setName] = useState('');
+export default async function CommentsSection({ articleSlug }: CommentsSectionProps) {
+  // We need to know the current article slug. 
+  // In the ArticlePage, we can pass it. 
+  // If not passed, we might need another way, but passing is best.
+  
+  // Note: The previous implementation didn't take props. 
+  // We need to update ArticlePage to pass the slug.
+  
+  if (!articleSlug) return null;
 
-  // Mock existing comments
-  const mockComments = [
-    {
-      id: 1,
-      author: 'Lucía Fernández',
-      date: 'hace 2 días',
-      content: 'Excelente artículo. Muy clara la explicación sobre los principios fundamentales. Me gustaría saber más sobre las aplicaciones clínicas mencionadas.',
-      avatar: null
-    },
-    {
-      id: 2,
-      author: 'Marcos R.',
-      date: 'hace 1 semana',
-      content: 'Gran aporte para la comunidad. La rigurosidad científica es lo que hace falta en estos temas.',
-      avatar: null
-    }
-  ];
+  const session = await auth();
+  const comments = await getComments(articleSlug);
+  
+  // Flatten count for display
+  const countComments = (nodes: any[]): number => {
+      let count = 0;
+      nodes.forEach(node => {
+          count += 1 + countComments(node.children || []);
+      });
+      return count;
+  };
+  const totalComments = countComments(comments);
 
   return (
-    <section className="mt-16 border-t border-neutral-100 pt-10">
+    <section className="mt-16 border-t border-neutral-100 pt-10" id="comments">
       <div className="max-w-3xl mx-auto">
-        <h3 className="text-2xl font-bold text-neutral-900 mb-8 flex items-center gap-2">
+        <h3 className="text-2xl font-bold text-neutral-900 mb-8 flex items-center gap-3">
+          <FaComments className="text-primary-500" />
           Comentarios
-          <span className="text-sm font-medium bg-neutral-100 text-neutral-500 px-2 py-0.5 rounded-full">
-            {mockComments.length}
+          <span className="text-sm font-bold bg-primary-50 text-primary-700 px-2.5 py-1 rounded-full border border-primary-100">
+            {totalComments}
           </span>
         </h3>
 
-        {/* Comment Form Mockup */}
-        <div className="bg-neutral-50 rounded-2xl p-6 mb-12">
-          <h4 className="text-lg font-semibold text-neutral-900 mb-4 text-center">Deja un comentario</h4>
-          <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div>
-                <label htmlFor="name" className="block text-sm font-medium text-neutral-700 mb-1">Nombre</label>
-                <input
-                  type="text"
-                  id="name"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  className="w-full px-4 py-2 rounded-xl border border-neutral-200 focus:outline-none focus:ring-2 focus:ring-primary-500 bg-white"
-                  placeholder="Tu nombre"
+        {/* Main Comment Form */}
+        <div className="bg-neutral-50 rounded-2xl p-6 mb-12 border border-neutral-100">
+          {session?.user ? (
+            <>
+                <h4 className="text-sm font-bold text-neutral-700 mb-4 uppercase tracking-wider">Publicar un comentario</h4>
+                <CommentForm 
+                    articleSlug={articleSlug} 
+                    userImage={session.user.image}
                 />
-              </div>
-              <div>
-                <label htmlFor="email" className="block text-sm font-medium text-neutral-700 mb-1">Email</label>
-                <input
-                  type="email"
-                  id="email"
-                  className="w-full px-4 py-2 rounded-xl border border-neutral-200 focus:outline-none focus:ring-2 focus:ring-primary-500 bg-white"
-                  placeholder="tu@email.com"
-                />
-              </div>
-            </div>
-            <div>
-              <label htmlFor="comment" className="block text-sm font-medium text-neutral-700 mb-1">Comentario</label>
-              <textarea
-                id="comment"
-                rows={4}
-                value={comment}
-                onChange={(e) => setComment(e.target.value)}
-                className="w-full px-4 py-3 rounded-xl border border-neutral-200 focus:outline-none focus:ring-2 focus:ring-primary-500 bg-white resize-none"
-                placeholder="Escribe tu comentario aquí..."
-              ></textarea>
-            </div>
-            <div className="flex justify-end">
-              <button
-                type="button"
-                className="px-6 py-3 bg-primary-600 text-white rounded-xl font-semibold flex items-center gap-2 hover:bg-primary-700 transition-all shadow-soft hover:shadow-soft-lg"
-              >
-                Publicar comentario
-                <FaPaperPlane className="text-xs" />
-              </button>
-            </div>
-          </form>
+            </>
+          ) : (
+             <div className="text-center py-6">
+                <p className="text-neutral-600 mb-4">Inicia sesión para participar en la conversación.</p>
+                <a href="/login" className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-primary-600 hover:bg-primary-700">
+                    Iniciar Sesión
+                </a>
+             </div>
+          )}
         </div>
 
-        {/* Comments List Mockup */}
+        {/* Comments List */}
         <div className="space-y-8">
-          {mockComments.map((c) => (
-            <div key={c.id} className="flex gap-4">
-              <div className="flex-shrink-0">
-                <div className="w-12 h-12 rounded-full bg-primary-100 flex items-center justify-center text-primary-600">
-                  <FaUser />
-                </div>
-              </div>
-              <div className="flex-grow">
-                <div className="flex items-center justify-between mb-1">
-                  <h5 className="font-bold text-neutral-900">{c.author}</h5>
-                  <span className="text-xs text-neutral-500">{c.date}</span>
-                </div>
-                <div className="bg-white rounded-2xl border border-neutral-100 p-4 shadow-soft">
-                  <p className="text-neutral-600 text-sm leading-relaxed">
-                    {c.content}
-                  </p>
-                </div>
-                <button className="text-xs font-semibold text-primary-600 mt-2 hover:text-primary-700 ml-2">
-                  Responder
-                </button>
-              </div>
+          {comments.length > 0 ? (
+            comments.map((comment) => (
+              <CommentItem 
+                key={comment.id} 
+                comment={comment} 
+                articleSlug={articleSlug}
+                currentUser={session?.user}
+              />
+            ))
+          ) : (
+            <div className="text-center py-12 text-neutral-400">
+                <p>No hay comentarios aún. ¡Sé el primero en comentar!</p>
             </div>
-          ))}
+          )}
         </div>
       </div>
     </section>

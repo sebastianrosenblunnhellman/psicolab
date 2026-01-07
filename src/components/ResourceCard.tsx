@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { FaExternalLinkAlt, FaDownload } from 'react-icons/fa';
+import LikeButton from './LikeButton';
 
 interface ResourceCardProps {
   id: string;
@@ -44,10 +45,15 @@ export default function ResourceCard({
               priority={false}
             />
           </div>
+
+          {/* Like Button */}
+          <div className="absolute top-8 right-8 z-10">
+             <LikeButton slug={id} title={title} type="material" className="shadow-soft" />
+          </div>
           
           {/* External link or download badge */}
           {downloadUrl && (
-            <div className="absolute top-8 right-8 px-3 py-1.5 bg-white/95 backdrop-blur-sm rounded-full shadow-soft flex items-center gap-2 z-10">
+            <div className="absolute top-8 left-8 px-3 py-1.5 bg-white/95 backdrop-blur-sm rounded-full shadow-soft flex items-center gap-2 z-10">
               <FaDownload className="w-3.5 h-3.5 text-primary-600" />
               <span className="text-xs font-semibold text-neutral-700">Recurso</span>
             </div>

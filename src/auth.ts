@@ -43,6 +43,19 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     async session({ session, token }) {
       if (token.sub && session.user) {
         session.user.id = token.sub;
+        
+        // Fetch fresh profile data to get the avatar
+        try {
+            const profile = await prisma.profile.findUnique({
+                where: { userId: token.sub },
+                select: { avatarUrl: true }
+            });
+            if (profile?.avatarUrl) {
+                session.user.image = profile.avatarUrl;
+            }
+        } catch (error) {
+            console.error("Error fetching profile for session", error);
+        }
       }
       return session;
     }

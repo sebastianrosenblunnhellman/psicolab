@@ -1,5 +1,7 @@
 import { getAllArticles, getArticleBySlug } from '@/utils/articles';
 import CommentsSection from '@/components/CommentsSection';
+import ArticleActions from '@/components/ArticleActions';
+import { getContentLikeStatus } from '@/actions/content-actions';
 
 interface ArticlePageProps {
   params: Promise<{
@@ -29,6 +31,8 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
     );
   }
 
+  const { isLiked } = await getContentLikeStatus(slug, 'article');
+
   return (
     <div className="min-h-screen bg-white">
       <div className="container mx-auto px-4 py-8 md:py-16">
@@ -48,7 +52,9 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                  dangerouslySetInnerHTML={{ __html: article.content }} />
           )}
           
-          <CommentsSection />
+          <ArticleActions title={article.title} slug={slug} initialIsLiked={isLiked} type="article" />
+          
+          <CommentsSection articleSlug={slug} />
         </article>
       </div>
     </div>

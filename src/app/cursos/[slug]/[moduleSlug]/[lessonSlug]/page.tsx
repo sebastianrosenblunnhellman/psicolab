@@ -1,6 +1,7 @@
 import { getLesson, getCourseCurriculum, getCourseBySlug, getAllCourses } from '@/utils/courses';
 import Link from 'next/link';
 import { FaChevronLeft, FaPlayCircle, FaCheckCircle, FaLock } from 'react-icons/fa';
+import LessonCompleteButton from '@/components/LessonCompleteButton';
 
 interface LessonPageProps {
   params: Promise<{
@@ -104,6 +105,9 @@ export default async function LessonPage({ params }: LessonPageProps) {
                     <div className="prose prose-lg max-w-none text-neutral-600">
                         <div dangerouslySetInnerHTML={{ __html: lesson.content }} />
                     </div>
+
+                    {/* Complete Button */}
+                    <LessonCompleteButton courseSlug={slug} lessonSlug={lessonSlug} />
                 </div>
             </div>
         </main>

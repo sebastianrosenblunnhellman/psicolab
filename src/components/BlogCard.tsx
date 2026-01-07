@@ -1,9 +1,10 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { Article } from '@/utils/articles';
 import { useState } from 'react';
-import Image from 'next/image';
+import LikeButton from './LikeButton';
 
 type BlogCardProps = Partial<Article> & {
   slug: string;
@@ -46,10 +47,15 @@ export default function BlogCard({
               priority
             />
           </div>
+
+          {/* Like Button */}
+          <div className="absolute top-8 right-8 z-10">
+             <LikeButton slug={slug} title={title} type="article" className="shadow-soft" />
+          </div>
           
-          {/* Read time badge */}
+          {/* Read time badge - Adjusted position or remove if conflicting, or move to left */}
           {readTime && (
-            <div className="absolute top-8 right-8 px-3 py-1 bg-white/95 backdrop-blur-sm rounded-full text-xs font-semibold text-neutral-700 shadow-soft z-10">
+            <div className="absolute top-8 left-8 px-3 py-1 bg-white/95 backdrop-blur-sm rounded-full text-xs font-semibold text-neutral-700 shadow-soft z-10">
               {readTime} min
             </div>
           )}
