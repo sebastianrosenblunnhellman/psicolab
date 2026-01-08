@@ -31,10 +31,10 @@ export default function NewsletterSection() {
           
           <div className="text-center md:text-left md:w-1/2 text-white">
             <h2 className="text-3xl sm:text-4xl font-bold mb-4">
-              Únete a nuestra comunidad
+              Únete a nuestro Newsletter
             </h2>
             <p className="text-primary-50 text-lg opacity-90 max-w-md mx-auto md:mx-0">
-              Recibe las últimas actualizaciones sobre psicología científica, nuevos cursos y artículos directamente en tu bandeja de entrada.
+              Recibe las últimas actualizaciones de nuestros cursos, artículos y novedades directamente en tu bandeja de entrada.
             </p>
           </div>
 

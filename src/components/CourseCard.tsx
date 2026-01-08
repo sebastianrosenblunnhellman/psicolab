@@ -54,24 +54,19 @@ export default function CourseCard({
             </span>
           )}
         </div>
-
-        {/* Level Badge */}
-        <div className="absolute bottom-4 left-4">
-          <span className="px-3 py-1 bg-white/20 backdrop-blur-md text-white text-xs font-medium rounded-full border border-white/30">
-            {level}
-          </span>
-        </div>
       </div>
 
       {/* Content */}
       <div className="p-6 flex flex-col flex-grow">
         <div className="flex items-center gap-2 mb-3">
-          <div className="flex text-yellow-400 text-xs">
-            {[...Array(5)].map((_, i) => (
-              <FaStar key={i} className={i < Math.floor(rating) ? "fill-current" : "text-gray-300"} />
-            ))}
-          </div>
-          <span className="text-xs text-neutral-500 font-medium">({students} alumnos)</span>
+          <span className={`px-2.5 py-0.5 rounded-md text-xs font-bold uppercase tracking-wide ${
+            level === 'Principiante' ? 'bg-emerald-100 text-emerald-700' :
+            level === 'Intermedio' ? 'bg-amber-100 text-amber-700' :
+            level === 'Avanzado' ? 'bg-rose-100 text-rose-700' :
+            'bg-gray-100 text-gray-700'
+          }`}>
+            {level}
+          </span>
         </div>
 
         <h3 className="text-xl font-bold text-neutral-900 mb-2 line-clamp-2 group-hover:text-primary-600 transition-colors">

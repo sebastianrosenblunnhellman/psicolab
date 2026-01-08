@@ -9,6 +9,7 @@ export interface Article {
   readTime: number;
   published: boolean;
   image?: string; // URL de la imagen de portada
+  level?: string;
 }
 
 export interface ArticleMetadata {

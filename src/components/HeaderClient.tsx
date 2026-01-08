@@ -78,12 +78,12 @@ export default function HeaderClient({ user }: HeaderClientProps) {
                 <img 
                   src="/favicon.png" 
                   alt="Logo" 
-                  className="h-10 w-10 transition-transform group-hover:scale-110" 
+                  className="h-10 w-10 transition-transform duration-300 group-hover:scale-110" 
                 />
                 <div className="absolute inset-0 bg-primary-500/20 rounded-full blur-md opacity-0 group-hover:opacity-100 transition-opacity"></div>
               </div>
-              <span className="text-2xl font-bold">
-                <span className="bg-gradient-to-r from-primary-600 to-primary-500 bg-clip-text text-transparent">Psi</span>
+              <span className="text-2xl font-bold transition-transform duration-300 group-hover:scale-105 origin-left">
+                <span className="bg-gradient-to-r from-primary-600 to-primary-500 bg-clip-text text-transparent">Psi</span>{' '}
                 <span className="bg-gradient-to-r from-accent-600 to-accent-500 bg-clip-text text-transparent">Colab</span>
               </span>
             </Link>

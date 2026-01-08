@@ -48,6 +48,7 @@ export interface Article {
   content: string;
   published: boolean;
   image?: string;
+  level?: string;
 }
 
 const articlesDirectory = path.join(process.cwd(), 'content/articles');
@@ -126,12 +127,11 @@ export async function getArticleBySlug(slug: string, fields: string[] = []): Pro
       tags: Array.isArray(data.tags) ? data.tags : [],
       readTime: readTime,
       author: data.author || 'Anónimo',
-      content: '', // Initialize with empty string
-  published: data.published !== false, // Default to true if not specified
-  image: typeof data.image === 'string' && data.image.length > 0 ? data.image : '/images/miniatura.jpg',
-    };
-
-    // Only add content if specifically requested or if fields array is empty (get all)
+                  content: '', // Initialize with empty string
+                  published: data.published !== false, // Default to true if not specified
+                  image: typeof data.image === 'string' && data.image.length > 0 ? data.image : '/images/miniatura.jpg',
+                  level: data.level || 'Principiante',
+                };    // Only add content if specifically requested or if fields array is empty (get all)
     if (fields.length === 0 || fields.includes('content')) {
       const renderedHtml = md.render(content);
       article.content = wrapReferencesSection(renderedHtml);

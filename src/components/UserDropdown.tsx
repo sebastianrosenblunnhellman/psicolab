@@ -40,9 +40,17 @@ export default function UserDropdown({ user }: UserDropdownProps) {
     <div className="relative" ref={dropdownRef}>
       <button 
         onClick={toggleDropdown}
-        className="flex items-center gap-2 focus:outline-none"
+        className="flex items-center gap-3 focus:outline-none hover:bg-neutral-50 p-1.5 rounded-full transition-all duration-200"
       >
-        <Avatar src={user.image} alt={user.name || 'User'} size="sm" className="cursor-pointer hover:opacity-80 transition-opacity" />
+        <span className="hidden lg:block text-sm font-semibold text-neutral-700 ml-1">
+          {user.name || 'Usuario'}
+        </span>
+        <Avatar 
+          src={user.image} 
+          alt={user.name || 'User'} 
+          size="md" 
+          className="cursor-pointer shadow-sm border-2 border-white group-hover:border-primary-100 transition-all" 
+        />
       </button>
 
       {isOpen && (

@@ -7,7 +7,6 @@ interface Node {
   y: number;
   vx: number;
   vy: number;
-  connections: number[];
 }
 
 export default function NetworkAnimation() {
@@ -19,34 +18,16 @@ export default function NetworkAnimation() {
 
   const initNodes = useCallback((width: number, height: number) => {
     const nodes: Node[] = [];
-    const nodeCount = 80; // Increased density
+    const nodeCount = 60; // Slightly fewer nodes for cleaner organic look
 
     for (let i = 0; i < nodeCount; i++) {
-      // Bias towards right side (50% random, 50% right-biased)
-      const x = Math.random() > 0.3 
-        ? (width * 0.5) + (Math.random() * width * 0.5) 
-        : Math.random() * width;
-        
       nodes.push({
-        x: x,
+        x: Math.random() * width,
         y: Math.random() * height,
-        vx: (Math.random() - 0.5) * 1.5, // Slightly faster
-        vy: (Math.random() - 0.5) * 1.5,
-        connections: []
+        vx: (Math.random() - 0.5) * 0.8, // Slower, more organic movement
+        vy: (Math.random() - 0.5) * 0.8
       });
     }
-
-    // Establecer conexiones
-    nodes.forEach((node, i) => {
-      const connections = Math.floor(Math.random() * 4) + 1; // More connections
-      for (let j = 0; j < connections; j++) {
-        const targetIndex = Math.floor(Math.random() * nodeCount);
-        if (targetIndex !== i && !node.connections.includes(targetIndex)) {
-          node.connections.push(targetIndex);
-        }
-      }
-    });
-
     return nodes;
   }, []);
 
@@ -55,39 +36,41 @@ export default function NetworkAnimation() {
       node.x += node.vx;
       node.y += node.vy;
 
+      // Gentle bounce with damping
       if (node.x <= 0 || node.x >= width) node.vx *= -1;
       if (node.y <= 0 || node.y >= height) node.vy *= -1;
     });
   }, []);
 
-  const drawConnections = useCallback((ctx: CanvasRenderingContext2D, nodes: Node[], opacity: number) => {
-    nodes.forEach(node => {
-      ctx.beginPath();
-      node.connections.forEach(targetIndex => {
-        const target = nodes[targetIndex];
-        // Distancia check for cleaner visuals
-        const dx = node.x - target.x;
-        const dy = node.y - target.y;
+  const drawNetwork = useCallback((ctx: CanvasRenderingContext2D, nodes: Node[], opacity: number) => {
+    // Draw connections
+    ctx.lineWidth = 1;
+    for (let i = 0; i < nodes.length; i++) {
+      for (let j = i + 1; j < nodes.length; j++) {
+        const nodeA = nodes[i];
+        const nodeB = nodes[j];
+        
+        const dx = nodeA.x - nodeB.x;
+        const dy = nodeA.y - nodeB.y;
         const dist = Math.sqrt(dx * dx + dy * dy);
         
-        if (dist < 200) { // Only draw if close
-            ctx.moveTo(node.x, node.y);
-            ctx.lineTo(target.x, target.y);
-            // Opacity based on distance
-            const lineOpacity = (1 - dist / 200) * 0.6 * opacity;
-            ctx.strokeStyle = `rgba(45, 212, 191, ${lineOpacity})`; // Teal color
+        // Connect any nodes within range for organic mesh
+        if (dist < 150) { 
+            const lineOpacity = (1 - dist / 150) * 0.5 * opacity;
+            ctx.strokeStyle = `rgba(45, 212, 191, ${lineOpacity})`; // Teal
+            ctx.beginPath();
+            ctx.moveTo(nodeA.x, nodeA.y);
+            ctx.lineTo(nodeB.x, nodeB.y);
+            ctx.stroke();
         }
-      });
-      ctx.lineWidth = 1.5;
-      ctx.stroke();
-    });
-  }, []);
+      }
+    }
 
-  const drawNodes = useCallback((ctx: CanvasRenderingContext2D, nodes: Node[], opacity: number) => {
+    // Draw nodes
     nodes.forEach(node => {
       ctx.beginPath();
-      ctx.arc(node.x, node.y, 3, 0, Math.PI * 2); // Larger nodes
-      ctx.fillStyle = `rgba(59, 130, 246, ${opacity * 0.8})`; // Blue nodes
+      ctx.arc(node.x, node.y, 2.5, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(59, 130, 246, ${opacity * 0.8})`; // Blue
       ctx.fill();
     });
   }, []);
@@ -100,18 +83,17 @@ export default function NetworkAnimation() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     
     if (fadeInRef.current < 1) {
-      fadeInRef.current += 0.02;
+      fadeInRef.current += 0.01;
     }
 
     const opacity = fadeInRef.current;
     const nodes = nodesRef.current;
 
     updateNodePositions(nodes, canvas.width, canvas.height);
-    drawConnections(ctx, nodes, opacity);
-    drawNodes(ctx, nodes, opacity);
+    drawNetwork(ctx, nodes, opacity);
 
     animationRef.current = requestAnimationFrame(animate);
-  }, [updateNodePositions, drawConnections, drawNodes]);
+  }, [updateNodePositions, drawNetwork]);
 
   useEffect(() => {
     const canvas = canvasRef.current;

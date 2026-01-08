@@ -3,7 +3,7 @@
 import { useRef, useEffect } from 'react';
 import Link from 'next/link';
 import BlogCard from '@/components/BlogCard';
-import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+import { FaChevronLeft, FaChevronRight, FaArrowRight } from 'react-icons/fa';
 
 interface BlogCarouselProps {
   articles: any[];
@@ -43,11 +43,23 @@ export default function BlogCarousel({ articles }: BlogCarouselProps) {
     <section className="container mx-auto px-4 py-20">
       <div className="max-w-7xl mx-auto">
         {/* Section Header */}
-        <div className="mb-12">
-            <h2 className="text-3xl sm:text-4xl font-bold text-neutral-900 mb-2">
-                Últimas entradas del Blog
-            </h2>
-            <div className="w-24 h-1 bg-gradient-to-r from-primary-500 to-accent-500 rounded-full"></div>
+        <div className="mb-12 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+            <div>
+                <h2 className="text-3xl sm:text-4xl font-bold text-neutral-900 mb-2">
+                    Últimas entradas del Blog
+                </h2>
+                <div className="w-24 h-1 bg-gradient-to-r from-primary-500 to-accent-500 rounded-full"></div>
+            </div>
+
+            <Link 
+                href="/articulos"
+                className="hidden sm:inline-flex items-center gap-2 text-primary-600 font-semibold hover:text-primary-700 transition-colors group"
+            >
+                Ver todo el Blog
+                <span className="w-8 h-8 rounded-full bg-primary-50 flex items-center justify-center group-hover:bg-primary-100 transition-colors">
+                     <FaArrowRight className="w-3 h-3 text-primary-600 group-hover:translate-x-0.5 transition-transform" />
+                </span>
+            </Link>
         </div>
 
         {/* Carousel Container */}
@@ -96,16 +108,13 @@ export default function BlogCarousel({ articles }: BlogCarouselProps) {
             </div>
         </div>
 
-        {/* View All Button */}
-        <div className="text-center mt-8">
+        {/* View All Button (Mobile) */}
+        <div className="mt-8 sm:hidden">
             <Link
                 href="/articulos"
-                className="group inline-flex items-center gap-2 px-8 py-4 bg-white text-primary-700 rounded-xl font-semibold border-2 border-primary-200 hover:border-primary-400 hover:bg-primary-50 transition-all duration-300 hover:-translate-y-1 shadow-soft hover:shadow-soft-lg"
+                className="block w-full py-3 text-center bg-primary-50 text-primary-700 rounded-xl font-semibold hover:bg-primary-100 transition-colors"
             >
                 Ver todo el Blog
-                <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
             </Link>
         </div>
       </div>

@@ -9,6 +9,7 @@ import LikeButton from './LikeButton';
 type BlogCardProps = Partial<Article> & {
   slug: string;
   title: string;
+  level?: string;
 };
 
 export default function BlogCard({
@@ -19,7 +20,8 @@ export default function BlogCard({
   tags,
   readTime,
   author,
-  image = '/images/miniatura.jpg'
+  image = '/images/miniatura.jpg',
+  level = 'Principiante'
 }: BlogCardProps) {
   const [isHovered, setIsHovered] = useState(false);
   
@@ -63,24 +65,16 @@ export default function BlogCard({
         
         {/* Content */}
         <div className="p-6 flex flex-col flex-grow">
-          {/* Tags */}
-          {tags && tags.length > 0 && (
-            <div className="flex flex-wrap gap-2 mb-3">
-              {tags.slice(0, 2).map((tag) => (
-                <span
-                  key={tag}
-                  className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-primary-50 text-primary-700 border border-primary-100"
-                >
-                  {tag}
-                </span>
-              ))}
-              {tags.length > 2 && (
-                <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-neutral-100 text-neutral-600">
-                  +{tags.length - 2}
-                </span>
-              )}
-            </div>
-          )}
+          {/* Level Badge */}
+          <div className="mb-3">
+            <span className={`px-2.5 py-0.5 rounded-md text-xs font-bold uppercase tracking-wide ${
+              level === 'Avanzado' ? 'bg-rose-100 text-rose-700' :
+              level === 'Intermedio' ? 'bg-amber-100 text-amber-700' :
+              'bg-emerald-100 text-emerald-700'
+            }`}>
+              {level}
+            </span>
+          </div>
 
           {/* Title */}
           <h2 className="text-xl font-bold text-neutral-900 mb-3 line-clamp-2 group-hover:text-primary-600 transition-colors leading-tight">
