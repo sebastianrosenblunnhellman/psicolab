@@ -17,7 +17,7 @@ export default function Footer() {
               </span>
             </div>
             <p className="text-neutral-300 max-w-md leading-relaxed mb-4">
-              Haciendo la ciencia psicológica accesible y comprensible para todos.
+              Haciendo la ciencia psicológica accesible para todos.
             </p>
             <div className="flex gap-4">
               <a
@@ -69,9 +69,6 @@ export default function Footer() {
             <ul className="space-y-2 text-neutral-300">
               <li className="hover:text-primary-400 transition-colors cursor-pointer">
                 psico.colab@gmail.com
-              </li>
-              <li className="text-sm">
-                Buenos Aires, Argentina
               </li>
             </ul>
           </div>

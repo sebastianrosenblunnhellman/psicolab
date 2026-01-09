@@ -21,7 +21,7 @@ export default function NewsletterSection() {
   };
 
   return (
-    <section className="container mx-auto px-4 py-20">
+    <section className="container mx-auto px-4 pt-12 md:pt-16 pb-20">
       <div className="max-w-6xl mx-auto bg-gradient-to-br from-primary-600 to-accent-600 rounded-3xl p-8 sm:p-12 md:p-16 relative overflow-hidden shadow-2xl">
         {/* Decorative Circles */}
         <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
