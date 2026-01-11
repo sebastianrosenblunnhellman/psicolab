@@ -54,16 +54,15 @@ collections:
     folder: "content/courses"
     create: true
     nested:
-      depth: 4 # Course -> Module -> Lesson -> (Optional Sub-lesson)
+      depth: 4
       summary: "{{title}}"
-    # `index: true` forces new entries to be created as folders with an index.md file.
-    # This is required to support the Course -> Module -> Lesson structure where Modules are folders.
-    meta: { path: { label: "Ruta (Carpeta)", index: true } }
+    # Correction: Use correct meta path configuration for nested collections with index files
+    meta: { path: { label: "Ruta (Carpeta)", widget: "string", index_file: "index" } }
     
     fields:
       - {label: "Título", name: "title", widget: "string"}
       
-      # Course Meta (These should be filled for the Course Landing Page)
+      # Course Meta
       - {label: "Descripción", name: "description", widget: "text", required: false, hint: "Solo para la portada del curso"}
       - {label: "Instructor", name: "instructor", widget: "string", required: false, hint: "Solo para la portada del curso"}
       - {label: "Nivel", name: "level", widget: "select", options: ["Principiante", "Intermedio", "Avanzado", "Todos los niveles"], required: false, hint: "Solo para la portada del curso"}
