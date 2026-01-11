@@ -1,8 +1,9 @@
 import { getCourseBySlug, getAllCourses, getCourseCurriculum } from '@/utils/courses';
 import Image from 'next/image';
-import Link from 'next/link';
 import { FaClock, FaUser, FaStar, FaPlayCircle } from 'react-icons/fa';
 import EnrollButton from '@/components/EnrollButton';
+import { auth } from '@/auth';
+import { prisma } from '@/lib/prisma';
 
 interface CoursePageProps {
   params: Promise<{
@@ -21,6 +22,33 @@ export default async function CoursePage({ params }: CoursePageProps) {
   const { slug } = await params;
   const course = await getCourseBySlug(slug);
   const curriculum = await getCourseCurriculum(slug);
+  
+  const session = await auth();
+  let isEnrolled = false;
+
+  if (session?.user?.id && course) {
+    // Check if user is enrolled
+    // We first need to find the course in the DB to get its ID, as enrollment is linked by ID
+    // Note: The course might not exist in DB if it hasn't been synced (lazy sync in enroll action)
+    // But if it's not in DB, user can't be enrolled.
+    const dbCourse = await prisma.course.findUnique({
+      where: { slug: slug }
+    });
+
+    if (dbCourse) {
+      const enrollment = await prisma.enrollment.findUnique({
+        where: {
+          userId_courseId: {
+            userId: session.user.id,
+            courseId: dbCourse.id
+          }
+        }
+      });
+      if (enrollment) {
+        isEnrolled = true;
+      }
+    }
+  }
 
   if (!course) {
     return (
@@ -118,28 +146,25 @@ export default async function CoursePage({ params }: CoursePageProps) {
                                     </div>
                                     <div className="divide-y divide-neutral-100">
                                         {module.lessons.map((lesson) => (
-                                            <Link 
+                                            <div 
                                                 key={lesson.slug} 
-                                                href={`/cursos/${course.slug}/${module.slug}/${lesson.slug}`}
-                                                className="block hover:bg-neutral-50 transition-colors"
+                                                className="px-6 py-4 flex items-center justify-between"
                                             >
-                                                <div className="px-6 py-4 flex items-center justify-between group">
-                                                    <div className="flex items-center gap-4">
-                                                        <div className="w-8 h-8 rounded-full bg-primary-100 flex items-center justify-center text-primary-600 group-hover:bg-primary-600 group-hover:text-white transition-colors">
-                                                            <FaPlayCircle className="w-4 h-4" />
-                                                        </div>
-                                                        <div>
-                                                            <p className="font-medium text-neutral-700 group-hover:text-primary-700 transition-colors">
-                                                                {lesson.title}
-                                                            </p>
-                                                        </div>
+                                                <div className="flex items-center gap-4">
+                                                    <div className="w-8 h-8 rounded-full bg-neutral-100 flex items-center justify-center text-neutral-400">
+                                                        <FaPlayCircle className="w-4 h-4" />
                                                     </div>
-                                                    <div className="flex items-center gap-2 text-sm text-neutral-400">
-                                                        <FaClock className="w-3 h-3" />
-                                                        <span>{lesson.duration}</span>
+                                                    <div>
+                                                        <p className="font-medium text-neutral-600">
+                                                            {lesson.title}
+                                                        </p>
                                                     </div>
                                                 </div>
-                                            </Link>
+                                                <div className="flex items-center gap-2 text-sm text-neutral-400">
+                                                    <FaClock className="w-3 h-3" />
+                                                    <span>{lesson.duration}</span>
+                                                </div>
+                                            </div>
                                         ))}
                                     </div>
                                 </div>
@@ -173,7 +198,11 @@ export default async function CoursePage({ params }: CoursePageProps) {
                     </div>
                     
                     {curriculum.length > 0 ? (
-                        <EnrollButton courseSlug={course.slug} firstLessonUrl={firstLessonUrl} />
+                        <EnrollButton 
+                            courseSlug={course.slug} 
+                            firstLessonUrl={firstLessonUrl}
+                            isEnrolled={isEnrolled}
+                        />
                     ) : (
                         <button disabled className="w-full bg-neutral-300 text-neutral-500 font-bold py-3 px-6 rounded-xl cursor-not-allowed mb-4">
                             Próximamente

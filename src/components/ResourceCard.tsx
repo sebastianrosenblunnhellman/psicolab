@@ -24,13 +24,10 @@ export default function ResourceCard({
   downloadUrl,
   tags
 }: ResourceCardProps) {
-  const href = downloadUrl || `/recursos/${id}`;
-  const linkProps = downloadUrl
-    ? { target: '_blank' as const, rel: 'noopener noreferrer' }
-    : {};
+  const href = `/recursos/${id}`;
 
   return (
-    <Link href={href} className="block group h-full" {...linkProps}>
+    <Link href={href} className="block group h-full">
       <article className="bg-white rounded-2xl shadow-soft border border-neutral-100 hover:shadow-soft-lg hover:border-primary-200 transition-all duration-300 overflow-hidden h-full flex flex-col group-hover:-translate-y-1">
         {/* Image */}
         <div className="relative w-full pt-6 px-6 bg-neutral-50/50">
@@ -96,19 +93,10 @@ export default function ResourceCard({
 
             {/* Action indicator */}
             <div className="flex items-center gap-1 text-primary-600 font-medium text-sm ml-auto">
-              {downloadUrl ? (
-                <>
-                  <span className="group-hover:translate-x-1 transition-transform">Descargar</span>
-                  <FaExternalLinkAlt className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-                </>
-              ) : (
-                <>
-                  <span className="group-hover:translate-x-1 transition-transform">Ver más</span>
-                  <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
-                </>
-              )}
+              <span className="group-hover:translate-x-1 transition-transform">Ver más</span>
+              <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
             </div>
           </div>
         </div>

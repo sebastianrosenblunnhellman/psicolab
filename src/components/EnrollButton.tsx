@@ -3,14 +3,16 @@
 import { useState } from 'react';
 import { enrollUser } from '@/actions/course-actions';
 import { useRouter } from 'next/navigation';
-import { FaGraduationCap } from 'react-icons/fa';
+import { FaGraduationCap, FaPlay } from 'react-icons/fa';
+import Link from 'next/link';
 
 interface EnrollButtonProps {
   courseSlug: string;
   firstLessonUrl: string;
+  isEnrolled?: boolean;
 }
 
-export default function EnrollButton({ courseSlug, firstLessonUrl }: EnrollButtonProps) {
+export default function EnrollButton({ courseSlug, firstLessonUrl, isEnrolled }: EnrollButtonProps) {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
@@ -31,6 +33,18 @@ export default function EnrollButton({ courseSlug, firstLessonUrl }: EnrollButto
       setLoading(false);
     }
   };
+
+  if (isEnrolled) {
+    return (
+      <Link
+        href={firstLessonUrl}
+        className="w-full text-center bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-xl transition-colors mb-4 flex items-center justify-center gap-2"
+      >
+        <FaPlay />
+        Acceder
+      </Link>
+    );
+  }
 
   return (
     <button

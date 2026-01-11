@@ -3,6 +3,7 @@ import { getUserEnrollments } from "@/actions/course-actions";
 import Link from "next/link";
 import { FaPlay, FaCheckCircle, FaAward } from "react-icons/fa";
 import { redirect } from "next/navigation";
+import { getCourseCurriculum } from "@/utils/courses";
 
 export default async function MyCoursesPage() {
   const session = await auth();
@@ -30,7 +31,30 @@ export default async function MyCoursesPage() {
           </div>
         ) : (
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {enrollments.map((enrollment) => (
+            {await Promise.all(enrollments.map(async (enrollment) => {
+              const curriculum = await getCourseCurriculum(enrollment.course.slug);
+              let continueUrl = `/cursos/${enrollment.course.slug}`; // Fallback
+
+              // Find first uncompleted lesson
+              if (curriculum.length > 0) {
+                 let found = false;
+                 // Default to very first lesson
+                 continueUrl = `/cursos/${enrollment.course.slug}/${curriculum[0].slug}/${curriculum[0].lessons[0].slug}`;
+                 
+                 for (const module of curriculum) {
+                    if (found) break;
+                    for (const lesson of module.lessons) {
+                        const isCompleted = enrollment.completedLessonSlugs.some(cl => cl.lessonSlug === lesson.slug);
+                        if (!isCompleted) {
+                            continueUrl = `/cursos/${enrollment.course.slug}/${module.slug}/${lesson.slug}`;
+                            found = true;
+                            break;
+                        }
+                    }
+                 }
+              }
+
+              return (
               <div key={enrollment.id} className="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow">
                 <div className="h-32 bg-primary-100 relative">
                    {/* Placeholder for course thumbnail if we had one in DB or joined with content */}
@@ -62,14 +86,14 @@ export default async function MyCoursesPage() {
                   </div>
 
                   <Link 
-                    href={`/cursos/${enrollment.course.slug}`}
+                    href={continueUrl}
                     className="block w-full text-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-primary-600 hover:bg-primary-700 transition-colors"
                   >
                     {enrollment.status === 'COMPLETADO' ? 'Repasar Curso' : 'Continuar Aprendiendo'}
                   </Link>
                 </div>
               </div>
-            ))}
+            )}))}
           </div>
         )}
       </div>

@@ -170,7 +170,7 @@ export async function getCourseCurriculum(courseSlug: string): Promise<Module[]>
   const modules: Module[] = await Promise.all(moduleDirs.map(async (moduleDir) => {
     const modulePath = path.join(coursePath, moduleDir.name);
     const lessonFiles = fs.readdirSync(modulePath)
-        .filter(file => file.endsWith('.md'))
+        .filter(file => file.endsWith('.md') && file !== 'index.md') // Exclude index.md
         .sort((a, b) => a.localeCompare(b));
 
     const lessons: Lesson[] = await Promise.all(lessonFiles.map(async (file) => {
@@ -186,6 +186,31 @@ export async function getCourseCurriculum(courseSlug: string): Promise<Module[]>
         };
     }));
 
+    // Check for folder-based lessons (e.g. module/lesson-slug/index.md)
+    const lessonDirs = fs.readdirSync(modulePath, { withFileTypes: true })
+        .filter(entry => entry.isDirectory());
+
+    const folderLessons = await Promise.all(lessonDirs.map(async (dir) => {
+        const lessonIndexPath = path.join(modulePath, dir.name, 'index.md');
+        if (fs.existsSync(lessonIndexPath)) {
+             const content = fs.readFileSync(lessonIndexPath, 'utf8');
+             const { data, content: markdownContent } = matter(content);
+             return {
+                slug: dir.name,
+                title: data.title || dir.name,
+                duration: data.duration || '10 min',
+                videoUrl: data.videoUrl,
+                content: md.render(markdownContent)
+             };
+        }
+        return null;
+    }));
+
+    const validFolderLessons = folderLessons.filter((l): l is Lesson => l !== null);
+
+    // Combine and sort
+    const allLessons = [...lessons, ...validFolderLessons].sort((a, b) => a.title.localeCompare(b.title));
+
     // Format module title from "01-fundamentos" to "Fundamentos"
     const formattedTitle = moduleDir.name
         .replace(/^\d+-/, '') // Remove leading numbers
@@ -195,7 +220,7 @@ export async function getCourseCurriculum(courseSlug: string): Promise<Module[]>
     return {
         slug: moduleDir.name,
         title: formattedTitle,
-        lessons
+        lessons: allLessons
     };
   }));
 
@@ -208,10 +233,16 @@ export async function getLesson(courseSlug: string, moduleSlug: string, lessonSl
     moduleSlug = decodeURIComponent(moduleSlug);
     lessonSlug = decodeURIComponent(lessonSlug);
 
-    const lessonPath = path.join(coursesDirectory, courseSlug, moduleSlug, `${lessonSlug}.md`);
+    let lessonPath = path.join(coursesDirectory, courseSlug, moduleSlug, `${lessonSlug}.md`);
 
+    // Check for folder-based lesson
     if (!fs.existsSync(lessonPath)) {
-        return null;
+        const folderLessonPath = path.join(coursesDirectory, courseSlug, moduleSlug, lessonSlug, 'index.md');
+        if (fs.existsSync(folderLessonPath)) {
+            lessonPath = folderLessonPath;
+        } else {
+            return null;
+        }
     }
 
     const content = fs.readFileSync(lessonPath, 'utf8');

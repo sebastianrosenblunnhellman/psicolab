@@ -3,6 +3,8 @@
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
+import { remark } from 'remark';
+import html from 'remark-html';
 
 export interface Resource {
   slug: string;
@@ -15,7 +17,8 @@ export interface Resource {
   pages?: number;
   cover?: string;
   link?: string;
-  image?: string; // Ensure image is included in the Resource type
+  image?: string;
+  content?: string;
 }
 
 const resourcesDirectory = path.join(process.cwd(), 'content/resources');
@@ -38,7 +41,8 @@ export async function getAllResources(): Promise<Resource[]> {
         .map(async fileName => {
           try {
             const slug = fileName.replace(/.md$/, '');
-            const resource = await getResourceBySlug(slug);
+            // We don't need full content for the list view, avoiding parsing for perf
+            const resource = await getResourceBySlug(slug, false); 
             return resource;
           } catch (error) {
             console.error(`Error processing resource ${fileName}:`, error);
@@ -59,7 +63,7 @@ export async function getAllResources(): Promise<Resource[]> {
   }
 }
 
-export async function getResourceBySlug(slug: string): Promise<Resource | null> {
+export async function getResourceBySlug(slug: string, withContent: boolean = true): Promise<Resource | null> {
   try {
     ensureResourcesDirectory();
     
@@ -75,12 +79,20 @@ export async function getResourceBySlug(slug: string): Promise<Resource | null> 
 
     const fullPath = path.join(resourcesDirectory, fileName);
     const fileContents = fs.readFileSync(fullPath, 'utf8');
-    const { data } = matter(fileContents);
+    const { data, content } = matter(fileContents);
 
     // Validate required fields
     if (!data.title || !data.type) {
       console.error(`Resource ${slug} is missing required fields`);
       return null;
+    }
+
+    let contentHtml = '';
+    if (withContent) {
+        const processedContent = await remark()
+        .use(html)
+        .process(content);
+        contentHtml = processedContent.toString();
     }
 
     const resource: Resource = {
@@ -94,7 +106,8 @@ export async function getResourceBySlug(slug: string): Promise<Resource | null> 
       pages: data.pages,
       cover: data.cover,
       link: data.link,
-      image: data.image || '/images/miniatura.jpg', // Default image if not provided
+      image: data.image || '/images/miniatura.jpg',
+      content: contentHtml,
     };
 
     return resource;

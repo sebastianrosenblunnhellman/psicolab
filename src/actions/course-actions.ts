@@ -13,6 +13,7 @@ export async function getUserEnrollments() {
     where: { userId: session.user.id },
     include: {
       course: true,
+      completedLessonSlugs: true,
     },
     orderBy: { updatedAt: 'desc' }
   });

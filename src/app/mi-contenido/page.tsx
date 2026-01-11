@@ -3,6 +3,7 @@ import { getUserLikes } from "@/actions/content-actions";
 import Link from "next/link";
 import { FaBook, FaTools, FaHeart } from "react-icons/fa";
 import { redirect } from "next/navigation";
+import RemoveSavedItemButton from "@/components/RemoveSavedItemButton";
 
 export default async function MyContentPage() {
   const session = await auth();
@@ -40,7 +41,8 @@ export default async function MyContentPage() {
             {likes.map((like) => {
               // Determine if it's an article or material
               const item = like.article || like.material;
-              const type = like.article ? 'Artículo' : 'Material';
+              const type = like.article ? 'article' : 'material'; // 'article' | 'material' for the action
+              const typeLabel = like.article ? 'Artículo' : 'Material';
               const href = like.article ? `/articulos/${like.article.slug}` : `/recursos/${like.material!.slug}`; // Assuming resource URL structure
               const Icon = like.article ? FaBook : FaTools;
 
@@ -52,11 +54,15 @@ export default async function MyContentPage() {
                     <div className="p-6 flex-1">
                       <div className="flex items-center justify-between mb-4">
                         <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                          type === 'Artículo' ? 'bg-primary-100 text-primary-800' : 'bg-accent-100 text-accent-800'
+                          typeLabel === 'Artículo' ? 'bg-primary-100 text-primary-800' : 'bg-accent-100 text-accent-800'
                         }`}>
-                          {type}
+                          {typeLabel}
                         </span>
-                        <FaHeart className="text-red-500 h-4 w-4" />
+                        <RemoveSavedItemButton 
+                            slug={item.slug} 
+                            title={item.title} 
+                            type={type} 
+                        />
                       </div>
                       <h3 className="text-xl font-bold text-gray-900 group-hover:text-primary-600 transition-colors mb-2">
                         {item.title}

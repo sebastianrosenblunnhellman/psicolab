@@ -1,7 +1,9 @@
 import { getLesson, getCourseCurriculum, getCourseBySlug, getAllCourses } from '@/utils/courses';
 import Link from 'next/link';
-import { FaChevronLeft, FaPlayCircle, FaCheckCircle, FaLock } from 'react-icons/fa';
+import { FaPlayCircle, FaCheckCircle, FaLock, FaThLarge } from 'react-icons/fa';
 import LessonCompleteButton from '@/components/LessonCompleteButton';
+import { auth } from '@/auth';
+import { prisma } from '@/lib/prisma';
 
 interface LessonPageProps {
   params: Promise<{
@@ -35,6 +37,27 @@ export default async function LessonPage({ params }: LessonPageProps) {
   const lesson = await getLesson(slug, moduleSlug, lessonSlug);
   const curriculum = await getCourseCurriculum(slug);
   const course = await getCourseBySlug(slug);
+  
+  const session = await auth();
+  let completedLessonSlugs: string[] = [];
+
+  if (session?.user?.id && course) {
+    const enrollment = await prisma.enrollment.findFirst({
+        where: {
+            userId: session.user.id,
+            course: {
+                slug: slug
+            }
+        },
+        include: {
+            completedLessonSlugs: true
+        }
+    });
+    
+    if (enrollment) {
+        completedLessonSlugs = enrollment.completedLessonSlugs.map(cl => cl.lessonSlug);
+    }
+  }
 
   if (!lesson || !course) {
     return <div>Lección no encontrada</div>;
@@ -46,11 +69,14 @@ export default async function LessonPage({ params }: LessonPageProps) {
       <header className="flex-none h-16 border-b border-neutral-200 bg-white flex items-center px-4 justify-between z-10 relative">
         <div className="flex items-center gap-4">
             <Link 
-                href={`/cursos/${slug}`} 
-                className="p-2 hover:bg-neutral-100 rounded-full text-neutral-600 transition-colors"
+                href="/mis-cursos" 
+                className="flex items-center gap-2 px-3 py-2 hover:bg-neutral-100 rounded-lg text-neutral-600 transition-colors text-sm font-medium"
+                title="Volver a mis cursos"
             >
-                <FaChevronLeft />
+                <FaThLarge />
+                <span>Mis Cursos</span>
             </Link>
+            <div className="h-6 w-px bg-neutral-200 hidden md:block"></div>
             <div>
                 <h1 className="text-sm font-bold text-neutral-900 truncate max-w-[200px] md:max-w-md">
                     {course.title}
@@ -128,6 +154,7 @@ export default async function LessonPage({ params }: LessonPageProps) {
                         <div>
                             {module.lessons.map((l) => {
                                 const isActive = l.slug === lessonSlug && module.slug === moduleSlug;
+                                const isCompleted = completedLessonSlugs.includes(l.slug);
                                 return (
                                     <Link 
                                         key={l.slug}
@@ -135,7 +162,9 @@ export default async function LessonPage({ params }: LessonPageProps) {
                                         className={`flex items-start gap-3 px-4 py-3 hover:bg-neutral-50 transition-colors ${isActive ? 'bg-primary-50 border-r-4 border-primary-500' : ''}`}
                                     >
                                         <div className="mt-1">
-                                            {isActive ? (
+                                            {isCompleted ? (
+                                                <FaCheckCircle className="w-4 h-4 text-green-500" />
+                                            ) : isActive ? (
                                                 <FaPlayCircle className="w-4 h-4 text-primary-600" />
                                             ) : (
                                                 <div className="w-4 h-4 rounded-full border-2 border-neutral-300" />

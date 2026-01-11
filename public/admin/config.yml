@@ -9,7 +9,6 @@ backend:
 local_backend: true 
 
 # CARPETA DE IMÁGENES
-# Las imágenes subidas irán a esta carpeta para no ensuciar la raíz de images
 media_folder: "public/images/cms"
 public_folder: "/images/cms"
 
@@ -23,9 +22,11 @@ collections:
     sortable_fields: ['title', 'date']
     fields:
       - {label: "Título", name: "title", widget: "string"}
+      - {label: "Tipo", name: "type", widget: "hidden", default: "articulo"}
       - {label: "Fecha", name: "date", widget: "datetime"}
       - {label: "Autor", name: "author", widget: "string", default: "Psi Colab"}
       - {label: "Etiquetas", name: "tags", widget: "list", default: ["Psicología"]}
+      - {label: "Tiempo de Lectura", name: "readTime", widget: "string", default: "5 min"}
       - {label: "Extracto", name: "excerpt", widget: "text"}
       - {label: "Imagen", name: "image", widget: "image", required: false}
       - {label: "Publicado", name: "published", widget: "boolean", default: true}
@@ -39,8 +40,8 @@ collections:
     slug: "{{slug}}"
     fields:
       - {label: "Título", name: "title", widget: "string"}
-      - {label: "Tipo", name: "type", widget: "string", default: "biblioteca"}
-      - {label: "Autor", name: "author", widget: "string"}
+      - {label: "Tipo", name: "type", widget: "hidden", default: "biblioteca"}
+      - {label: "Autor", name: "author", widget: "string", required: false}
       - {label: "Extracto", name: "excerpt", widget: "text"}
       - {label: "Imagen", name: "image", widget: "image", required: false}
       - {label: "Link Externo", name: "link", widget: "string", required: false}
@@ -48,29 +49,33 @@ collections:
 
   # COLECCIÓN DE CURSOS (JERÁRQUICA)
   - name: "courses"
-    label: "Cursos y Contenido"
-    label_singular: "Elemento de Curso"
+    label: "Cursos"
+    label_singular: "Curso / Módulo / Lección"
     folder: "content/courses"
     create: true
-    # Depth 4 permite: Curso (1) -> Modulo (2) -> Leccion (3) -> (Extra)
-    nested: 
-      depth: 4 
+    nested:
+      depth: 4 # Course -> Module -> Lesson -> (Optional Sub-lesson)
       summary: "{{title}}"
-      path: {label: "Ruta/Carpeta", index: true}
+    # `index: true` forces new entries to be created as folders with an index.md file.
+    # This is required to support the Course -> Module -> Lesson structure where Modules are folders.
+    meta: { path: { label: "Ruta (Carpeta)", index: true } }
     
-    # Decap usará estos campos. Como mezclamos carpetas (index.md) y archivos (lecciones),
-    # hacemos muchos campos opcionales.
     fields:
       - {label: "Título", name: "title", widget: "string"}
       
-      # Campos de Portada de Curso
+      # Course Meta (These should be filled for the Course Landing Page)
+      - {label: "Descripción", name: "description", widget: "text", required: false, hint: "Solo para la portada del curso"}
+      - {label: "Instructor", name: "instructor", widget: "string", required: false, hint: "Solo para la portada del curso"}
+      - {label: "Nivel", name: "level", widget: "select", options: ["Principiante", "Intermedio", "Avanzado", "Todos los niveles"], required: false, hint: "Solo para la portada del curso"}
+      - {label: "Estado", name: "status", widget: "select", options: ["available", "coming_soon", "in_progress"], required: false, default: "coming_soon", hint: "Solo para la portada del curso"}
+      - {label: "Categoría", name: "category", widget: "string", required: false, hint: "Solo para la portada del curso"}
+      - {label: "Estudiantes", name: "students", widget: "number", required: false, default: 0, hint: "Solo para la portada del curso"}
+      - {label: "Calificación", name: "rating", widget: "number", value_type: "float", min: 0, max: 5, step: 0.1, required: false, default: 5, hint: "Solo para la portada del curso"}
+      - {label: "Fecha", name: "date", widget: "datetime", required: false, hint: "Solo para la portada del curso"}
+      
+      # Shared / Lesson Fields
+      - {label: "Duración", name: "duration", widget: "string", required: false, hint: "Ej: '10 min' para lección o '20 horas' para curso"}
+      - {label: "Video URL", name: "videoUrl", widget: "string", required: false, hint: "Solo para lecciones"}
+      
       - {label: "Imagen", name: "image", widget: "image", required: false}
-      - {label: "Instructor", name: "instructor", widget: "string", required: false}
-      - {label: "Descripción", name: "description", widget: "text", required: false}
-      - {label: "Estado", name: "status", widget: "select", options: ["available", "coming_soon", "in_progress"], required: false}
-      
-      # Campos de Lección
-      - {label: "Video URL", name: "videoUrl", widget: "string", required: false}
-      - {label: "Duración", name: "duration", widget: "string", required: false}
-      
-      - {label: "Cuerpo / Contenido", name: "body", widget: "markdown"}
+      - {label: "Cuerpo", name: "body", widget: "markdown"}

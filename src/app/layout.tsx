@@ -35,14 +35,16 @@ export default function RootLayout({
     <html lang="es">
       <head></head>
       <body className={`${inter.className} bg-white min-h-screen flex flex-col`}>
-          <CacheProvider>
-            <IdentityRedirect />
+          <IdentityRedirect />
+          <Suspense fallback={<div className="h-16" />}>
             <Header />
+          </Suspense>
+          <CacheProvider>
             <main className="flex-grow mt-16">
               {children}
             </main>
-            <Footer />
           </CacheProvider>
+          <Footer />
       </body>
     </html>
   )

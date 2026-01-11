@@ -2,6 +2,8 @@ import { getAllArticles, getArticleBySlug } from '@/utils/articles';
 import CommentsSection from '@/components/CommentsSection';
 import ArticleActions from '@/components/ArticleActions';
 import { getContentLikeStatus } from '@/actions/content-actions';
+import Link from 'next/link';
+import { FaArrowLeft } from 'react-icons/fa';
 
 interface ArticlePageProps {
   params: Promise<{
@@ -34,9 +36,17 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
   const { isLiked } = await getContentLikeStatus(slug, 'article');
 
   return (
-    <div className="min-h-screen bg-white">
-      <div className="container mx-auto px-4 py-8 md:py-16">
-        <article className="article-container max-w-4xl mx-auto">
+    <div className="min-h-screen bg-white py-8 md:py-16">
+      <div className="container mx-auto px-4 max-w-4xl">
+        <Link 
+            href="/articulos" 
+            className="inline-flex items-center text-gray-500 hover:text-primary-600 mb-8 transition-colors text-sm font-medium"
+        >
+            <FaArrowLeft className="mr-2 w-3 h-3" />
+            Volver al blog
+        </Link>
+
+        <article className="article-container mx-auto">
           <h1 className="text-3xl md:text-4xl font-bold mb-4 md:mb-6">{article.title}</h1>
           <div className="flex flex-wrap items-center text-gray-600 mb-6 md:mb-8 space-x-2 md:space-x-4">
             <span>{article.date ? new Date(article.date).toLocaleDateString() : ''}</span>
